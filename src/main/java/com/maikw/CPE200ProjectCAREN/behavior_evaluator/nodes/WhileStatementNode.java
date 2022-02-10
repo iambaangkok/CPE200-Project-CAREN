@@ -5,7 +5,7 @@ public class WhileStatementNode implements Node {
     Node expressionNode;
     Node statementNode;
 
-    WhileStatementNode(Node expressionNode, Node statementNode) {
+    public WhileStatementNode(Node expressionNode, Node statementNode) {
         this.expressionNode = expressionNode;
         this.statementNode = statementNode;
     }

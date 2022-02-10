@@ -5,7 +5,7 @@ public class AssignmentStatementNode implements Node{
     protected VariableNode variableNode;
     protected Node expressionNode;
 
-    AssignmentStatementNode(VariableNode variableNode, Node expressionNode){
+    public AssignmentStatementNode(VariableNode variableNode, Node expressionNode){
         this.variableNode = variableNode;
         this.expressionNode = expressionNode;
     }

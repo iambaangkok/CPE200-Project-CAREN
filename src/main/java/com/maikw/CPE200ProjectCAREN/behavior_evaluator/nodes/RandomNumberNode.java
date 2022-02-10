@@ -5,7 +5,7 @@ import java.util.Random;
 public class RandomNumberNode implements Node{
     protected Random random = null;
 
-    RandomNumberNode(double number){
+    public RandomNumberNode(){
         random = new Random();
     }
 

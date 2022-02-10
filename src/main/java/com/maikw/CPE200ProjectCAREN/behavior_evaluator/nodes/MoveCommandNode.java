@@ -7,7 +7,7 @@ public class MoveCommandNode implements Node {
     protected String direction;
     protected Unit unit;
 
-    MoveCommandNode(String direction, Unit unit){
+    public MoveCommandNode(String direction, Unit unit){
         this.direction = direction;
         this.unit = unit;
     }

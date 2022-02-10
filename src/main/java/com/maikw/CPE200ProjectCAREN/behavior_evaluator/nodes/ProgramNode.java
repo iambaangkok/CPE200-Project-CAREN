@@ -7,7 +7,7 @@ public class ProgramNode implements Node {
 
     protected List<Node> statements;
 
-    ProgramNode(){
+    public ProgramNode(){
         statements = new ArrayList<>();
     }
 

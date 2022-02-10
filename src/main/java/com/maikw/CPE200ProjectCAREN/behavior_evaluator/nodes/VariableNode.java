@@ -6,7 +6,7 @@ public class VariableNode implements Node{
     protected Map<String,Double> variables = null;
     protected String identifier;
 
-    VariableNode(String identifier, Map<String,Double> variables){
+    public VariableNode(String identifier, Map<String,Double> variables){
         this.variables = variables;
         this.identifier = identifier;
         if(!variables.keySet().contains(identifier)){

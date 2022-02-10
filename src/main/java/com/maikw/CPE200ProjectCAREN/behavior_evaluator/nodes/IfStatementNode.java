@@ -6,7 +6,7 @@ public class IfStatementNode implements Node {
     Node ifTrueStatementNode;
     Node ifFalseStatementNode;
 
-    IfStatementNode(Node expressionNode, Node ifTrueStatementNode, Node ifFalseStatementNode) {
+    public IfStatementNode(Node expressionNode, Node ifTrueStatementNode, Node ifFalseStatementNode) {
         this.expressionNode = expressionNode;
         this.ifTrueStatementNode = ifTrueStatementNode;
         this.ifFalseStatementNode = ifFalseStatementNode;

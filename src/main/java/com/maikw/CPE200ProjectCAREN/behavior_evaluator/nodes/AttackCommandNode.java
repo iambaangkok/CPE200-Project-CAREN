@@ -7,7 +7,7 @@ public class AttackCommandNode implements Node {
     protected String direction;
     protected Unit unit;
 
-    AttackCommandNode(String direction, Unit unit){
+    public AttackCommandNode(String direction, Unit unit){
         this.direction = direction;
         this.unit = unit;
     }

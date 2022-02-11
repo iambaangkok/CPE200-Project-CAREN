@@ -17,12 +17,12 @@ public class Tokenizer{
         this.geneticCode = geneticCode;
         tokens = new ArrayList<>();
         
-        matcher = Regex.ALL.matcher(geneticCode);
+        matcher = Regex.P_ALL.matcher(geneticCode);
         
         computeNext();
     }
  
-    private void computeNext() throws SyntaxError {
+    private void computeNext(){
         if(matcher.find()){
             next = matcher.group();
         }else{
@@ -39,7 +39,7 @@ public class Tokenizer{
     /** Consumes the next token
      *  from the input stream
      *  and returns it. */
-    public String consume() throws SyntaxError {
+    public String consume(){
         String result = next;
         computeNext();
 
@@ -47,19 +47,21 @@ public class Tokenizer{
     }
 
     /**
-     * Returns true if
-     * the next token is s.
+     *  Returns true if
+     *  the next token matches the regex.
+     *  @param regex
      */
-    boolean peek(String s) {
-        return peek().equals(s);
+    boolean peek(String regex) {
+        return peek().matches(regex);
     }
 
     /**
-     * Consume the next token if it is s.
-     * Throw SyntaxError otherwise.
+     *  Consume the next token if it matches the regex.
+     *  Throw SyntaxError otherwise.
+     *  @param regex
      */
-    void consume(String s) throws SyntaxError {
-        if (peek(s)) {
+    void consume(String regex) throws SyntaxError {
+        if (peek().matches(regex)) {
             consume();
         } else {
             throw new SyntaxError("consume(s): token does not match s");

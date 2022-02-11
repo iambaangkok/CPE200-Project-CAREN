@@ -22,7 +22,7 @@ public class NodeFactory {
      * 
      * @return a ProgramNode/BlockStatementNode. it's the same thing
      */
-    public Node createProgramNode(){
+    public ProgramNode createProgramNode(){
         return new ProgramNode();
     }
     /**
@@ -79,14 +79,14 @@ public class NodeFactory {
      * @param variables
      * @return a VariableNode
      */
-    public Node createNode(String identifier, Map<String,Double> variables){
+    public VariableNode createNode(String identifier, Map<String,Double> variables){
         return new VariableNode(identifier,variables);
     }
     /**
      * 
      * @return a RandomNumberNode
      */
-    public Node createRandomNumberNode(){
+    public VariableNode createRandomNumberNode(){
         return new RandomNumberNode();
     }
     /**

@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
  * 
  */
 public class Regex {
-    public static final String S_ALL = "[-+*/%^]|=|[({})]|([0-9]+[.]*[0-9]+)|([0-9]+)|((upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby)[a-zA-Z0-9]+)|upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby|([[a-zA-Z]]+[[a-zA-Z0-9]]*)";
+    public static final String S_ALL = "[-+*/%^]|=|[({})]|([0-9]+[.]*[0-9]+)|([0-9]+)|((upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby)[a-zA-Z0-9]+)|upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby|([a-zA-Z]+[a-zA-Z0-9]*)";
 
-    public static final String S_VARIABLE = "((upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby)[a-zA-Z0-9]+)|([[a-zA-Z]]+[[a-zA-Z0-9]]*)";
+    public static final String S_VARIABLE = "((upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby)[a-zA-Z0-9]+)|([a-zA-Z]+[a-zA-Z0-9]*)";
 
     public static final String S_NUMBER = "([0-9]+[.]*[0-9]+)|([0-9]+)";
     public static final String S_OPERATOR = "[-+*/%^]";

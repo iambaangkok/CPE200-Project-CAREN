@@ -7,14 +7,17 @@ import java.util.regex.Pattern;
  * 
  */
 public class Regex {
-    public static final String S_ALL = "[-+*/%^]|[({})]|([0-9]+[.]*[0-9]+)|([0-9]+)|move|shoot|left|right|up|down|upleft|upright|downleft|downright|if|then|else|while|virus|antibody|nearby|([[a-zA-Z]]+[[a-zA-Z0-9]]*)";
+    public static final String S_ALL = "[-+*/%^]|=|[({})]|([0-9]+[.]*[0-9]+)|([0-9]+)|((upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby)[a-zA-Z0-9]+)|upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby|([[a-zA-Z]]+[[a-zA-Z0-9]]*)";
 
-    public static final String S_VARIABLE = "[[a-zA-Z]]+[[a-zA-Z0-9]]*";
+    public static final String S_VARIABLE = "((upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby)[a-zA-Z0-9]+)|([[a-zA-Z]]+[[a-zA-Z0-9]]*)";
 
     public static final String S_NUMBER = "([0-9]+[.]*[0-9]+)|([0-9]+)";
     public static final String S_OPERATOR = "[-+*/%^]";
     public static final String S_PARENTHESES = "[({})]";
+    public static final String S_ASSIGN = "=";
     public static final String S_RESERVEDWORD = "move|shoot|left|right|up|down|upleft|upright|downleft|downright|if|then|else|while|virus|antibody|nearby";
+
+    public static final String S_RANDOM = "random";
     
     public static final String S_DIRECTION = "left|right|up|down|upleft|upright|downleft|downright";
     public static final String S_LEFT = "left";
@@ -31,6 +34,7 @@ public class Regex {
     public static final String S_ANTIBODY = "antibody";
     public static final String S_NEARBY = "nearby";
     
+    public static final String S_ACTION = "move|shoot";
     public static final String S_MOVE = "move";
     public static final String S_SHOOT = "shoot";
     
@@ -40,36 +44,40 @@ public class Regex {
 
     public static final String S_WHILE = "while";
 
-    public static final Pattern ALL = Pattern.compile(S_ALL);
+    public static final Pattern P_ALL = Pattern.compile(S_ALL);
 
-    public static final Pattern VARIABLE = Pattern.compile(S_VARIABLE);
+    public static final Pattern P_VARIABLE = Pattern.compile(S_VARIABLE);
 
-    public static final Pattern NUMBER = Pattern.compile(S_NUMBER);
-    public static final Pattern OPERATOR = Pattern.compile(S_OPERATOR);
-    public static final Pattern PARENTHESES = Pattern.compile(S_PARENTHESES);
-    public static final Pattern RESERVEDWORD = Pattern.compile(S_RESERVEDWORD);
+    public static final Pattern P_NUMBER = Pattern.compile(S_NUMBER);
+    public static final Pattern P_OPERATOR = Pattern.compile(S_OPERATOR);
+    public static final Pattern P_PARENTHESES = Pattern.compile(S_PARENTHESES);
+    public static final Pattern P_ASSIGN = Pattern.compile(S_ASSIGN);
+    public static final Pattern P_RESERVEDWORD = Pattern.compile(S_RESERVEDWORD);
     
-    public static final Pattern DIRECTION = Pattern.compile(S_DIRECTION);
-    public static final Pattern LEFT = Pattern.compile(S_LEFT);
-    public static final Pattern RIGHT = Pattern.compile(S_RIGHT);
-    public static final Pattern UP = Pattern.compile(S_UP);
-    public static final Pattern DOWN = Pattern.compile(S_DOWN);
-    public static final Pattern UPLEFT = Pattern.compile(S_UPLEFT);
-    public static final Pattern UPRIGHT = Pattern.compile(S_UPRIGHT);
-    public static final Pattern DOWNLEFT = Pattern.compile(S_DOWNLEFT);
-    public static final Pattern DOWNRIGHT = Pattern.compile(S_DOWNRIGHT);
+    public static final Pattern P_RANDOM = Pattern.compile(S_RANDOM);
 
-    public static final Pattern SENSOR = Pattern.compile(S_SENSOR);
-    public static final Pattern VIRUS = Pattern.compile(S_VIRUS);
-    public static final Pattern ANTIBODY = Pattern.compile(S_ANTIBODY);
-    public static final Pattern NEARBY = Pattern.compile(S_NEARBY);
-    
-    public static final Pattern MOVE = Pattern.compile(S_MOVE);
-    public static final Pattern SHOOT = Pattern.compile(S_SHOOT);
-    
-    public static final Pattern IF = Pattern.compile(S_IF);
-    public static final Pattern THEN = Pattern.compile(S_THEN);
-    public static final Pattern ELSE = Pattern.compile(S_ELSE);
+    public static final Pattern P_DIRECTION = Pattern.compile(S_DIRECTION);
+    public static final Pattern P_LEFT = Pattern.compile(S_LEFT);
+    public static final Pattern P_RIGHT = Pattern.compile(S_RIGHT);
+    public static final Pattern P_UP = Pattern.compile(S_UP);
+    public static final Pattern P_DOWN = Pattern.compile(S_DOWN);
+    public static final Pattern P_UPLEFT = Pattern.compile(S_UPLEFT);
+    public static final Pattern P_UPRIGHT = Pattern.compile(S_UPRIGHT);
+    public static final Pattern P_DOWNLEFT = Pattern.compile(S_DOWNLEFT);
+    public static final Pattern P_DOWNRIGHT = Pattern.compile(S_DOWNRIGHT);
 
-    public static final Pattern WHILE = Pattern.compile(S_WHILE);
+    public static final Pattern P_SENSOR = Pattern.compile(S_SENSOR);
+    public static final Pattern P_VIRUS = Pattern.compile(S_VIRUS);
+    public static final Pattern P_ANTIBODY = Pattern.compile(S_ANTIBODY);
+    public static final Pattern P_NEARBY = Pattern.compile(S_NEARBY);
+    
+    public static final Pattern P_ACTION = Pattern.compile(S_ACTION);
+    public static final Pattern P_MOVE = Pattern.compile(S_MOVE);
+    public static final Pattern P_SHOOT = Pattern.compile(S_SHOOT);
+    
+    public static final Pattern P_P_IF = Pattern.compile(S_IF);
+    public static final Pattern P_THEN = Pattern.compile(S_THEN);
+    public static final Pattern P_ELSE = Pattern.compile(S_ELSE);
+
+    public static final Pattern P_WHILE = Pattern.compile(S_WHILE);
 }

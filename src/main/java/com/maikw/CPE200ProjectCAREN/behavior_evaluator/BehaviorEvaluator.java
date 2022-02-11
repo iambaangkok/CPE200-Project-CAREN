@@ -10,6 +10,8 @@ public class BehaviorEvaluator{
     protected NodeFactory factory;
     protected Unit unit;
 
+    private static final boolean DEBUG = true;
+
     public BehaviorEvaluator(String src, Unit unit) {
         try{
             this.tkz = new Tokenizer(src);
@@ -21,11 +23,13 @@ public class BehaviorEvaluator{
     }
     
     public Node parseProgram() throws SyntaxError, UnmatchedParenthesesError{
+        if(DEBUG) System.out.println("parseProgram " + tkz.peek());
         
         ProgramNode programNode = factory.createProgramNode();
         
         while(tkz.peek() != null){
             String s = tkz.peek();
+            System.out.println(s);
             if(s.matches(Regex.S_OPERATOR) || s.matches(Regex.S_NUMBER) || s.matches(Regex.S_DIRECTION) || s.matches(Regex.S_SENSOR)){ /// invalid case
                 tkz.consume();
                 throw new SyntaxError();
@@ -36,26 +40,36 @@ public class BehaviorEvaluator{
                     programNode.addStatement(parseIf());
                 }else if(s.matches(Regex.S_ACTION)){ // MOVE or SHOOT
                     programNode.addStatement(parseAction());
+                }else if(s.matches(Regex.S_ELSE)){
+                    break;
                 }
             }else if(s.matches(Regex.S_VARIABLE)){ /// ASSIGNMENT
                 programNode.addStatement(parseAssignment());
             }else if(s.matches(Regex.S_PARENTHESES)){ /// PARENTHESES -> BLOCKSTATEMENT
-                if(s.matches("{")){
-                    tkz.consume("{");
+                if(s.equals("(") || s.equals(")")){
+                    throw new UnmatchedParenthesesError("( or ) as statement starter");   
+                }else if(s.equals("{")){
+                    if(DEBUG) System.out.println("  BRACKET {");
+                    tkz.consume();
                     programNode.addStatement(parseProgram());
-                    if(tkz.peek("}") == false){
+                    if(tkz.peek().equals("}") == false){
                         throw new UnmatchedParenthesesError("missing }");
-                    } tkz.consume("}");
-                }else{
-                    throw new UnmatchedParenthesesError("} without {");
+                    } tkz.consume();
+                }else if(s.equals("}")){
+                    break;
                 }
+            }else if(s.matches("\n")){
+                tkz.consume();
+            }else{
+                throw new SyntaxError(tkz.peek());
             }
         }
-
+        if(DEBUG) System.out.println("RETURNED parseProgram");
         return programNode;
     }
 
     public Node parseAssignment() throws SyntaxError{
+        if(DEBUG) System.out.println("parseAssignment " + tkz.peek());
         VariableNode variableNode = parseVariable();
         tkz.consume(Regex.S_ASSIGN);
         Node expressionNode = parseExpression();
@@ -65,10 +79,11 @@ public class BehaviorEvaluator{
     }
 
     public Node parseIf() throws SyntaxError{
+        if(DEBUG) System.out.println("parseIf " + tkz.peek());
         tkz.consume(Regex.S_IF);
-        tkz.consume("(");
+        tkz.consume("[(]");
         Node expressionNode = parseExpression();
-        tkz.consume(")");
+        tkz.consume("[)]");
         tkz.consume(Regex.S_THEN);
         Node ifTrueStatementNode = parseProgram();
         tkz.consume(Regex.S_ELSE);
@@ -79,10 +94,11 @@ public class BehaviorEvaluator{
     }
 
     public Node parseWhile() throws SyntaxError{
+        if(DEBUG) System.out.println("parseWhile " + tkz.peek());
         tkz.consume(Regex.S_WHILE);
-        tkz.consume("(");
+        tkz.consume("[(]");
         Node expressionNode = parseExpression();
-        tkz.consume(")");
+        tkz.consume("[)]");
         Node statementNode = parseProgram();
 
         Node whileStatemeNode = factory.createNode(expressionNode, statementNode);
@@ -90,6 +106,7 @@ public class BehaviorEvaluator{
     }
 
     public Node parseAction() throws SyntaxError{
+        if(DEBUG) System.out.println("parseAction " + tkz.peek());
         boolean isAttack = false;
         if(tkz.peek(Regex.S_SHOOT)){
             isAttack = true;
@@ -106,8 +123,9 @@ public class BehaviorEvaluator{
     
     //Expression → Expression + Term | Expression - Term | Term
     public Node parseExpression() throws SyntaxError, EvaluationError{
+        if(DEBUG) System.out.println("parseExpression " + tkz.peek());
         Node expression = parseTerm();
-        while (tkz.peek("+") || tkz.peek("-")) {
+        while (tkz.peek().equals("+") || tkz.peek("-")) {
             String op = tkz.consume();
             Node rightTerm = parseTerm();
             if(op.equals("+")){
@@ -124,9 +142,10 @@ public class BehaviorEvaluator{
 
     //Term → Term * Factor | Term / Factor | Term % Factor | Factor
     public Node parseTerm() throws SyntaxError, EvaluationError{
+        if(DEBUG) System.out.println("parseTerm " + tkz.peek());
         Node term = parseFactor();
 
-        while (tkz.peek("*") || tkz.peek("/") || tkz.peek("%")) {
+        while (tkz.peek().equals("*") || tkz.peek("/") || tkz.peek("%")) {
             String op = tkz.consume();
             Node rightTerm = parseFactor();
 
@@ -153,6 +172,7 @@ public class BehaviorEvaluator{
 
     //Factor → Power ^ Factor | Power
     public Node parseFactor() throws SyntaxError, EvaluationError{
+        if(DEBUG) System.out.println("parseFactor " + tkz.peek());
         Node term = parsePower();
 
         while (tkz.peek("^")) {
@@ -170,6 +190,7 @@ public class BehaviorEvaluator{
 
     //Power → <number> | <identifier> | ( Expression ) | SensorExpression
     public Node parsePower() throws SyntaxError, EvaluationError{
+        if(DEBUG) System.out.println("parsePower " + tkz.peek());
         if(tkz.peek(Regex.S_NUMBER)){
             Node numberNode = factory.createNode(Double.parseDouble(tkz.peek()));
             tkz.consume(Regex.S_NUMBER);
@@ -192,6 +213,7 @@ public class BehaviorEvaluator{
 
     //SensorExpression → virus | antibody | nearby Direction	
     public Node parseSensor() throws SyntaxError{
+        if(DEBUG) System.out.println("parseSensor " + tkz.peek());
         String mode = tkz.consume();
 
         if(mode.matches(Regex.S_NEARBY)){
@@ -207,6 +229,7 @@ public class BehaviorEvaluator{
     }
 
     public String parseDirection() throws SyntaxError{
+        if(DEBUG) System.out.println("parseDirection " + tkz.peek());
         String direction = tkz.peek();
         tkz.consume(Regex.S_DIRECTION);
 
@@ -214,6 +237,7 @@ public class BehaviorEvaluator{
     }
 
     public VariableNode parseVariable() throws SyntaxError{
+        if(DEBUG) System.out.println("parseVariable " + tkz.peek());
         String identifier = tkz.peek();
         if(identifier.matches(Regex.S_RANDOM)){
             tkz.consume(Regex.S_RANDOM);

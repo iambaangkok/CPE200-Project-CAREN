@@ -13,11 +13,15 @@ public class Tokenizer{
     
     protected Matcher matcher;
 
+    private static final boolean DEBUG = true;
+
     public Tokenizer(String geneticCode) throws SyntaxError {
         this.geneticCode = geneticCode;
         tokens = new ArrayList<>();
         
         matcher = Regex.P_ALL.matcher(geneticCode);
+
+        System.out.println("geneticCode: " + geneticCode);
         
         computeNext();
     }

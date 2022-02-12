@@ -21,7 +21,7 @@ public class Tokenizer{
         
         matcher = Regex.P_ALL.matcher(geneticCode);
 
-        System.out.println("geneticCode: " + geneticCode);
+        if(DEBUG)System.out.println("geneticCode: " + geneticCode);
         
         computeNext();
     }

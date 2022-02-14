@@ -46,6 +46,7 @@ public class Unit {
         }else{
             target.currentHealth -= this.attackDamage;
         }
+        System.out.println("Unit " + target.name + " current hp = " + target.currentHealth);
     }    
 
     public int sense(String mode, String direction){

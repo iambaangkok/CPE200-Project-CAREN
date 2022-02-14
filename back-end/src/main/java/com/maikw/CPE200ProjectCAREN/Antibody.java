@@ -5,7 +5,6 @@ public class Antibody extends Unit{
         super(name, type);
     }
 
-
     public Virus virusToSpawn(String name, String type){
         return new Virus(name, type);
     }

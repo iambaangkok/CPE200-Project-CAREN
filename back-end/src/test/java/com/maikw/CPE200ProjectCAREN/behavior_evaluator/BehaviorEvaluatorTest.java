@@ -13,7 +13,7 @@ public class BehaviorEvaluatorTest {
     public void validGeneticCodeTest_1(){
         BehaviorEvaluator be = new BehaviorEvaluator(
             GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt"),
-            new Unit("")
+            new Unit("","")
             );
         try{
             Node programNode = be.parseProgram();
@@ -27,7 +27,7 @@ public class BehaviorEvaluatorTest {
     public static void main(String[] args) {
         BehaviorEvaluator be = new BehaviorEvaluator(
             GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt"),
-            new Unit("")
+            new Unit("","")
             );
         try{
             Node programNode = be.parseProgram();

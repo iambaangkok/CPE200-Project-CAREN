@@ -1,11 +1,11 @@
 package com.maikw.CPE200ProjectCAREN;
 
 public class UnitFactory {
-    public Antibody createAntibody(){
-        return new Antibody();
+    public Antibody createAntibody(String name, String type){
+        return new Antibody(name, type);
     }
 
-    public Virus createVirus(){
-        return new Virus();
+    public Virus createVirus(String name, String type){
+        return new Virus(name, type);
     }
 }

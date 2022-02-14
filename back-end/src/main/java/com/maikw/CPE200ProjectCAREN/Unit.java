@@ -9,12 +9,12 @@ import com.maikw.CPE200ProjectCAREN.behavior_evaluator.nodes.Node;
 
 public class Unit {
 
-    protected int maxHealth = 0;
-    protected int currentHealth = 0;
+    protected int maxHealth = 100;
+    protected int currentHealth = 100;
     protected int moveCost = 0;
     protected int attackDamage = 0;
     protected double attackRange = 0.0;
-    protected int lifeSteal = 0;
+    protected int lifeSteal = 10;
     protected String type = "";
     protected String name;
     protected Map<String, Double> variables;
@@ -39,6 +39,14 @@ public class Unit {
     public void attack(String direction){
         System.out.println("Unit " + name + " attacked " + direction);
     }
+
+    public void attack(Unit target){
+        if(target.currentHealth <= this.attackDamage){
+            target.currentHealth = 0;
+        }else{
+            target.currentHealth -= this.attackDamage;
+        }
+    }    
 
     public int sense(String mode, String direction){
         System.out.println("Unit " + name + " sensed " + mode + " " + direction);

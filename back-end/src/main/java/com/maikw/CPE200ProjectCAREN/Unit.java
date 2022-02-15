@@ -9,12 +9,12 @@ import com.maikw.CPE200ProjectCAREN.behavior_evaluator.nodes.Node;
 
 public class Unit {
 
-    protected int maxHealth = 0;
-    protected int currentHealth = 0;
+    protected int maxHealth = 100;
+    protected int currentHealth = 100;
     protected int moveCost = 0;
     protected int attackDamage = 0;
     protected double attackRange = 0.0;
-    protected int lifeSteal = 0;
+    protected int lifeSteal = 10;
     protected String type = "";
     protected String name;
     protected Map<String, Double> variables;
@@ -24,6 +24,16 @@ public class Unit {
         variables = new HashMap<>();
         this.name = name;
         this.type = type;
+        if(type.equals("melee")){
+            this.attackDamage = 20;
+            this.attackRange = 1;
+        }else if(type.equals("ranged")){
+            this.attackDamage = 20;
+            this.attackRange = 3;
+        }else if(type.equals("aoe")){
+            this.attackDamage = 15;
+            this.attackRange = 1;
+        }
         BehaviorEvaluator be = new BehaviorEvaluator("",this);
         try{
             programNode = be.parseProgram();
@@ -40,6 +50,15 @@ public class Unit {
         System.out.println("Unit " + name + " attacked " + direction);
     }
 
+    public void attack(Unit target){
+        if(target.currentHealth <= this.attackDamage){
+            target.currentHealth = 0;
+        }else{
+            target.currentHealth -= this.attackDamage;
+        }
+        System.out.println("Unit " + target.name + " current hp = " + target.currentHealth);
+    }    
+
     public int sense(String mode, String direction){
         System.out.println("Unit " + name + " sensed " + mode + " " + direction);
         return 7;
@@ -51,5 +70,13 @@ public class Unit {
 
     public Map<String, Double> getVariables(){
         return variables;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getType(){
+        return type;
     }
 }

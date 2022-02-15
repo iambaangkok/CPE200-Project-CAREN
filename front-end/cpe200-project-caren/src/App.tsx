@@ -14,6 +14,8 @@ var dim_black : ImageObject;
 var alertLight_blue: ImageObject;
 
 var t_caren : TextObject;
+var t_howToPlay : TextObject;
+var t_clickAnywhereToStart : TextObject;
 
 const screenWidth = 1280;
 const screenHeight = 720;
@@ -63,8 +65,22 @@ class App extends React.Component {
 		dim_black = new ImageObject(p_dim_black, 0,0);
 		alertLight_blue = new ImageObject(p_alertLight_blue,0,0)
 
-		t_caren = new TextObject("C.A.R.E.N", "30px Arial", 100, 100, "white", "left")
-
+		t_caren = new TextObject(["C.A.R.E.N"], 96, "'Press Start 2P'", 112, 235)
+		t_howToPlay = new TextObject([
+			"Covid VIRUS is attacking!",
+			"",
+			"",
+			"• You must protect your organs: brain, heart, and lungs",
+			"• Don’t let the amount of ANTIBODY reach zero or you lose the organ",
+			"• Each lost organ increase the VIRUS amount by x1.5",
+			"• Buy ANTIBODY with ANTIBODY CREDITS earned from killing VIRUS",
+			"• ANTIBODY turns into VIRUS when it dies",
+			"• Program how your ANTIBODY behaves below",
+			"   (or don’t, you can use our default programs)",
+			"• Survive the 5 VIRUS WAVES to win!"
+			],
+			18, "'Press Start 2P'", 112, 398)
+		t_clickAnywhereToStart = new TextObject(["CLICK ANYWHERE TO START"], 24, "'Press Start 2P'", 112, 904)
 	}
 
 	fetchAll(){
@@ -76,8 +92,6 @@ class App extends React.Component {
 	updateAll(){
 		if(DEBUG) console.log("UPDATEALL")
 		ctx!.clearRect(0,0,screenWidth, screenHeight);
-
-		
 	}
 
 	drawAll(){
@@ -85,6 +99,8 @@ class App extends React.Component {
 		dim_black.draw();
 
 		t_caren.draw();
+		t_howToPlay.draw();
+		t_clickAnywhereToStart.draw();
 	}
 
 	draw(img : ImageObject){

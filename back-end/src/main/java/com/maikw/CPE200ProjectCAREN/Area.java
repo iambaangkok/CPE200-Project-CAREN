@@ -1,6 +1,6 @@
 package com.maikw.CPE200ProjectCAREN;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Area {
@@ -10,9 +10,9 @@ public class Area {
     protected List<Antibody> antibodies;
 
     public Area(){
-        this.units = new LinkedList<Unit>(); 
-        this.viruses = new LinkedList<Virus>(); 
-        this.antibodies = new LinkedList<Antibody>();
+        this.units = new ArrayList<Unit>();
+        this.viruses = new ArrayList<Virus>();
+        this.antibodies = new ArrayList<Antibody>();
     }
 
     private void addUnit(Unit dummy){
@@ -21,10 +21,12 @@ public class Area {
 
     private void addVirus(Virus dummy){
         this.viruses.add(dummy);
+        this.addUnit(dummy);
     }
 
     private void addAntibody(Antibody dummy){
         this.antibodies.add(dummy);
+        this.addUnit(dummy);
     }
 
     // 3 level 0 = green light -> all good , 1 = yellow light -> antibodies:viruses = 1:3 , 2 = red light -> area taken

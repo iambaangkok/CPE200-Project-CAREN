@@ -24,6 +24,16 @@ public class Unit {
         variables = new HashMap<>();
         this.name = name;
         this.type = type;
+        if(type.equals("melee")){
+            this.attackDamage = 20;
+            this.attackRange = 1;
+        }else if(type.equals("ranged")){
+            this.attackDamage = 20;
+            this.attackRange = 3;
+        }else if(type.equals("aoe")){
+            this.attackDamage = 15;
+            this.attackRange = 1;
+        }
         BehaviorEvaluator be = new BehaviorEvaluator("",this);
         try{
             programNode = be.parseProgram();

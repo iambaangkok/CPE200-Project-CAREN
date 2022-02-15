@@ -61,4 +61,12 @@ public class Unit {
     public Map<String, Double> getVariables(){
         return variables;
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getType(){
+        return type;
+    }
 }

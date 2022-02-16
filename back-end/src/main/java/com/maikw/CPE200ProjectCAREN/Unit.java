@@ -25,6 +25,7 @@ public class Unit {
     protected Map<String, Double> variables;
     protected Node programNode;
     protected Area area;
+    protected String unitClass;
 
     public Unit(String name, String type){
         variables = new HashMap<>();
@@ -185,6 +186,7 @@ public class Unit {
         double min = Integer.MAX_VALUE;
         int directionAngle = 0;
         int baseDirectionValue = directionValue(0, direction);
+        String classUnit = "";
         for (Unit u : units) {
             double angle = getAngle(this, u);
             int directionValue = directionValue((int) angle,"");
@@ -196,6 +198,7 @@ public class Unit {
                     if (range < min) {
                         min = range;
                         directionAngle = directionValue;
+                        classUnit = u.getUnitClass();
                     }
                 }
             }
@@ -203,11 +206,23 @@ public class Unit {
         if (min == Integer.MAX_VALUE) {
             return 0;
         } else if (min <= dangerRange) {
-            return 10  + directionAngle;
+            if(classUnit.equals("Virus")){
+                return 10 + 1;
+            }else if(classUnit.equals("Antibody")){
+                return 10 + 2;
+            }
         } else if (min <= attackRange) {
-            return 20 + directionAngle;
+            if(classUnit.equals("Virus")){
+                return 20 + 1;
+            }else if(classUnit.equals("Antibody")){
+                return 20 + 2;
+            }
         } else if (min <= detectRange) {
-            return 30 + directionAngle;
+            if(classUnit.equals("Virus")){
+                return 30 + 1;
+            }else if(classUnit.equals("Antibody")){
+                return 30 + 2;
+            }
         }
         return 0;
     }
@@ -277,6 +292,10 @@ public class Unit {
         return lifeSteal;
     }
 
+    public String getUnitClass() {
+        return unitClass;
+    }
+
     public void setArea(Area area) {
         this.area = area;
     }
@@ -288,4 +307,5 @@ public class Unit {
     public void setPositionY(double positionY) {
         this.positionY = positionY;
     }
+
 }

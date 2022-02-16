@@ -1,4 +1,4 @@
 package com.maikw.CPE200ProjectCAREN;
 
-public class APIZoomManager {
+public class ZoomController {
 }

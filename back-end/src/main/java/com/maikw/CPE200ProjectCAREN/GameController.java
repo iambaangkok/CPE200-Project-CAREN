@@ -1,7 +1,5 @@
 package com.maikw.CPE200ProjectCAREN;
 
-
-
 import com.maikw.CPE200ProjectCAREN.apiclasses.GameState;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +20,9 @@ public class GameController {
 
     @CrossOrigin
     @PostMapping(path = "/setState")
-    public String setGameState(@RequestBody GameState gameState){
+    public int setGameState(@RequestBody GameState gameState){
         game.setState(gameState.getGameState());
 
-        return ""+gameState.getGameState();
+        return gameState.getGameState();
     }
-
-
-
 }

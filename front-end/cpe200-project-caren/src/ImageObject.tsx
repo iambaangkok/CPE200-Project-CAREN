@@ -85,6 +85,11 @@ class ImageObject{
         // fetch here
     }
 
+    public mouseInside(mousePos : {x : number, y : number}){
+        return (mousePos.x >= this.position.x && mousePos.x <= this.position.x+this.width
+            && mousePos.y >= this.position.y && mousePos.y <= this.position.y+this.height);
+    }
+
     public nextState(){
         if(this.image instanceof Array){
             this.state = (this.state+1) % this.maxState!;

@@ -1,6 +1,7 @@
 package com.maikw.CPE200ProjectCAREN;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.BehaviorEvaluator;
@@ -68,64 +69,15 @@ public class Unit {
 
     public int sense(String mode, String direction){
         System.out.println("Unit " + name + " sensed " + mode + " " + direction);
-        int directionValue = directionValue(direction);
         switch (mode) {
             case "virus" -> {
-                double min = Integer.MAX_VALUE;
-                for (Virus v : area.getViruses()) {
-                    double range = range(this, v);
-                    if (this.detectRange < range) {
-                    } else {
-                        if (range < min) min = range;
-                    }
-                }
-                if (min == Integer.MAX_VALUE) {
-                    return 0;
-                } else if (min <= dangerRange) {
-                    return 10 + directionValue;
-                } else if (min <= attackRange) {
-                    return 20 + directionValue;
-                } else if (min <= detectRange) {
-                    return 30 + directionValue;
-                }
+                return senseVirusEval(area.getViruses());
             }
             case "antibody" -> {
-                double min = Integer.MAX_VALUE;
-                for (Antibody a : area.getAntibodies()) {
-                    double range = range(this, a);
-                    if (this.detectRange < range) {
-                    } else {
-                        if (range < min) min = range;
-                    }
-                }
-                if (min == Integer.MAX_VALUE) {
-                    return 0;
-                } else if (min <= dangerRange) {
-                    return 10 + directionValue;
-                } else if (min <= attackRange) {
-                    return 20 + directionValue;
-                } else if (min <= detectRange) {
-                    return 30 + directionValue;
-                }
+                return senseAntibodyEval(area.getAntibodies());
             }
             case "nearby" -> {
-                double min = Integer.MAX_VALUE;
-                for (Unit u : area.getUnits()) {
-                    double range = range(this, u);
-                    if (this.detectRange < range) {
-                    } else {
-                        if (range < min) min = range;
-                    }
-                }
-                if (min == Integer.MAX_VALUE) {
-                    return 0;
-                } else if (min <= dangerRange) {
-                    return 10 + directionValue;
-                } else if (min <= attackRange) {
-                    return 20 + directionValue;
-                } else if (min <= detectRange) {
-                    return 30 + directionValue;
-                }
+                return senseUnitEval(area.getUnits(), direction);
             }
         }
         return 0;
@@ -135,8 +87,8 @@ public class Unit {
         return Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2));
     }
 
-    public static double getAngle(Unit a, Unit b){
-        double angle = Math.toDegrees(Math.atan2(b.positionY - a.positionY, b.positionX - a.positionX));
+    public static int getAngle(Unit a, Unit b){
+        int angle = (int) Math.toDegrees(Math.atan2(b.positionY - a.positionY, b.positionX - a.positionX));
 
         if (angle < 0) {
             angle += 360;
@@ -145,18 +97,119 @@ public class Unit {
         return angle;
     }
 
-    public static int directionValue(String direction){
-        return switch (direction) {
-            case "up" -> 1;
-            case "upright" -> 2;
-            case "right" -> 3;
-            case "downright" -> 4;
-            case "down" -> 5;
-            case "downleft" -> 6;
-            case "left" -> 7;
-            case "upleft" -> 8;
-            default -> 0;
-        };
+    public static int directionValue(int angle, String direction){
+        if(direction.equals("")){
+            return switch (angle) {
+                case 90 -> 1;
+                case 45 -> 2;
+                case 0 -> 3;
+                case 315 -> 4;
+                case 270 -> 5;
+                case 225 -> 6;
+                case 180 -> 7;
+                case 135 -> 8;
+                default -> 0;
+            };
+        }else{
+            return switch (direction) {
+                case "up" -> 1;
+                case "upright" -> 2;
+                case "right" -> 3;
+                case "downright" -> 4;
+                case "down" -> 5;
+                case "downleft" -> 6;
+                case "left" -> 7;
+                case "upleft" -> 8;
+                default -> 0;
+            };
+        }
+
+    }
+
+    private int senseVirusEval(List<Virus> viruses){
+        double min = Integer.MAX_VALUE;
+        int directionAngle = 0;
+        for (Virus v : viruses) {
+            double angle = getAngle(this, v);
+            int directionValue = directionValue((int) angle,"");
+            double range = range(this, v);
+            if (this.detectRange < range) {
+            } else {
+                if (range < min){
+                    min = range;
+                    directionAngle = directionValue;
+                }
+            }
+        }
+        if (min == Integer.MAX_VALUE) {
+            return 0;
+        } else if (min <= dangerRange) {
+            return 10  + directionAngle;
+        } else if (min <= attackRange) {
+            return 20 + directionAngle;
+        } else if (min <= detectRange) {
+            return 30 + directionAngle;
+        }
+        return 0;
+    }
+
+    private int senseAntibodyEval(List<Antibody> antibodies){
+        System.out.println("This X: " + this.positionX + " This Y: " + this.positionY);
+        double min = Integer.MAX_VALUE;
+        int directionAngle = 0;
+        for (Antibody a : antibodies) {
+            double angle = getAngle(this, a);
+            int directionValue = directionValue((int) angle,"");
+            double range = range(this, a);
+            if (this.detectRange < range) {
+            } else {
+                if (range < min){
+                    min = range;
+                    directionAngle = directionValue;
+                }
+            }
+        }
+        if (min == Integer.MAX_VALUE) {
+            return 0;
+        } else if (min <= dangerRange) {
+            return 10  + directionAngle;
+        } else if (min <= attackRange) {
+            return 20 + directionAngle;
+        } else if (min <= detectRange) {
+            return 30 + directionAngle;
+        }
+        return 0;
+    }
+
+    private int senseUnitEval(List<Unit> units, String direction){
+        double min = Integer.MAX_VALUE;
+        int directionAngle = 0;
+        int baseDirectionValue = directionValue(0, direction);
+        for (Unit u : units) {
+            double angle = getAngle(this, u);
+            int directionValue = directionValue((int) angle,"");
+            double range = range(this, u);
+            if (directionValue != baseDirectionValue) {
+            }else{
+                if (this.detectRange < range) {
+                } else {
+                    if (range < min) {
+                        min = range;
+                        directionAngle = directionValue;
+                    }
+                }
+            }
+        }
+        if (min == Integer.MAX_VALUE) {
+            return 0;
+        } else if (min <= dangerRange) {
+            return 10  + directionAngle;
+        } else if (min <= attackRange) {
+            return 20 + directionAngle;
+        } else if (min <= detectRange) {
+            return 30 + directionAngle;
+        }
+        return 0;
     }
 
     public double getPositionX() {
@@ -226,5 +279,13 @@ public class Unit {
 
     public void setArea(Area area) {
         this.area = area;
+    }
+
+    public void setPositionX(double positionX) {
+        this.positionX = positionX;
+    }
+
+    public void setPositionY(double positionY) {
+        this.positionY = positionY;
     }
 }

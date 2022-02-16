@@ -1,22 +1,51 @@
 import React from 'react';
 import './App.css';
 import ImageObject from './ImageObject';
+import TextObject from './TextObject';
 
+// controllers
+import GameController from './controllers/GameController';
+
+// pngs
 import p_main_background from './assets/artworks/main_background.png'
 import p_dim_black from './assets/artworks/dim_black.png'
 import p_alertLight_blue from './assets/artworks/alertLight_blue.png'
-import TextObject from './TextObject';
+import p_brain_blue from './assets/artworks/brain_blue.png'
+import p_brain_red from './assets/artworks/brain_red.png'
+import p_lungs_blue from './assets/artworks/lungs_blue.png'
+import p_lungs_red from './assets/artworks/lungs_red.png'
+import p_heart_blue from './assets/artworks/heart_blue.png'
+import p_heart_red from './assets/artworks/heart_red.png'
+import p_scanner from './assets/artworks/scanner.png'
 
 var canvas : HTMLCanvasElement | null;
 var ctx: CanvasRenderingContext2D | null;
-var main_background: ImageObject;
-var dim_black : ImageObject;
-var alertLight_blue: ImageObject;
 
+/// ELEMENTS
+var i_main_background: ImageObject;
+var i_brain : ImageObject;
+var i_lungs : ImageObject;
+var i_heart : ImageObject;
+
+// dim black
+var i_dim_black : ImageObject;
+var i_scanner : ImageObject;
+
+// scanner
+var i_alertLight_blue: ImageObject;
+
+// pregame
 var t_caren : TextObject;
 var t_howToPlay : TextObject;
 var t_clickAnywhereToStart : TextObject;
 
+
+/// FETCHABLE FIELDS
+var gameState : number = 1; // 1 = pregame, 2 = game
+var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
+var areas = [null,null,null]; // area datas
+
+/// CONSTANTS
 const screenWidth = 1280;
 const screenHeight = 720;
 
@@ -38,6 +67,7 @@ class App extends React.Component {
 		this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
 		
 		this.initAll();
+		this.fetchAll();
 		this.updateAll();
 	}
 
@@ -56,15 +86,27 @@ class App extends React.Component {
 		canvas = document.querySelector('canvas');
 		canvas!.width = 1280
 		canvas!.height = 720
+
+		canvas!.addEventListener('mousedown', function(e){ onMouseDown(e);});
 		
 		ctx = canvas!.getContext('2d')
 		ctx!.scale(imageScaling,imageScaling);
+		ctx!.imageSmoothingEnabled = false;
 
 
-		main_background = new ImageObject(p_main_background,0,0)
-		dim_black = new ImageObject(p_dim_black, 0,0);
-		alertLight_blue = new ImageObject(p_alertLight_blue,0,0)
+		i_main_background = new ImageObject(p_main_background,0,0)
+		i_brain = new ImageObject([p_brain_blue, p_brain_red],808,74)
+		i_lungs = new ImageObject([p_lungs_blue, p_lungs_red],780,501)
+		i_heart = new ImageObject([p_heart_blue, p_heart_red],932,453)
 
+		// dim black
+		i_dim_black = new ImageObject(p_dim_black, 0,0);
+		i_scanner = new ImageObject(p_scanner, 245, 28);
+
+		// scanner
+		i_alertLight_blue = new ImageObject(p_alertLight_blue,0,0)
+
+		// pregame
 		t_caren = new TextObject(["C.A.R.E.N"], 96, "'Press Start 2P'", 112, 235)
 		t_howToPlay = new TextObject([
 			"Covid VIRUS is attacking!",
@@ -85,28 +127,56 @@ class App extends React.Component {
 
 	fetchAll(){
 		if(DEBUG) console.log("FETCHALL")
-
+		GameController.getGameState().then(data => gameState = data);
+		for(var i = 0 ; i < 3; ++i){
+			GameController.getArea(i+1).then(data => {
+				areas[i] = data;
+				if(DEBUG) console.log(areas[i]);
+			});
+		}
+		
+		if(DEBUG) console.log(gameState)
 	}
 
 	
 	updateAll(){
 		if(DEBUG) console.log("UPDATEALL")
 		ctx!.clearRect(0,0,screenWidth, screenHeight);
+
+		i_heart.nextState();
 	}
 
 	drawAll(){
-		main_background.draw();
-		dim_black.draw();
+		if(DEBUG) console.log("DRAWALL")
+		if(DEBUG) console.log("gameState: " + gameState)
+		i_main_background.draw();
 
-		t_caren.draw();
-		t_howToPlay.draw();
-		t_clickAnywhereToStart.draw();
+		i_brain.draw();
+		i_lungs.draw();
+		i_heart.draw();
+
+		// dim black
+		if(gameState === 1 || activeAreaIndex !== 0){
+			i_dim_black.draw();
+		}
+
+		// scanner
+		if(gameState === 2){
+			if(activeAreaIndex !== 0){
+				i_scanner.draw();
+			}
+		}
+
+		// pre game
+		if(gameState === 1){
+			t_caren.draw();
+			t_howToPlay.draw();
+			t_clickAnywhereToStart.draw();
+		}
+		
 	}
 
-	draw(img : ImageObject){
-		if(DEBUG) console.log('draw');
-		ctx!.drawImage(img.image, img.position.x, img.position.y, img.width, img.height);
-	}
+	
 
 	render() {
 		return (
@@ -117,4 +187,23 @@ class App extends React.Component {
 
 export default App;
 
+function onMouseDown(e : MouseEvent){
+	if (DEBUG) console.log("mousedown");
+	var mousePos = getMousePosition(canvas!, e);
+	if (DEBUG) console.log(mousePos);
+
+	if(gameState === 1){
+		if(i_dim_black.mouseInside(mousePos)){
+			if (DEBUG) console.log("clicked dim_black")
+			gameState = 2;
+			// call game state change api
+			GameController.setGameState(gameState);
+		}
+	}
+}
+
+function getMousePosition(canvas : HTMLCanvasElement, e : MouseEvent){
+	var canvasRect = canvas.getBoundingClientRect();
+	return {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top};
+}
 

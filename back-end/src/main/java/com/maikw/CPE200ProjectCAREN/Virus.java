@@ -3,6 +3,7 @@ package com.maikw.CPE200ProjectCAREN;
 public class Virus extends Unit{
     public Virus(String name, String type) {
         super(name, type);
+        super.unitClass = "Virus";
     }
 
     public int creditReward(){

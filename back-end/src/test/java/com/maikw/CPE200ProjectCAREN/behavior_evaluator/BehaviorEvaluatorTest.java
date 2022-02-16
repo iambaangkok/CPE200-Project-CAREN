@@ -35,6 +35,7 @@ public class BehaviorEvaluatorTest {
             );
         try{
             Node programNode = be.parseProgram();
+            programNode.print(0);
             //programNode.evaluate();
         }catch(SyntaxError e){
             System.out.println(e.getMessage());

@@ -34,4 +34,12 @@ public class VariableNode implements Node{
     public String getIdentifier(){
         return getIdentifier();
     }
+
+    @Override
+    public void print(int depth){
+        for(int i = 0 ; i < depth; ++i){
+            System.out.print("   ");
+        }
+        System.out.print("<" + identifier + ">");
+    }
 }

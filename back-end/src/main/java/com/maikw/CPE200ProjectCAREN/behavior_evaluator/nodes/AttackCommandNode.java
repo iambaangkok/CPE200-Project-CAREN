@@ -17,4 +17,12 @@ public class AttackCommandNode implements Node {
         unit.attack(direction);
         return 0;
     }
+
+    @Override
+    public void print(int depth){
+        for(int i = 0 ; i < depth; ++i){
+            System.out.print("   ");
+        }
+        System.out.println(" |---Attack " + direction);
+    }
 }

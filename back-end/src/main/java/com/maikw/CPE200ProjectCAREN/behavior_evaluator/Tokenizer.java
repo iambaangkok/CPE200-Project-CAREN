@@ -13,7 +13,7 @@ public class Tokenizer{
     
     protected Matcher matcher;
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public Tokenizer(String geneticCode) throws SyntaxError {
         this.geneticCode = geneticCode;
@@ -21,7 +21,7 @@ public class Tokenizer{
         
         matcher = Regex.P_ALL.matcher(geneticCode);
 
-        if(DEBUG)System.out.println("geneticCode: " + geneticCode);
+        if(DEBUG) System.out.println("tok | geneticCode: " + geneticCode);
         
         computeNext();
     }

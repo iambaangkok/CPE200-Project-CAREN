@@ -18,5 +18,14 @@ public class WhileStatementNode implements Node {
 
         return 0;
     }
-    
+
+    @Override
+    public void print(int depth){
+        for(int i = 0 ; i < depth; ++i){
+            System.out.print("   ");
+        }
+        System.out.print(" |---If ");
+        expressionNode.print(0);
+        statementNode.print(depth+1);
+    }
 }

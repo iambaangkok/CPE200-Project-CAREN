@@ -37,4 +37,14 @@ public class BinaryArithmeticNode implements Node {
         }  
         throw new ArithmeticException("unknown op: " + op);
     }
+
+    @Override
+    public void print(int depth){
+        for(int i = 0 ; i < depth; ++i){
+            System.out.print("   ");
+        }
+        left.print(0);
+        System.out.print(" " + op + " ");
+        right.print(0);
+    }
 }

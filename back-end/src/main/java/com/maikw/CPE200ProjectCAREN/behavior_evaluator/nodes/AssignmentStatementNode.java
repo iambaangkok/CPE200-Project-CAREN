@@ -15,4 +15,15 @@ public class AssignmentStatementNode implements Node{
         variableNode.assignValue(expressionNode.evaluate());
         return 0;
     }
+
+    @Override
+    public void print(int depth){
+        for(int i = 0 ; i < depth; ++i){
+            System.out.print("   ");
+        }
+        System.out.print(" |---Assign ");
+        variableNode.print(0);
+        System.out.print(" = ");
+        expressionNode.print(0);
+    }
 }

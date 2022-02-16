@@ -16,4 +16,12 @@ public class SensorNode implements Node {
     public double evaluate(){
         return unit.sense(mode, direction);
     }
+
+    @Override
+    public void print(int depth){
+        for(int i = 0 ; i < depth; ++i){
+            System.out.print("   ");
+        }
+        System.out.print(" m " + mode + " d " + direction);
+    }
 }

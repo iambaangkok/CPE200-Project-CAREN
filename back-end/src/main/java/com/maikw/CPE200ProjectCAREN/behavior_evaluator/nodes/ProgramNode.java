@@ -27,4 +27,16 @@ public class ProgramNode implements Node {
         return 0;
     }
     
+
+    @Override
+    public void print(int depth){
+        for(int i = 0 ; i < depth; ++i){
+            System.out.print("   ");
+        }
+        System.out.print(" |---Program ");
+        for(Node stm : statements){
+            System.out.println();
+            stm.print(depth+1);
+        }
+    }
 }

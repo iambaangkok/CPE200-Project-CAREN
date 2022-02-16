@@ -10,7 +10,7 @@ public class BehaviorEvaluator{
     protected NodeFactory factory;
     protected Unit unit;
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public BehaviorEvaluator(String src, Unit unit) {
         try{
@@ -29,7 +29,7 @@ public class BehaviorEvaluator{
         
         while(tkz.peek() != null){
             String s = tkz.peek();
-            System.out.println(s);
+            if(DEBUG) System.out.println(s);
             if(s.matches(Regex.S_OPERATOR) || s.matches(Regex.S_NUMBER) || s.matches(Regex.S_DIRECTION) || s.matches(Regex.S_SENSOR)){ /// invalid case
                 tkz.consume();
                 throw new SyntaxError();

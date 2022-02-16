@@ -24,8 +24,8 @@ var ctx: CanvasRenderingContext2D | null;
 /// ELEMENTS
 var i_main_background: ImageObject;
 var i_brain : ImageObject;
-var i_lungs : ImageObject;
 var i_heart : ImageObject;
+var i_lungs : ImageObject;
 
 // dim black
 var i_dim_black : ImageObject;
@@ -152,8 +152,8 @@ class App extends React.Component {
 		i_main_background.draw();
 
 		i_brain.draw();
-		i_lungs.draw();
 		i_heart.draw();
+		i_lungs.draw();
 
 		// dim black
 		if(gameState === 1 || activeAreaIndex !== 0){
@@ -199,6 +199,33 @@ function onMouseDown(e : MouseEvent){
 			// call game state change api
 			GameController.setGameState(gameState);
 		}
+	}
+	if(gameState === 2){
+		if(i_dim_black.mouseInside(mousePos)){
+			if (DEBUG) console.log("clicked dim_black")
+			if (DEBUG) console.log(i_scanner.mouseInside(mousePos));
+
+			if(activeAreaIndex === 0){
+
+			}else if(i_scanner.mouseInside(mousePos) === false){
+				activeAreaIndex = 0;
+			}
+		}
+		if(i_brain.mouseInside(mousePos)){
+			if(activeAreaIndex === 0){
+				activeAreaIndex = 1;
+			}
+		}else if(i_heart.mouseInside(mousePos)){
+			if(activeAreaIndex === 0){
+				activeAreaIndex = 2;
+			}
+		}else if(i_lungs.mouseInside(mousePos)){
+			if(activeAreaIndex === 0){
+				activeAreaIndex = 3;
+			}
+		}
+		if (DEBUG) console.log("aai: " + activeAreaIndex)
+		
 	}
 }
 

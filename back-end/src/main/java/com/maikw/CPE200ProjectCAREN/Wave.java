@@ -17,6 +17,7 @@ public class Wave {
     }
 
     public List<Virus> getAreaVirus(Integer number) {
+
         if (number == 1) {
             return area1Virus;
         } else if (number == 2) {
@@ -24,5 +25,19 @@ public class Wave {
         } else {
             return area3Virus;
         }
+    }
+
+    public void addArea(Virus virus){
+
+        if(waveNumber == 1 ){
+            area1Virus.add(virus);
+        }
+        else if(waveNumber == 2 ){
+            area2Virus.add(virus);
+        }
+        else {area3Virus.add(virus);}
+
+
+
     }
 }

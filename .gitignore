@@ -43,3 +43,4 @@ build/
 ### VS Code ###
 .vscode/
 
+front-end/cpe200-project-caren/yarn.lock

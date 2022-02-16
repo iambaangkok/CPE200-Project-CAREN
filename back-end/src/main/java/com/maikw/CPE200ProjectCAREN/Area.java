@@ -8,11 +8,13 @@ public class Area {
     protected List<Unit> units;
     protected List<Virus> viruses;
     protected List<Antibody> antibodies;
+    protected String name;
 
-    public Area(){
+    public Area(String name){
         this.units = new ArrayList<Unit>();
         this.viruses = new ArrayList<Virus>();
         this.antibodies = new ArrayList<Antibody>();
+        this.name = name;
     }
 
     private void addUnit(Unit dummy){

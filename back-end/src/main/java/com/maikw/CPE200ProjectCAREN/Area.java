@@ -45,7 +45,7 @@ public class Area {
     public boolean isTaken(){
         return this.alertLevel() == 2;
     }
-    
+
     public List<Unit> getUnits() {
         return units;
     }

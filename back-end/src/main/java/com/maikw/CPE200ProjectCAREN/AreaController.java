@@ -23,4 +23,9 @@ public class AreaController {
     public Area getArea2(){
         return area2;
     }
+
+    @GetMapping(path = "/getarea3")
+    public Area getArea3(){
+        return area3;
+    }
 }

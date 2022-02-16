@@ -79,4 +79,28 @@ public class Unit {
     public String getType(){
         return type;
     }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public int getMoveCost() {
+        return moveCost;
+    }
+
+    public int getAttackDamage() {
+        return attackDamage;
+    }
+
+    public double getAttackRange() {
+        return attackRange;
+    }
+
+    public int getLifeSteal() {
+        return lifeSteal;
+    }
 }

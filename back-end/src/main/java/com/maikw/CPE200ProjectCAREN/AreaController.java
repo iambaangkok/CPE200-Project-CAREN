@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(path = "/area") // http://localhost:8080/area
 public class AreaController {
@@ -13,18 +11,17 @@ public class AreaController {
     Area area2 = new Area("Area2");
     Area area3 = new Area("Area3");
 
-
-    @GetMapping(path = "/getarea1")
+    @GetMapping(path = "/getarea1") // http://localhost:8080/area/getarea1
     public Area getArea1(){
         return area;
     }
 
-    @GetMapping(path = "/getarea2")
+    @GetMapping(path = "/getarea2") // http://localhost:8080/area/getarea2
     public Area getArea2(){
         return area2;
     }
 
-    @GetMapping(path = "/getarea3")
+    @GetMapping(path = "/getarea3") // http://localhost:8080/area/getarea3
     public Area getArea3(){
         return area3;
     }

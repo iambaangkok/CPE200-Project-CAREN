@@ -17,16 +17,16 @@ public class Area {
         this.name = name;
     }
 
-    private void addUnit(Unit dummy){
+    public void addUnit(Unit dummy){
         this.units.add(dummy);
     }
 
-    private void addVirus(Virus dummy){
+    public void addVirus(Virus dummy){
         this.viruses.add(dummy);
         this.addUnit(dummy);
     }
 
-    private void addAntibody(Antibody dummy){
+    public void addAntibody(Antibody dummy){
         this.antibodies.add(dummy);
         this.addUnit(dummy);
     }

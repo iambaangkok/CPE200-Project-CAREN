@@ -52,7 +52,11 @@ public class Unit {
     }
 
     public void move(String direction){
-        System.out.println("Unit " + name + " moved " + direction);
+        if (sense("nearby", direction) == 0){
+            System.out.println("Unit " + name + " moved " + direction);
+        }else{
+            System.out.println("There is already a unit there. Unit " + name + " can't move to " + direction);
+        }
     }
 
     public void attack(String direction){

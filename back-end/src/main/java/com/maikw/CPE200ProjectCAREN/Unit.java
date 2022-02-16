@@ -68,11 +68,85 @@ public class Unit {
 
     public int sense(String mode, String direction){
         System.out.println("Unit " + name + " sensed " + mode + " " + direction);
-        return 7;
+        int directionValue = directionValue(direction);
+        switch (mode) {
+            case "virus" -> {
+                double min = Integer.MAX_VALUE;
+                for (Virus v : area.getViruses()) {
+                    double range = range(this, v);
+                    if (this.detectRange < range) {
+                    } else {
+                        if (range < min) min = range;
+                    }
+                }
+                if (min == Integer.MAX_VALUE) {
+                    return 0;
+                } else if (min <= dangerRange) {
+                    return 10 + directionValue;
+                } else if (min <= attackRange) {
+                    return 20 + directionValue;
+                } else if (min <= detectRange) {
+                    return 30 + directionValue;
+                }
+            }
+            case "antibody" -> {
+                double min = Integer.MAX_VALUE;
+                for (Antibody a : area.getAntibodies()) {
+                    double range = range(this, v);
+                    if (this.detectRange < range) {
+                    } else {
+                        if (range < min) min = range;
+                    }
+                }
+                if (min == Integer.MAX_VALUE) {
+                    return 0;
+                } else if (min <= dangerRange) {
+                    return 10 + directionValue;
+                } else if (min <= attackRange) {
+                    return 20 + directionValue;
+                } else if (min <= detectRange) {
+                    return 30 + directionValue;
+                }
+            }
+            case "nearby" -> {
+                double min = Integer.MAX_VALUE;
+                for (Unit u : area.getUnits()) {
+                    double range = range(this, v);
+                    if (this.detectRange < range) {
+                    } else {
+                        if (range < min) min = range;
+                    }
+                }
+                if (min == Integer.MAX_VALUE) {
+                    return 0;
+                } else if (min <= dangerRange) {
+                    return 10 + directionValue;
+                } else if (min <= attackRange) {
+                    return 20 + directionValue;
+                } else if (min <= detectRange) {
+                    return 30 + directionValue;
+                }
+            }
+        }
+        return 0;
     }
 
     public static double range(Unit a, Unit b){
         return Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2));
+    }
+
+    public static int directionValue(String direction){
+        return switch (direction) {
+            case "up" -> 1;
+            case "upright" -> 2;
+            case "right" -> 3;
+            case "downright" -> 4;
+            case "down" -> 5;
+            case "downleft" -> 6;
+            case "left" -> 7;
+            case "upleft" -> 8;
+            default -> 0;
+        };
     }
 
     public double getPositionX() {

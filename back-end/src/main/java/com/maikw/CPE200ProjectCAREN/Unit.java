@@ -9,6 +9,8 @@ import com.maikw.CPE200ProjectCAREN.behavior_evaluator.nodes.Node;
 
 public class Unit {
 
+    protected double positionX = 0.0;
+    protected double positionY = 0.0;
     protected int maxHealth = 100;
     protected int currentHealth = 100;
     protected int moveCost = 20;
@@ -21,6 +23,7 @@ public class Unit {
     protected String name;
     protected Map<String, Double> variables;
     protected Node programNode;
+    protected Area area;
 
     public Unit(String name, String type){
         variables = new HashMap<>();
@@ -66,6 +69,22 @@ public class Unit {
     public int sense(String mode, String direction){
         System.out.println("Unit " + name + " sensed " + mode + " " + direction);
         return 7;
+    }
+
+    public static double range(Unit a, Unit b){
+        return Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2));
+    }
+
+    public double getPositionX() {
+        return positionX;
+    }
+
+    public double getPositionY() {
+        return positionY;
+    }
+
+    public Area getArea() {
+        return area;
     }
 
     public boolean isAlive(){
@@ -114,5 +133,9 @@ public class Unit {
 
     public int getLifeSteal() {
         return lifeSteal;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
     }
 }

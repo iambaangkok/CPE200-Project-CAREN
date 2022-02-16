@@ -47,28 +47,24 @@ public class Game {
 //            upDate();
 //
 //        }
-        while(true){
-            if(state == 1 ){
+        while(true) {
+            if (state == 1) {
                 System.out.println("");
             }
-            if(state == 2){
-                if(waveManager.currentWaveCount == 1){
+            if (state == 2) {
+                if (waveManager.currentWaveCount == 1) {
                     waveManager.waveInfo.get(0);
-                }else if(waveManager.currentWaveCount == 2){
+                } else if (waveManager.currentWaveCount == 2) {
                     waveManager.waveInfo.get(1);
-                }else if(waveManager.currentWaveCount == 3){
+                } else if (waveManager.currentWaveCount == 3) {
                     waveManager.waveInfo.get(2);
                 }
-                }else if(waveManager.currentWaveCount == 4){
-                    waveManager.waveInfo.get(3);
-                }
-                else {
-                    waveManager.waveInfo.get(4);
-                }
+            } else if (waveManager.currentWaveCount == 4) {
+                waveManager.waveInfo.get(3);
+            } else {
+                waveManager.waveInfo.get(4);
             }
-
         }
-
     }
 
     public static void main(String[] args) {

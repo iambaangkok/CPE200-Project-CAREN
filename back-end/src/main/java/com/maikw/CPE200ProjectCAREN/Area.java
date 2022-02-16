@@ -45,4 +45,20 @@ public class Area {
     public boolean isTaken(){
         return this.alertLevel() == 2;
     }
+    
+    public List<Unit> getUnits() {
+        return units;
+    }
+
+    public List<Virus> getViruses() {
+        return viruses;
+    }
+
+    public List<Antibody> getAntibodies() {
+        return antibodies;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

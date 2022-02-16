@@ -17,18 +17,32 @@ public class Area {
         this.name = name;
     }
 
-    private void addUnit(Unit dummy){
+    public void addUnit(Unit dummy){
         this.units.add(dummy);
     }
 
-    private void addVirus(Virus dummy){
+    public void addVirus(Virus dummy){
         this.viruses.add(dummy);
         this.addUnit(dummy);
     }
 
-    private void addAntibody(Antibody dummy){
+    public void addAntibody(Antibody dummy){
         this.antibodies.add(dummy);
         this.addUnit(dummy);
+    }
+
+    public void removeUnit(Unit dummy){
+        this.units.remove(dummy);
+    }
+
+    public void removeVirus(Virus dummy){
+        this.viruses.remove(dummy);
+        this.removeUnit(dummy);
+    }
+
+    public void removeAntibody(Antibody dummy){
+        this.antibodies.remove(dummy);
+        this.removeUnit(dummy);
     }
 
     // 3 level 0 = green light -> all good , 1 = yellow light -> antibodies:viruses = 1:3 , 2 = red light -> area taken

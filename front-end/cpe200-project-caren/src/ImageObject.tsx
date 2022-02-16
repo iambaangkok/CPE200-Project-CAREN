@@ -10,13 +10,14 @@ class ImageObject{
     image;
     width;
     height;
+    scale;
 
     // multi state support
     isMultiState;
     maxState;
     state;
 
-    constructor(imagePath : string|string[], x : number, y : number, width?: number|undefined, height?: number|undefined){
+    constructor(imagePath : string|string[], x : number, y : number, scale?: number|undefined, width?: number|undefined, height?: number|undefined){
         this.canvas = document.querySelector('canvas');
         this.context = this.canvas!.getContext('2d');
 
@@ -37,6 +38,12 @@ class ImageObject{
             this.image = this.createImage(imagePath!);
         }
         this.state = 0;
+
+        if(scale === undefined){
+            this.scale = 0.6666667;
+        }else{
+            this.scale = scale;
+        }
 
         if(width === undefined || height === undefined){
             if(this.image instanceof Array){
@@ -86,8 +93,8 @@ class ImageObject{
     }
 
     public mouseInside(mousePos : {x : number, y : number}){
-        return (mousePos.x >= this.position.x && mousePos.x <= this.position.x+this.width
-            && mousePos.y >= this.position.y && mousePos.y <= this.position.y+this.height);
+        return (mousePos.x >= (this.position.x)*this.scale && mousePos.x <= (this.position.x+this.width)*this.scale
+            && mousePos.y >= (this.position.y)*this.scale && mousePos.y <= (this.position.y+this.height)*this.scale);
     }
 
     public nextState(){

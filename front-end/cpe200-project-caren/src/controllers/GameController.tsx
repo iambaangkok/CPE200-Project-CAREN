@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const baseURL = "http://localhost:8080"
 
+const DEBUG = false;
+
 class GameController {
   static async getArea(areaIndex : number){
     const url = baseURL + "/area/getarea" + (areaIndex);
@@ -12,7 +14,7 @@ class GameController {
 
   static async getGameState() {
     var gameState = await axios.get(baseURL + "/game/state");
-    console.log(gameState);
+    if(DEBUG) console.log(gameState);
 
     return gameState.data.state;
   }

@@ -27,7 +27,7 @@ public class Unit {
     protected Area area;
     protected String unitClass;
 
-    public Unit(String name, String type){
+    public Unit(String name, String type, String geneticCode){
         variables = new HashMap<>();
         this.name = name;
         this.type = type;
@@ -43,7 +43,7 @@ public class Unit {
             this.attackDamage = 15;
             this.attackRange = 10;
         }
-        BehaviorEvaluator be = new BehaviorEvaluator("",this);
+        BehaviorEvaluator be = new BehaviorEvaluator(geneticCode,this);
         try{
             programNode = be.parseProgram();
         }catch(SyntaxError e){

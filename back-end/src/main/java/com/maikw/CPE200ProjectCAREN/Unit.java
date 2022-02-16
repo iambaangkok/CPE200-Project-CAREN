@@ -11,9 +11,11 @@ public class Unit {
 
     protected int maxHealth = 100;
     protected int currentHealth = 100;
-    protected int moveCost = 0;
+    protected int moveCost = 20;
     protected int attackDamage = 0;
+    protected double detectRange = 0.0;
     protected double attackRange = 0.0;
+    protected double dangerRange = 0.0;
     protected int lifeSteal = 10;
     protected String type = "";
     protected String name;
@@ -24,15 +26,17 @@ public class Unit {
         variables = new HashMap<>();
         this.name = name;
         this.type = type;
+        this.detectRange = 40;
+        this.dangerRange = 5;
         if(type.equals("melee")){
             this.attackDamage = 20;
-            this.attackRange = 1;
+            this.attackRange = 10;
         }else if(type.equals("ranged")){
             this.attackDamage = 20;
-            this.attackRange = 3;
+            this.attackRange = 30;
         }else if(type.equals("aoe")){
             this.attackDamage = 15;
-            this.attackRange = 1;
+            this.attackRange = 10;
         }
         BehaviorEvaluator be = new BehaviorEvaluator("",this);
         try{
@@ -94,6 +98,14 @@ public class Unit {
 
     public int getAttackDamage() {
         return attackDamage;
+    }
+
+    public double getDetectRange() {
+        return detectRange;
+    }
+
+    public double getDangerRange() {
+        return dangerRange;
     }
 
     public double getAttackRange() {

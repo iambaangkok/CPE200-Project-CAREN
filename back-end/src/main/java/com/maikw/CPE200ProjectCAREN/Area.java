@@ -42,6 +42,12 @@ public class Area {
         }
     }
 
+    public void evaluate(){
+        for(Unit unit : units){
+            unit.evaluate();
+        }
+    }
+
     public boolean isTaken(){
         return this.alertLevel() == 2;
     }
@@ -61,4 +67,6 @@ public class Area {
     public String getName() {
         return name;
     }
+
+
 }

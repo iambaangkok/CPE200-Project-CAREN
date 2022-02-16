@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    protected Integer state  =1 ;
+    protected Integer state  = 1 ;
+    protected Boolean spawn ;
     protected Integer screenWidth  = 1024 ;
     protected Integer screenHeight = 768 ;
     protected Double mousePositionX ;
@@ -18,6 +19,10 @@ public class Game {
     protected GeneticCodeManager geneticCodeManager ;
 
     public Game(){
+
+    this.spawn = false ;
+    this.waveManager = new WaveManager();
+
     }
 
     public void move(){
@@ -36,18 +41,40 @@ public class Game {
 
 
     public void startGameLoop(){
-        while(state == 1){
-            upDate();
-
-
-
+//        while(state == 1){
+//            waveManager.waveInfo.get()
+//            spawn = true ;
+//            upDate();
+//
+//        }
+        while(true){
+            if(state == 1 ){
+                System.out.println("");
+            }
+            if(state == 2){
+                if(waveManager.currentWaveCount == 1){
+                    waveManager.waveInfo.get(0);
+                }else if(waveManager.currentWaveCount == 2){
+                    waveManager.waveInfo.get(1);
+                }else if(waveManager.currentWaveCount == 3){
+                    waveManager.waveInfo.get(2);
+                }
+                }else if(waveManager.currentWaveCount == 4){
+                    waveManager.waveInfo.get(3);
+                }
+                else {
+                    waveManager.waveInfo.get(4);
+                }
+            }
 
         }
+
     }
 
     public static void main(String[] args) {
         Game g = new Game();
         g.startGameLoop();
+
 
     }
 
@@ -60,7 +87,10 @@ public class Game {
 
 
         if(state == 1 ){
+            if(spawn != false){
 
+                spawn = false;
+            }
         }
 
 

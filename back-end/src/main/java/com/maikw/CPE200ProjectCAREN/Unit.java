@@ -76,6 +76,11 @@ public class Unit {
         return variables;
     }
 
+
+    public void evaluate(){
+        programNode.evaluate();
+    }
+
     public String getName(){
         return name;
     }

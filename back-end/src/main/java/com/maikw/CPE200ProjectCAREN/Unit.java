@@ -92,7 +92,7 @@ public class Unit {
             case "antibody" -> {
                 double min = Integer.MAX_VALUE;
                 for (Antibody a : area.getAntibodies()) {
-                    double range = range(this, v);
+                    double range = range(this, a);
                     if (this.detectRange < range) {
                     } else {
                         if (range < min) min = range;
@@ -111,7 +111,7 @@ public class Unit {
             case "nearby" -> {
                 double min = Integer.MAX_VALUE;
                 for (Unit u : area.getUnits()) {
-                    double range = range(this, v);
+                    double range = range(this, u);
                     if (this.detectRange < range) {
                     } else {
                         if (range < min) min = range;
@@ -133,6 +133,16 @@ public class Unit {
 
     public static double range(Unit a, Unit b){
         return Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2));
+    }
+
+    public static double getAngle(Unit a, Unit b){
+        double angle = Math.toDegrees(Math.atan2(b.positionY - a.positionY, b.positionX - a.positionX));
+
+        if (angle < 0) {
+            angle += 360;
+        }
+
+        return angle;
     }
 
     public static int directionValue(String direction){

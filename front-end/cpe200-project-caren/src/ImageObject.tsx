@@ -11,8 +11,12 @@ class ImageObject{
     width;
     height;
 
+    // multi state support
+    isMultiState;
+    maxState;
+    state;
 
-    constructor(imagePath : string, x : number, y : number, width?: number|undefined, height?: number|undefined){
+    constructor(imagePath : string|string[], x : number, y : number, width?: number|undefined, height?: number|undefined){
         this.canvas = document.querySelector('canvas');
         this.context = this.canvas!.getContext('2d');
 
@@ -22,17 +26,41 @@ class ImageObject{
         };
         
         this.imagePath = imagePath;
-        this.image = this.createImage(imagePath);
+
+        if(imagePath instanceof Array){
+            this.isMultiState = true;
+            this.maxState = imagePath.length;
+            this.image = this.createImageArray(imagePath);
+        }else{
+            this.isMultiState = false;
+            this.maxState = 1;
+            this.image = this.createImage(imagePath!);
+        }
+        this.state = 0;
+
         if(width === undefined || height === undefined){
-            this.width = this.image.width;
-            this.height = this.image.height;
+            if(this.image instanceof Array){
+                this.width = (this.image[0]).width;
+                this.height = (this.image[0]).height;
+            }else{
+                this.width = this.image.width;
+                this.height = this.image.height;
+            }
         }else{
             this.width = width;
             this.height = height;
         }
     }
 
-    createImage(imagePath : string){
+    protected createImageArray(imagePaths : string[]){
+        var images: HTMLImageElement[] = [];
+        imagePaths.forEach(x =>{
+            images.push(this.createImage(x));
+        })
+        return images;
+    }
+
+    protected createImage(imagePath : string){
         console.log(imagePath)
 
         const image = new Image();
@@ -43,14 +71,30 @@ class ImageObject{
         return image;
     }
 
-    draw(){
-        if(DEBUG) console.log("draw")
-        this.context!.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+    public draw(){
+        if(DEBUG) console.log("draw image")
+        if(this.image instanceof Array){
+            this.context!.drawImage(this.image[this.state], this.position.x, this.position.y, this.width, this.height);
+        }else{
+            this.context!.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+        }
     }
 
-    update(){
+    protected update(){
         this.draw();
         // fetch here
+    }
+
+    public nextState(){
+        if(this.image instanceof Array){
+            this.state = (this.state+1) % this.maxState!;
+        }
+    }
+
+    public setState(state : number){
+        if(this.image instanceof Array){
+            this.state = (state) % this.maxState!;
+        }
     }
 }
 

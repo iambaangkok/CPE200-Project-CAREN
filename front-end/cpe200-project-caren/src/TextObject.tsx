@@ -46,7 +46,7 @@ class TextObject{
     }
 
     draw(){
-        if(DEBUG) console.log("draw")
+        if(DEBUG) console.log("draw text")
         this.context!.font = this.size + "px " + this.font;
         this.context!.fillStyle = this.color;
         this.context!.textAlign = this.align as CanvasTextAlign;

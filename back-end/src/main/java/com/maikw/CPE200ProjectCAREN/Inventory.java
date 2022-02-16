@@ -8,8 +8,11 @@ public class Inventory {
 
 
 
-    public Inventory(){
+    public Inventory(Integer meleeCount, Integer rangedCount ,Integer aoeCount){
 
+        this.meleeCount += meleeCount;
+        this.rangedCount += rangedCount;
+        this.aoeCount += aoeCount;
     }
 
 
@@ -24,7 +27,6 @@ public class Inventory {
     public void setAoeCount(Integer aoeCount) {
         this.aoeCount += aoeCount;
     }
-
     public Integer getMeleeCount() {
         return meleeCount;
     }

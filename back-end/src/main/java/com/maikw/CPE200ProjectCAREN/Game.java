@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+    protected Integer state  =1 ;
     protected Integer screenWidth  = 1024 ;
     protected Integer screenHeight = 768 ;
     protected Double mousePositionX ;
@@ -17,12 +18,7 @@ public class Game {
     protected GeneticCodeManager geneticCodeManager ;
 
     public Game(){
-
-
-
     }
-
-
 
     public void move(){
 
@@ -32,7 +28,6 @@ public class Game {
 
 
     public List<Integer> getScreen(){
-
         List<Integer> s = new ArrayList<Integer>();
         s.add(screenWidth);
         s.add(screenHeight);
@@ -40,4 +35,43 @@ public class Game {
     }
 
 
+    public void startGameLoop(){
+        while(state == 1){
+            upDate();
+
+
+
+
+        }
+    }
+
+    public static void main(String[] args) {
+        Game g = new Game();
+        g.startGameLoop();
+
+    }
+
+
+
+
+    private void upDate(){
+
+        Inventory inventory = new Inventory(0,0,0);
+
+
+        if(state == 1 ){
+
+        }
+
+
+    }
+
+
+    public Integer getState(){
+        return state;
+    }
+
+    public void setState(int state){
+        this.state = state;
+    }
 }

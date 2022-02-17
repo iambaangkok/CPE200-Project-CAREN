@@ -20,6 +20,16 @@ import p_heart_red from './assets/artworks/heart_red.png'
 import p_scanner from './assets/artworks/scanner.png'
 
 import p_money_panel from './assets/artworks/money_panel.png'
+import p_buy_melee from './assets/artworks/unitFrame_melee.png'
+import p_buy_melee_clicked from './assets/artworks/unitFrame_melee_clicked.png'
+import p_buy_melee_hover from './assets/artworks/unitFrame_melee_hover.png'
+import p_buy_ranged from './assets/artworks/unitFrame_ranged.png'
+import p_buy_ranged_clicked from './assets/artworks/unitFrame_ranged_clicked.png'
+import p_buy_ranged_hover from './assets/artworks/unitFrame_ranged_hover.png'
+import p_buy_aoe from './assets/artworks/unitFrame_aoe.png'
+import p_buy_aoe_clicked from './assets/artworks/unitFrame_aoe_clicked.png'
+import p_buy_aoe_hover from './assets/artworks/unitFrame_aoe_hover.png'
+import ButtonObject from './ButtonObject';
 
 var canvas : HTMLCanvasElement | null;
 var ctx: CanvasRenderingContext2D | null;
@@ -37,6 +47,10 @@ var i_scanner : ImageObject;
 // shop
 var i_money_panel : ImageObject;
 var t_money : TextObject;
+
+var i_buy_melee : ButtonObject;
+var i_buy_ranged : ButtonObject;
+var i_buy_aoe : ButtonObject;
 
 // scanner
 var i_alertLight_blue: ImageObject;
@@ -96,6 +110,10 @@ class App extends React.Component {
 		canvas!.height = 720
 
 		canvas!.addEventListener('mousedown', function(e){ onMouseDown(e);});
+		canvas!.addEventListener('mouseup', function(e){ onMouseUp(e);});
+		canvas!.addEventListener('mouseout', function(e){ onMouseUp(e);});
+		canvas!.addEventListener('mouseover', function(e){ onMouseHover(e);});
+		
 		
 		ctx = canvas!.getContext('2d')
 		ctx!.scale(imageScaling,imageScaling);
@@ -114,6 +132,10 @@ class App extends React.Component {
 		// shop
 		i_money_panel = new ImageObject(p_money_panel,1476,79);
 		t_money = new TextObject([money.toString()], 40, "'Press Start 2P'", 1696, 123, Config.COLOR_LIGHTBLUE, "center");
+
+		i_buy_melee = new ButtonObject([p_buy_melee,p_buy_melee_hover,p_buy_melee_clicked], 1712, 256);
+		i_buy_ranged = new ButtonObject([p_buy_ranged, p_buy_ranged_hover, p_buy_ranged_clicked], 1712, 381);
+		i_buy_aoe = new ButtonObject([p_buy_aoe, p_buy_aoe_hover, p_buy_aoe_clicked], 1712, 506);
 
 		// scanner
 		i_alertLight_blue = new ImageObject(p_alertLight_blue,0,0)
@@ -184,6 +206,9 @@ class App extends React.Component {
 		i_money_panel.draw();
 		t_money.draw();
 		
+		i_buy_melee.draw();
+		i_buy_ranged.draw();
+		i_buy_aoe.draw();
 
 		// scanner
 		if(gameState === 2){
@@ -214,6 +239,38 @@ class App extends React.Component {
 }
 
 export default App;
+
+function onMouseHover(e : MouseEvent){
+	if (DEBUG) console.log("mousehover");
+	var mousePos = getMousePosition(canvas!, e);
+
+	if(gameState === 2){
+		i_buy_melee.setHover(i_buy_melee.mouseInside(mousePos));
+		i_buy_ranged.setHover(i_buy_ranged.mouseInside(mousePos));	
+		i_buy_aoe.setHover(i_buy_aoe.mouseInside(mousePos));
+	}
+
+}
+
+function onMouseUp(e : MouseEvent){
+	if (DEBUG) console.log("mouseup");
+	var mousePos = getMousePosition(canvas!, e);
+
+	if(gameState === 2){
+		if(!i_buy_melee.mouseInside(mousePos)){
+			i_buy_melee.setClicked(false);
+		}
+		if(!i_buy_ranged.mouseInside(mousePos)){
+			i_buy_ranged.setClicked(false);	
+		}
+		if(!i_buy_aoe.mouseInside(mousePos)){
+			i_buy_aoe.setClicked(false);
+		}
+		// i_buy_melee.mouseUp();
+		// i_buy_ranged.mouseUp();
+		// i_buy_aoe.mouseUp();
+	}
+}
 
 function onMouseDown(e : MouseEvent){
 	if (DEBUG) console.log("mousedown");
@@ -252,7 +309,12 @@ function onMouseDown(e : MouseEvent){
 				activeAreaIndex = 3;
 			}
 		}
-		if (DEBUG) console.log("aai: " + activeAreaIndex)
+		if(gameState === 2){
+			i_buy_melee.setClicked(i_buy_melee.mouseInside(mousePos));
+			i_buy_ranged.setClicked(i_buy_ranged.mouseInside(mousePos));	
+			i_buy_aoe.setClicked(i_buy_aoe.mouseInside(mousePos));
+		}
+		
 		
 	}
 }

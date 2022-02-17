@@ -1,0 +1,734 @@
+* commit 50fac8cb3b3fe3a79fbf966988d39c2a669bcb3f
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 16 23:43:05 2022 +0700
+| 
+|     back-end: added a good print() to Nodes for debugging BehaviorEvaluator
+| 
+* commit bb87caa44db611e39495062d19c18eede5d6dd97
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 16 23:17:55 2022 +0700
+| 
+|     back-end: added dummy geneticCode
+| 
+* commit 84d9b6b9043d20f0852dc8f64d60bfeeb31bdcba
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 16 23:17:38 2022 +0700
+| 
+|     back-end: added geneticCode to constructor in Unit, Virus, Antibody
+| 
+* commit 54f46ca372dd78eff1bd2ee3f6e654251327f365
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 16 23:16:52 2022 +0700
+| 
+|     back-end: tested Unit and BehaviorEvaluator
+| 
+* commit ef443c18537fb04df0100248b67559459d073c07
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 22:37:41 2022 +0700
+| 
+|     implemented move method (uncomplete)
+| 
+* commit 9f23d19b10970fc1c6b5ef15e34cce453f530542
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 22:30:34 2022 +0700
+| 
+|     rename ZoomController
+| 
+* commit 663d482cd607d47e6bdbbcecfa56efc6dd286cdd
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 22:28:05 2022 +0700
+| 
+|     added unitClass and completed sense mode nearby
+| 
+* commit aa72d5e78195582f7d59df0ac76b3f0aac9cfe9a
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 22:27:42 2022 +0700
+| 
+|     added unitClass to constructor of Virus and Antibody
+| 
+* commit bc6e30a4401c6cd8607eb83279dd7e6e77098247
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 22:07:03 2022 +0700
+| 
+|     completed sense method
+|   
+*   commit a16a06f5e726359019ac5c4a7f31892d3fbfd33d
+|\  Merge: d14a65f b990a44
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 22:03:15 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| |   
+| *   commit b990a44e64c1165dd4ef06953e9253568a244723
+| |\  Merge: f66383d 02c2b0c
+| | | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | | Date:   Wed Feb 16 21:57:51 2022 +0700
+| | | 
+| | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | | 
+| * | commit f66383d65528e12020ad4280aee6070456101b29
+| | | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | | Date:   Wed Feb 16 21:57:49 2022 +0700
+| | | 
+| | |     add WaveController API
+| | | 
+* | | commit d14a65fb8060dd9ba25fc86cb4d6098ad03739aa
+| |/  Author: rbzgamer <kuro123520@hotmail.com>
+|/|   Date:   Wed Feb 16 22:03:05 2022 +0700
+| |   
+| |       removed Areas
+| | 
+* | commit 02c2b0c838692b957dcfd099881e51acf94894f0
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 21:42:58 2022 +0700
+| | 
+| |     added remove Unit, Virus, Antibody method
+| | 
+* | commit ea66d4373175a66d39dcace049387d6848a30519
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 20:47:12 2022 +0700
+| | 
+| |     change method addUnit,Virus,Antibody in Area from private to public
+| | 
+* | commit 8007bac3a0251fa6824757e61744882704c724e0
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Wed Feb 16 19:29:02 2022 +0700
+| | 
+| |     front-end: added activeAreaIndex change on clicking brain/heart/lungs
+| | 
+* | commit 77ee6a9c01647c7e380e34f46f691bbcf2afd9b5
+|/  Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+|   Date:   Wed Feb 16 19:28:15 2022 +0700
+|   
+|       front-end: added scale support for ImageObject
+| 
+* commit 75d9ac9863e4ed1d9f1908cae5c35ee1b7a42f8b
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 16 17:37:40 2022 +0700
+| 
+|     removed gitignored files (yarn.lock)
+| 
+* commit 09cd03fb9e5d7e2bdd5de42edb05c9db421a453f
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 16 17:35:47 2022 +0700
+| 
+|     front-end: added onMouseDown(), GameController, fetching workflow
+| 
+* commit dc51d48139d1ea7f37db1da766ed97ea8443913a
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 16 17:33:51 2022 +0700
+| 
+|     Update .gitignore
+| 
+* commit 9b8428d121bc8b21a8932e0d1f432a14140cfe34
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 16 17:24:46 2022 +0700
+| 
+|     back-end: fixed parentheses bug
+|   
+*   commit 89721bee24ae21e5b98c9ca403829d7020a20b8b
+|\  Merge: 97d5be6 b0cfdba
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 17:23:10 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| |   
+| *   commit b0cfdbae9c5a4f5710a83580025a5da0e9b4b213
+| |\  Merge: f723793 1346af8
+| | | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | | Date:   Wed Feb 16 17:22:46 2022 +0700
+| | | 
+| | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | | 
+| | * commit 1346af8e409ae858cb31a7d0535635a493b31fab
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Wed Feb 16 17:21:32 2022 +0700
+| | | 
+| | |     back-end: added @CrossOrigin to AreaController
+| | | 
+| * | commit f72379333c2e6cfe140986eff23f6b8274bbd834
+| | | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | | Date:   Wed Feb 16 17:22:43 2022 +0700
+| | | 
+| | |     add evaluate เพื่อสั่ง unit ให้เดิน
+| | | 
+* | | commit 97d5be6f51c7f41bd2900d891b8d5d2e8bfc3789
+| |/  Author: rbzgamer <kuro123520@hotmail.com>
+|/|   Date:   Wed Feb 16 17:22:56 2022 +0700
+| |   
+| |       added getAngle method
+| | 
+* | commit 57a161dea6775fd1fe31641b0f769f661c1c51a9
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 17:14:09 2022 +0700
+| | 
+| |     implemented sense (untested) and added directionValue method
+| | 
+* | commit 0b132fa18efc2cafa9e0327ebb5af40c7b29970f
+|/  Author: rbzgamer <kuro123520@hotmail.com>
+|   Date:   Wed Feb 16 16:49:56 2022 +0700
+|   
+|       added area , postion x,y , getter , setter of area, getter position x,y and range eval
+|   
+*   commit 8ed969d7086696e904c4a6860f73be357e5fd0d5
+|\  Merge: e533898 88772e7
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Wed Feb 16 16:13:04 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | 
+| * commit 88772e7c207791b9abf10c39eb6eda8d64f9640d
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 15:46:20 2022 +0700
+| | 
+| |     ignore space
+| | 
+* | commit e533898117d6a2da0cfdd32e8eea271a635dcd73
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Wed Feb 16 16:11:08 2022 +0700
+| | 
+| |     back-end: added @CrossOrigin to GameController
+| | 
+* | commit 9709d59c414c6ad4c74b29ff61ed75b8364dbfe8
+|/  Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+|   Date:   Wed Feb 16 16:10:46 2022 +0700
+|   
+|       back-end: added httpcomponents dependency to deal with CORS problem
+|   
+*   commit 4a9b1aa8b6090fe2b8999e6939275fb9e20d12b0
+|\  Merge: 5aa44f5 11fa89a
+| | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | Date:   Wed Feb 16 15:41:19 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| |   
+| *   commit 11fa89ac935492f27b132488d76d046fce8cabc9
+| |\  Merge: e257195 bf87eed
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Wed Feb 16 15:24:58 2022 +0700
+| | | 
+| | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | | 
+| * | commit e25719556911c5420a61b9284a8c668a907a88f3
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Wed Feb 16 15:17:38 2022 +0700
+| | | 
+| | |     front-end: added axios package
+| | | 
+* | | commit 5aa44f544fbe563bffeaa13b05ef8ffffd381bba
+| |/  Author: Nonthawt20 <Nonthawt20@gmail.com>
+|/|   Date:   Wed Feb 16 15:41:11 2022 +0700
+| |   
+| |       Game controller
+| | 
+* | commit bf87eed80f321801f442d70b8b10f8d018150523
+|/  Author: rbzgamer <kuro123520@hotmail.com>
+|   Date:   Wed Feb 16 14:42:36 2022 +0700
+|   
+|       added detectRange and dangerRange , set moveCost
+| 
+* commit c54f2cfa08c2767b918d65a9162357378c96e506
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 14:35:21 2022 +0700
+| 
+|     deleted unit api
+| 
+* commit b8347be9b80d076cff3cf95052c3e02c3b7dbb30
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 14:32:40 2022 +0700
+| 
+|     added getter to Unit Class
+| 
+* commit b1f3998ecf4ba1a55cc98a69b40c5fb29061e75b
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 14:29:36 2022 +0700
+| 
+|     added getArea3 to area api
+| 
+* commit 775c8ec5c8e8078861f269cdd0db115139d53eea
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 14:28:29 2022 +0700
+| 
+|     added implemented area api
+| 
+* commit 513ebc443841fd1c777c633b0723dd3cefeb7592
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 14:28:14 2022 +0700
+| 
+|     added Area's getter
+| 
+* commit 87725a3a04986f8c85f5ac643f98f4df304bcb5c
+| Author: Nonthawt20 <Nonthawt20@gmail.com>
+| Date:   Wed Feb 16 14:10:06 2022 +0700
+| 
+|     fix WaveMana
+| 
+* commit f5318997764784b9e45c623dd7e8734a1e33802f
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Wed Feb 16 13:35:58 2022 +0700
+| 
+|     deleted empty space and added constructor to Areas class
+|   
+*   commit 6b2cce6aac8b228fc6f1968c0d5d5ea334111508
+|\  Merge: d1719b8 aa9ae19
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 13:33:11 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| |   
+| *   commit aa9ae19366a0249397e4945fb9f1429839789768
+| |\  Merge: 203ba49 6c56663
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Wed Feb 16 13:29:49 2022 +0700
+| | | 
+| | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | | 
+| * | commit 203ba49cedf64ba16fd0aebbd6b774a64d386064
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Wed Feb 16 13:29:48 2022 +0700
+| | | 
+| | |     front-end: added click (mousedown) detection in ImageObject
+| | | 
+* | | commit d1719b882a6b35ebfc1b1f74faa4a0a223af492e
+| |/  Author: rbzgamer <kuro123520@hotmail.com>
+|/|   Date:   Wed Feb 16 13:33:01 2022 +0700
+| |   
+| |       deleted empty space and added constructor to Wave class
+| | 
+* | commit 6c5666373a849bcd3088e7af27264b465fd9e713
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 13:21:08 2022 +0700
+| | 
+| |     added unimplement unit api
+| | 
+* | commit 9d485413221a065d2be26fab8afe242b26ece229
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 16 13:20:56 2022 +0700
+| | 
+| |     added unimplement area api
+| | 
+* | commit 84511a595a249fcd9acc83483bcfa013f5ba2523
+|/  Author: rbzgamer <kuro123520@hotmail.com>
+|   Date:   Wed Feb 16 13:20:32 2022 +0700
+|   
+|       added area name
+| 
+* commit 01cab87a694647a09fd36cb720426aff41ba3734
+| Author: Nonthawt20 <Nonthawt20@gmail.com>
+| Date:   Wed Feb 16 12:07:54 2022 +0700
+| 
+|     add Class Wave ที่เก็บ List ของ Virus ต่างๆเอาไว้
+| 
+* commit 00dad16d4e0ad70c4660322ebe1685c6ce2a150c
+| Author: Nonthawt20 <Nonthawt20@gmail.com>
+| Date:   Wed Feb 16 12:04:52 2022 +0700
+| 
+|     add field Class WaveManager
+|     
+|     เพิ่มเติม field
+|   
+*   commit 8bd1a9505287a9544f56eddd5796a28c81914666
+|\  Merge: 48ac4bb 0361d4a
+| | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | Date:   Wed Feb 16 12:04:04 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | 
+| * commit 0361d4afa5fabe4b16000873136141d14b511d30
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Wed Feb 16 11:03:21 2022 +0700
+| | 
+| |     front-end: added multi-state image support for ImageObject
+| |     
+| |     also changed some debug message for ImageObject and TextObject to be clearer
+| | 
+| * commit c253f015cc052caee016cf9e0866d090be015be4
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Wed Feb 16 01:25:33 2022 +0700
+| | 
+| |     removed unusable font imports
+| | 
+| * commit bc310d45ea473d2ca132a51989e2ec8698d912d2
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Wed Feb 16 01:20:02 2022 +0700
+| | 
+| |     added pre-game texts
+| | 
+| * commit b8032e820c606580dcdf5e698bae4c7fd8a5efc7
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Wed Feb 16 01:19:46 2022 +0700
+| | 
+| |     added font 'Press Start 2P'
+| | 
+| * commit 90e936bbd9564a2a7386602874f3c0ea3a3fe965
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Wed Feb 16 01:19:23 2022 +0700
+| | 
+| |     added support for baseline, size, multiline string to TextObject
+| |   
+| *   commit def5e31249f3a5b72ebd18810d158a90efabc30a
+| |\  Merge: c85ed3e d18d2cb
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 15 23:29:16 2022 +0700
+| | | 
+| | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | | 
+| * | commit c85ed3e0313db79f29bec6fe837e4b2a83158406
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 15 23:29:12 2022 +0700
+| | | 
+| | |     add TextObject
+| | | 
+| * | commit 1a5fa5bdeacbf14883b7acc364731d57e8a6e175
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 15 23:28:57 2022 +0700
+| | | 
+| | |     renamed DIMBLACK.png -> dim_black.png
+| | | 
+| * | commit e88544d1038854e847ce9d0125a6d6edd378ca3d
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 15 23:28:38 2022 +0700
+| | | 
+| | |     change .jsx to .tsx
+| | | 
+* | | commit 48ac4bb162e06752e6c1bf8f2fd97073521764f9
+| |/  Author: Nonthawt20 <Nonthawt20@gmail.com>
+|/|   Date:   Wed Feb 16 12:04:00 2022 +0700
+| |   
+| |       add field Class ZoomManager
+| |       
+| |       ยังไม่ได้เพิ่ม method ที่จำเป็น
+| | 
+* | commit d18d2cb9b74145a0096f68c8c543ac773f8288d2
+| | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | Date:   Tue Feb 15 22:53:47 2022 +0700
+| | 
+| |     update Inventory
+| |     
+| |     เพิ่ม method
+| | 
+* | commit 38f3e3879d5ddfbaf0756fc82841c451399b9abf
+|\| Merge: 2d6a483 bf76127
+| | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | Date:   Tue Feb 15 22:52:32 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| |   
+| *   commit bf7612716a4ef111cb01bfb10d5173dafd8eff01
+| |\  Merge: 1132cf1 abb1bb1
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 15 22:15:35 2022 +0700
+| | | 
+| | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | |   
+| | *   commit abb1bb1d94b91b99e1632faff06b0cfc6e81c9ba
+| | |\  Merge: 6be621a 71dc380
+| | | | Author: rbzgamer <kuro123520@hotmail.com>
+| | | | Date:   Tue Feb 15 21:21:04 2022 +0700
+| | | | 
+| | | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | | | 
+| | * | commit 6be621a77706ca15280af5a30ea42bd33809cd70
+| | | | Author: rbzgamer <kuro123520@hotmail.com>
+| | | | Date:   Tue Feb 15 21:21:02 2022 +0700
+| | | | 
+| | | |     added return value to creditReward
+| | | | 
+| | * | commit fb459ea342b60fe1af2b7676a1fd5610be9ad195
+| | | | Author: rbzgamer <kuro123520@hotmail.com>
+| | | | Date:   Tue Feb 15 21:20:36 2022 +0700
+| | | | 
+| | | |     added static
+| | | | 
+| | * | commit f26a70527cb6759c8501d3db4b2382857c0f4869
+| | | | Author: rbzgamer <kuro123520@hotmail.com>
+| | | | Date:   Tue Feb 15 21:20:27 2022 +0700
+| | | | 
+| | | |     change linkedlist to arraylist
+| | | | 
+| * | | commit 1132cf108fc4140d9d07eb9930c5f00ac2e3571d
+| | | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | | Date:   Tue Feb 15 22:15:32 2022 +0700
+| | | | 
+| | | |     successfully draw image on <canvas>
+| | | |     
+| | | |     yessssss! finallyyyyyy! been doing this for so long not knowing why it wouldn't work!!!
+| | | | 
+| * | | commit 2b5ad5b6fd7816b03b7cd8495eae5facbfef3f93
+| | | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | | Date:   Tue Feb 15 22:14:42 2022 +0700
+| | | | 
+| | | |     added image assets
+| | | | 
+* | | | commit 2d6a483d963741d2b111d15ba3cddbdbe5ac1755
+| |_|/  Author: Nonthawt20 <Nonthawt20@gmail.com>
+|/| |   Date:   Tue Feb 15 22:52:26 2022 +0700
+| | |   
+| | |        TimeManger add on method
+| | |       
+| | |       เพิ่ม method ที่คาดว่าต้องได้ใช้
+| | | 
+* | | commit 71dc380517a5834dbb9e9bee2203e0f9a835ccaf
+| |/  Author: Nonthawt20 <Nonthawt20@gmail.com>
+|/|   Date:   Tue Feb 15 20:16:21 2022 +0700
+| |   
+| |       add Class Areas
+| |       
+| |       เป็น Class ที่เก็ย Area เเต่ละตัว
+| | 
+* | commit bdfd1e859abaec4fa8bf56c654b3b113864531e1
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Tue Feb 15 13:20:26 2022 +0700
+| | 
+| |     added type to unit constructor
+| | 
+* | commit c4a87b065622103c29eeb1d4ec3a32cc5a555bbb
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Tue Feb 15 13:02:03 2022 +0700
+| | 
+| |     import list
+| | 
+* | commit 92e164f77ed5d82ef80918c1283628932c43a96a
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Tue Feb 15 12:57:22 2022 +0700
+| | 
+| |     added getName , getType
+| | 
+* | commit b6f03978b835a3b9f07d857de064ec879e90e724
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Tue Feb 15 01:27:07 2022 +0700
+| | 
+| |     added area(uncomplete)
+| | 
+* | commit 6d15524cf7c72a2b02def7a059dcda5f922ccb7f
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Tue Feb 15 01:05:34 2022 +0700
+| | 
+| |     deleted empty space and added print to attack method
+| | 
+* | commit 8e601624f5ecb0d7aa549e06a7ab1c105d3d04fe
+|/  Author: rbzgamer <kuro123520@hotmail.com>
+|   Date:   Tue Feb 15 01:00:23 2022 +0700
+|   
+|       added attack(Unit) method
+| 
+* commit 128db86fae675e6f62dabcd5d5ee769e28ee5126
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Mon Feb 14 22:30:33 2022 +0700
+| 
+|     added constructor to Unit
+| 
+* commit d0a579f93b2b0385e3affa1a98d3009f8cf7725a
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Mon Feb 14 16:10:02 2022 +0700
+| 
+|     merge Unit
+| 
+* commit 225333304349643526797de6dc8b30e5cda6f6a4
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Mon Feb 14 16:05:01 2022 +0700
+| 
+|     move file
+| 
+* commit 9cf79b34db2d2403da8cd81cb315e3dd10a36cb1
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Mon Feb 14 16:04:05 2022 +0700
+| 
+|     move file
+| 
+* commit 37f18e8a3b0eee0039b4b248243a21373cecb142
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Mon Feb 14 14:53:09 2022 +0700
+| 
+|     added UnitFactory(uncomplete)
+| 
+* commit 42792020466cd6071311ba295a87bdd90e0d7519
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Mon Feb 14 14:51:35 2022 +0700
+| 
+|     Added unimplement Antibody & Virus
+| 
+* commit 825eaf29d40f7d441ccb6f618d0187a957bf0af3
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Mon Feb 14 14:51:11 2022 +0700
+| 
+|     added Unit (uncomplete)
+| 
+* commit f55d938457b1e0173359a341542bf72063a5c3f1
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Mon Feb 14 14:50:51 2022 +0700
+| 
+|     added empty UnitFactory
+| 
+* commit 54a9fc9953f69d7e8c35d0350550c029ec0c1595
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Mon Feb 14 12:35:29 2022 +0700
+| 
+|     Create README.md
+| 
+* commit 43f9b5323ba1da39a528dce91e2649cae1da9b75
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Mon Feb 14 12:34:15 2022 +0700
+| 
+|     Reconfigured project into separate front-end and back-end sub-project
+|     
+|     Also added a APIExample.java
+|   
+*   commit 8d39f9f5c6df2d07d352eb975ac4ec2a572aa2c7
+|\  Merge: d50cd8d fcf2e45
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Sat Feb 12 10:35:51 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | 
+| * commit fcf2e4543d6d3669a0154781fcb0b68fd6ac610e
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 11 21:02:39 2022 +0700
+| | 
+| |     Update README.md
+| | 
+* | commit d50cd8dba4347c3e8a9d4bfd4d9bf8c88e9742de
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Sat Feb 12 10:35:41 2022 +0700
+| | 
+| |     added DEBUG print
+| | 
+* | commit 237d9382954134c29d0b3c749808e27b12287023
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 11 18:27:15 2022 +0700
+| | 
+| |     fixed regex for variables
+| | 
+* | commit b9d30651244a41766e7fd965465a01035f4eb900
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 11 18:26:56 2022 +0700
+| | 
+| |     added DEBUG static field
+| | 
+* | commit ae7ab5e6e1409f7320ba823142ecab45341687e0
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 11 18:25:56 2022 +0700
+| | 
+| |     added a method to read genetic code from file into GeneticCodeManager
+| | 
+* | commit 4b344962f440a737263527703f4b3647c275920a
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 11 18:25:10 2022 +0700
+| | 
+| |     created BehaviorEvaluatorTest.java
+| | 
+* | commit fdec927e8a4384026fe407a700c1c90540a4ea1b
+|/  Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+|   Date:   Fri Feb 11 18:24:49 2022 +0700
+|   
+|       updated .gitignore
+| 
+* commit 0c9b09c5fe2fb15e6bd7645e4c26a4084d094138
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 11:08:03 2022 +0700
+| 
+|     finished implementation (untested)
+| 
+* commit 250688cf25ccb7ee4d655bd5e2d04bb178c1b98b
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 11:07:45 2022 +0700
+| 
+|     updated peek(String) and consume(String) to be able to match regex
+| 
+* commit def27d348e147e85a09e4f947c856168d35eb750
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 11:06:50 2022 +0700
+| 
+|     changed some method's return type
+| 
+* commit 3b23c7235ef6782ece39820877c88b617b11c811
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 11:06:23 2022 +0700
+| 
+|     change RandomNumberNode to extends VariableNode
+|     
+|     reason is so that implementation goes more in-line with the project specification's description of "random" grammar
+| 
+* commit 58e71574221f8d5c9d6a155557ced5e50e811cf9
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 11:05:14 2022 +0700
+| 
+|     added dummy constructor
+| 
+* commit 96feb1518eed50dc8a36153c9fbafa9d554d0647
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 11:04:46 2022 +0700
+| 
+|     updated regex to be able to detect variable that started with reserved words
+| 
+* commit 5df2dc68bdadafa3bcee514400ccef171451ba8c
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 11:04:03 2022 +0700
+| 
+|     added constructor(String)
+| 
+* commit 949a3b0c3786028006c961f74ab231335a57503c
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 00:30:53 2022 +0700
+| 
+|     added BehaviorEvaluator (wip)
+| 
+* commit 0430530838e4d450f478770b17d0b4e6db302769
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 00:30:36 2022 +0700
+| 
+|     added NodeFactory, Regex, Tokenizer
+| 
+* commit 1bd315368835e6e26550289f6618946c1349740b
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 00:29:57 2022 +0700
+| 
+|     added SyntaxError, EvaluationError
+| 
+* commit 42c09abf5366a5b8d91d99036c6a5486ce1fbcd1
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 00:25:38 2022 +0700
+| 
+|     exposed Node's derivatives constructor to be public
+| 
+* commit ee8a79343683d12d859f99e4110bf94eaa3aa8cf
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 11 00:24:36 2022 +0700
+| 
+|     removed redundant node classes
+| 
+* commit d74e824db489fc4a2a399c67b2258b70b37f467d
+| Author: Nonthawt20 <Nonthawt20@gmail.com>
+| Date:   Thu Feb 10 22:10:01 2022 +0700
+| 
+|     เติมทีละนิดจะเสร็จเมื่อไหร่
+| 
+* commit b55e55919d0cba6bb018f50a452e2b452619fee6
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 10 19:51:28 2022 +0700
+| 
+|     added all variations of nodes
+| 
+* commit a4fa34ee36498a61ef7569e11a2d43a5fb0a1bc6
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 10 00:10:38 2022 +0700
+| 
+|     added unimplemented Node.java
+| 
+* commit 7ea118fe5fd165a3d8d9d3c5d9680bc1c41a011e
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Wed Feb 9 13:27:35 2022 +0700
+| 
+|     initial configuration of project settings
+| 
+* commit 382152aa9d98f308a9ea62119dff87d21d239f9b
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Tue Feb 8 18:01:38 2022 +0700
+| 
+|     Update README.md
+| 
+* commit eba8b14af52522643d593aa58416e491d173aed8
+  Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+  Date:   Tue Feb 8 18:00:19 2022 +0700
+  
+      Initial commit

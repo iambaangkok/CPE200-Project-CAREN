@@ -18,9 +18,14 @@ public class Game {
     protected WaveManager waveManager ;
     protected GeneticCodeManager geneticCodeManager ;
 
+
     public Game(){
 
     this.spawn = false ;
+    this.areas = new ArrayList<Area>();
+
+    this.timeManager = new TimeManager();
+    this.inventory = new Inventory();
     this.waveManager = new WaveManager();
 
     }
@@ -52,17 +57,24 @@ public class Game {
                 System.out.println("");
             }
             if (state == 2) {
+
+                waveManager.getWaveInfo();
+
                 if (waveManager.currentWaveCount == 1) {
                     waveManager.waveInfo.get(0);
                 } else if (waveManager.currentWaveCount == 2) {
                     waveManager.waveInfo.get(1);
                 } else if (waveManager.currentWaveCount == 3) {
                     waveManager.waveInfo.get(2);
+                } else if (waveManager.currentWaveCount == 4) {
+                    waveManager.waveInfo.get(3);
+                } else {
+                    waveManager.waveInfo.get(4);
                 }
-            } else if (waveManager.currentWaveCount == 4) {
-                waveManager.waveInfo.get(3);
-            } else {
-                waveManager.waveInfo.get(4);
+
+
+
+
             }
         }
     }
@@ -72,15 +84,13 @@ public class Game {
         g.startGameLoop();
 
 
+
     }
 
 
 
 
     private void upDate(){
-
-        Inventory inventory = new Inventory(0,0,0);
-
 
         if(state == 1 ){
             if(spawn != false){

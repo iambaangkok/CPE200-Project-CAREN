@@ -8,7 +8,7 @@ public class Inventory {
 
 
 
-    public Inventory(Integer meleeCount, Integer rangedCount ,Integer aoeCount){
+    public Inventory(){
 
         this.meleeCount += meleeCount;
         this.rangedCount += rangedCount;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class WaveController {
 
 
-    Wave  wave1 = new Wave(1);
+    Wave wave1 = new Wave(1);
     Wave wave2 = new Wave(2);
     Wave wave3 = new Wave(3);
     Wave wave4 = new Wave(4);

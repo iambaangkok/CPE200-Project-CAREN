@@ -4,40 +4,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Wave {
-    protected List<Virus> area1Virus;
-    protected List<Virus> area2Virus;
-    protected List<Virus> area3Virus;
+    protected List<Virus> wave1;
+    protected List<Virus> wave2;
+    protected List<Virus> wave3;
+    protected List<Virus> wave4;
+    protected List<Virus> wave5;
+
     protected int waveNumber;
 
     public Wave(int waveNumber) {
-        this.area1Virus = new ArrayList<Virus>();
-        this.area2Virus = new ArrayList<Virus>();
-        this.area3Virus = new ArrayList<Virus>();
+        this.wave1 = new ArrayList<Virus>();
+        this.wave2 = new ArrayList<Virus>();
+        this.wave3 = new ArrayList<Virus>();
+        this.wave4 = new ArrayList<Virus>();
+        this.wave5 = new ArrayList<Virus>();
         this.waveNumber = waveNumber;
     }
 
-    public List<Virus> getAreaVirus(Integer number) {
-
-        if (number == 1) {
-            return area1Virus;
-        } else if (number == 2) {
-            return area2Virus;
-        } else {
-            return area3Virus;
-        }
-    }
-
-    public void addArea(Virus virus){
-
+    public void addWave(Virus virus){
         if(waveNumber == 1 ){
-            area1Virus.add(virus);
-        }
-        else if(waveNumber == 2 ){
-            area2Virus.add(virus);
-        }
-        else {area3Virus.add(virus);}
-
-
+            wave1.add(virus);
+        }else if(waveNumber == 2 ){
+            wave2.add(virus);
+        }else if(waveNumber == 3 ){
+            wave3.add(virus);
+        }else if(waveNumber == 4) {
+            wave4.add(virus);
+        }else {
+            wave5.add(virus);}
 
     }
+
+
+
+
+
+
+
+    public List<Virus> getWave1() {
+        return wave1;
+    }
+
+    public List<Virus> getWave2() {
+        return wave2;
+    }
+
+    public List<Virus> getWave3() {
+        return wave3;
+    }
+
+    public List<Virus> getWave4() {
+        return wave4;
+    }
+
+    public List<Virus> getWave5() {
+        return wave5;
+    }
+
+    //
+//    public void setArea1Virus(List<Virus> area1Virus) {
+//        this.area1Virus = area1Virus;
+//    }
+//
+//    public List<Virus> getAreaVirus(Integer number) {
+//
+//        if (number == 1) {
+//            return area1Virus;
+//        } else if (number == 2) {
+//            return area2Virus;
+//        } else {
+//            return area3Virus;
+//        }
+//    }
+
+
 }

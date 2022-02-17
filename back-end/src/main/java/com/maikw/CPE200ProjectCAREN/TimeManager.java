@@ -10,7 +10,7 @@ public class TimeManager {
     protected List<String> timeSate ;
 
 
-    private TimeManager(){
+    public TimeManager(){
 
     }
 

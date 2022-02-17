@@ -14,21 +14,24 @@ public class WaveManager {
 
     public WaveManager(){
         this.waveInfo =  new ArrayList<Wave>();
+        setWaveInfo();
+
     }
 
     public Wave createWave(int wavenumber,int area1melee, int area1ranged, int area1aoe){
+
         Wave wave = new Wave(wavenumber);
 
         for(int i = 0 ; i < area1melee;i++){
-            wave.addArea(UnitFactory.createVirus("viruemelee"+i, "melee"));
+            wave.addWave(UnitFactory.createVirus("viruemelee"+i, "melee"));
         }
 
         for(int i = 0 ; i < area1ranged ; i++){
-            wave.addArea(UnitFactory.createVirus("viruerange"+i, "range"));
+            wave.addWave(UnitFactory.createVirus("viruerange"+i, "range"));
         }
 
         for (int i = 0 ; i < area1aoe; i++){
-            wave.addArea(UnitFactory.createVirus("virueaoe"+i, "aoe"));
+            wave.addWave(UnitFactory.createVirus("virueaoe"+i, "aoe"));
         }
         currentWaveCount += 1 ;
         return  wave;
@@ -44,6 +47,20 @@ public class WaveManager {
     }
 
 
+    public Wave getWaveInfo(){
 
+        return waveInfo.get(currentWaveCount);
+    }
 
+    public Integer getMaxWaveCount() {
+        return maxWaveCount;
+    }
+
+    public Integer getCurrentWaveCount() {
+        return currentWaveCount;
+    }
+
+    public Integer getTimeBetweenWave() {
+        return timeBetweenWave;
+    }
 }

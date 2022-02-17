@@ -1,10 +1,20 @@
 import axios from 'axios'
+import Config from '../Config';
 
-const baseURL = "http://localhost:8080"
+const baseURL = Config.SERVER_URL;
 
 const DEBUG = false;
 
 class GameController {
+
+  static async getMoney(){
+    // const url = baseURL + "/money";
+    // var money = await axios.get(url);
+
+    // return money.data;
+    return 1200;
+  }
+
   static async getArea(areaIndex : number){
     const url = baseURL + "/area/getarea" + (areaIndex);
     var area = await axios.get(url);

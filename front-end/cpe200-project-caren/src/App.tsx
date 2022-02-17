@@ -67,6 +67,10 @@ var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
 var areas = [null,null,null]; // area datas
 var money : number = 0; // money 
 
+/// FIELDS
+var isHover = false;
+var mousePosition : {x:number, y:number};
+
 /// CONSTANTS
 const screenWidth = 1280;
 const screenHeight = 720;
@@ -86,7 +90,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		if(DEBUG) console.log("MOUNTED");
-		this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+		this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000/Config.FPS);
 		
 		this.initAll();
 		this.fetchAll();
@@ -109,10 +113,11 @@ class App extends React.Component {
 		canvas!.width = 1280
 		canvas!.height = 720
 
-		canvas!.addEventListener('mousedown', function(e){ onMouseDown(e);});
-		canvas!.addEventListener('mouseup', function(e){ onMouseUp(e);});
-		canvas!.addEventListener('mouseout', function(e){ onMouseUp(e);});
-		canvas!.addEventListener('mouseover', function(e){ onMouseHover(e);});
+		// EVENTLISTENERS
+		canvas!.addEventListener('mousedown', function(e){ onMouseDown(e); getMousePosition(canvas!, e)});
+		canvas!.addEventListener('mouseup', function(e){ onMouseUp(e); getMousePosition(canvas!, e)});
+		canvas!.addEventListener('mousemove', function(e){ onMouseHover(e); getMousePosition(canvas!, e)});
+		canvas!.addEventListener('mouseout', function(e){ onMouseHover(e); getMousePosition(canvas!, e)});
 		
 		
 		ctx = canvas!.getContext('2d')
@@ -182,6 +187,16 @@ class App extends React.Component {
 
 		t_money.setText([money.toString()]);
 
+		// isHover == true
+		if(isHover){
+			if(gameState === 2){
+				i_buy_melee.setHover(i_buy_melee.mouseInside(mousePosition));
+				i_buy_ranged.setHover(i_buy_ranged.mouseInside(mousePosition));	
+				i_buy_aoe.setHover(i_buy_aoe.mouseInside(mousePosition));
+			}
+		}
+		
+
 		if(DEBUG) i_heart.nextState();
 	}
 
@@ -242,77 +257,65 @@ export default App;
 
 function onMouseHover(e : MouseEvent){
 	if (DEBUG) console.log("mousehover");
-	var mousePos = getMousePosition(canvas!, e);
-
-	if(gameState === 2){
-		i_buy_melee.setHover(i_buy_melee.mouseInside(mousePos));
-		i_buy_ranged.setHover(i_buy_ranged.mouseInside(mousePos));	
-		i_buy_aoe.setHover(i_buy_aoe.mouseInside(mousePos));
-	}
-
+	isHover = true;
 }
 
 function onMouseUp(e : MouseEvent){
 	if (DEBUG) console.log("mouseup");
-	var mousePos = getMousePosition(canvas!, e);
 
 	if(gameState === 2){
-		if(!i_buy_melee.mouseInside(mousePos)){
-			i_buy_melee.setClicked(false);
-		}
-		if(!i_buy_ranged.mouseInside(mousePos)){
-			i_buy_ranged.setClicked(false);	
-		}
-		if(!i_buy_aoe.mouseInside(mousePos)){
-			i_buy_aoe.setClicked(false);
-		}
-		// i_buy_melee.mouseUp();
-		// i_buy_ranged.mouseUp();
-		// i_buy_aoe.mouseUp();
+		// if(!i_buy_melee.mouseInside(mousePosition)){
+		// 	i_buy_melee.setClicked(false);
+		// }
+		// if(!i_buy_ranged.mouseInside(mousePosition)){
+		// 	i_buy_ranged.setClicked(false);	
+		// }
+		// if(!i_buy_aoe.mouseInside(mousePosition)){
+		// 	i_buy_aoe.setClicked(false);
+		// }
+		i_buy_melee.mouseUp();
+		i_buy_ranged.mouseUp();
+		i_buy_aoe.mouseUp();
 	}
 }
 
 function onMouseDown(e : MouseEvent){
 	if (DEBUG) console.log("mousedown");
-	var mousePos = getMousePosition(canvas!, e);
-	if (DEBUG) console.log(mousePos);
+	if (DEBUG) console.log(mousePosition);
 
 	if(gameState === 1){
-		if(i_dim_black.mouseInside(mousePos)){
-			if (DEBUG) console.log("clicked dim_black")
+		if(i_dim_black.mouseInside(mousePosition)){
 			gameState = 2;
 			// call game state change api
 			GameController.setGameState(gameState);
 		}
 	}
 	if(gameState === 2){
-		if(i_dim_black.mouseInside(mousePos)){
-			if (DEBUG) console.log("clicked dim_black")
-			if (DEBUG) console.log(i_scanner.mouseInside(mousePos));
+		if(i_dim_black.mouseInside(mousePosition)){
 
 			if(activeAreaIndex === 0){
 
-			}else if(i_scanner.mouseInside(mousePos) === false){
+			}else if(i_scanner.mouseInside(mousePosition) === false){
 				activeAreaIndex = 0;
 			}
 		}
-		if(i_brain.mouseInside(mousePos)){
+		if(i_brain.mouseInside(mousePosition)){
 			if(activeAreaIndex === 0){
 				activeAreaIndex = 1;
 			}
-		}else if(i_heart.mouseInside(mousePos)){
+		}else if(i_heart.mouseInside(mousePosition)){
 			if(activeAreaIndex === 0){
 				activeAreaIndex = 2;
 			}
-		}else if(i_lungs.mouseInside(mousePos)){
+		}else if(i_lungs.mouseInside(mousePosition)){
 			if(activeAreaIndex === 0){
 				activeAreaIndex = 3;
 			}
 		}
 		if(gameState === 2){
-			i_buy_melee.setClicked(i_buy_melee.mouseInside(mousePos));
-			i_buy_ranged.setClicked(i_buy_ranged.mouseInside(mousePos));	
-			i_buy_aoe.setClicked(i_buy_aoe.mouseInside(mousePos));
+			i_buy_melee.setClicked(i_buy_melee.mouseInside(mousePosition));
+			i_buy_ranged.setClicked(i_buy_ranged.mouseInside(mousePosition));	
+			i_buy_aoe.setClicked(i_buy_aoe.mouseInside(mousePosition));
 		}
 		
 		
@@ -321,6 +324,7 @@ function onMouseDown(e : MouseEvent){
 
 function getMousePosition(canvas : HTMLCanvasElement, e : MouseEvent){
 	var canvasRect = canvas.getBoundingClientRect();
-	return {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top};
+	mousePosition = {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top};
+	return mousePosition;
 }
 

@@ -15,6 +15,17 @@ class GameController {
     return 1200;
   }
 
+  static async buyUnit(type: string) {
+    // await axios({
+    //   method: 'post',
+    //   url: baseURL + "/shop/buyUnit",
+    //   headers: {},
+    //   data: {
+    //     type: type,
+    //   }
+    // });
+  }
+
   static async getArea(areaIndex : number){
     const url = baseURL + "/area/getarea" + (areaIndex);
     var area = await axios.get(url);

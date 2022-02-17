@@ -1,6 +1,7 @@
 package com.maikw.CPE200ProjectCAREN;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Game {
@@ -21,12 +22,11 @@ public class Game {
 
     public Game(){
 
-    this.spawn = false ;
-    this.areas = new ArrayList<Area>();
-
-    this.timeManager = new TimeManager();
-    this.inventory = new Inventory();
-    this.waveManager = new WaveManager();
+//    this.spawn = false ;
+//    this.areas = new ArrayList<Area>();
+//    this.timeManager = new TimeManager();
+//    this.inventory = new Inventory();
+//    this.waveManager = new WaveManager();
 
     }
 
@@ -46,12 +46,10 @@ public class Game {
 
 
     public void startGameLoop(){
-//        while(state == 1){
-//            waveManager.waveInfo.get()
-//            spawn = true ;
-//            upDate();
-//
-//        }
+
+
+
+
         while(true) {
             if (state == 1) {
                 System.out.println("");
@@ -81,12 +79,33 @@ public class Game {
 
     public static void main(String[] args) {
         Game g = new Game();
-        g.startGameLoop();
+//        g.startGameLoop();
 
+        while(true){
+
+            g.waitState();
+
+
+        }
 
 
     }
 
+
+
+
+    private void waitState(){
+        try{
+            for(int i = 0 ; i <= 20 ; i++) {
+//            System.out.println("Start of delay: "+ new Date());
+                System.out.println("current time "+i+ " seccon");
+                Thread.sleep(1000);
+//            System.out.println("End of delay: "+ new Date());
+            }
+        }catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
+    }
 
 
 

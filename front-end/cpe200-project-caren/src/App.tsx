@@ -70,6 +70,8 @@ var money : number = 0; // money
 /// FIELDS
 var isHover = false;
 var mousePosition : {x:number, y:number};
+var gameTime = 0;
+var frameTime = 1000/Config.FPS;
 
 /// CONSTANTS
 const screenWidth = 1280;
@@ -90,7 +92,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		if(DEBUG) console.log("MOUNTED");
-		this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000/Config.FPS);
+		this.interval = setInterval(() => this.setState({ time: Date.now() }), frameTime);
 		
 		this.initAll();
 		this.fetchAll();
@@ -98,7 +100,11 @@ class App extends React.Component {
 	}
 
 	componentDidUpdate(){
-		this.fetchAll();
+		gameTime += frameTime;
+		if(gameTime > Config.FETCH_INTERVAL_SECONDS*1000){
+			this.fetchAll();
+			gameTime -= Config.FETCH_INTERVAL_SECONDS*1000;
+		}
 		this.updateAll();
 		this.drawAll();
 	}

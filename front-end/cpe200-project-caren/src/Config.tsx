@@ -4,6 +4,8 @@ class Config{
     public static COLOR_LIGHTBLUE = "#92E8C0";
 
     public static FPS = 30;
+
+    public static FETCH_INTERVAL_SECONDS = 1;
     
 }
 

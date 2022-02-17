@@ -60,6 +60,10 @@ class TextObject{
         this.draw();
     }
 
+    public setText(text : string[]){
+        this.text = text;
+    }
+
 }
 
 export default TextObject;

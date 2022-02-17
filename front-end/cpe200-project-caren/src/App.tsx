@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Config from './Config';
 import ImageObject from './ImageObject';
 import TextObject from './TextObject';
 
@@ -18,6 +19,8 @@ import p_heart_blue from './assets/artworks/heart_blue.png'
 import p_heart_red from './assets/artworks/heart_red.png'
 import p_scanner from './assets/artworks/scanner.png'
 
+import p_money_panel from './assets/artworks/money_panel.png'
+
 var canvas : HTMLCanvasElement | null;
 var ctx: CanvasRenderingContext2D | null;
 
@@ -30,6 +33,10 @@ var i_lungs : ImageObject;
 // dim black
 var i_dim_black : ImageObject;
 var i_scanner : ImageObject;
+
+// shop
+var i_money_panel : ImageObject;
+var t_money : TextObject;
 
 // scanner
 var i_alertLight_blue: ImageObject;
@@ -44,6 +51,7 @@ var t_clickAnywhereToStart : TextObject;
 var gameState : number = 1; // 1 = pregame, 2 = game
 var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
 var areas = [null,null,null]; // area datas
+var money : number = 0; // money 
 
 /// CONSTANTS
 const screenWidth = 1280;
@@ -103,6 +111,10 @@ class App extends React.Component {
 		i_dim_black = new ImageObject(p_dim_black, 0,0);
 		i_scanner = new ImageObject(p_scanner, 245, 28);
 
+		// shop
+		i_money_panel = new ImageObject(p_money_panel,1476,79);
+		t_money = new TextObject([money.toString()], 40, "'Press Start 2P'", 1696, 123, Config.COLOR_LIGHTBLUE, "center");
+
 		// scanner
 		i_alertLight_blue = new ImageObject(p_alertLight_blue,0,0)
 
@@ -128,6 +140,9 @@ class App extends React.Component {
 	fetchAll(){
 		if(DEBUG) console.log("FETCHALL")
 		GameController.getGameState().then(data => gameState = data);
+
+		GameController.getMoney().then(data => money = data);
+
 		for(var i = 0 ; i < 3; ++i){
 			GameController.getArea(i+1).then(data => {
 				areas[i] = data;
@@ -143,7 +158,9 @@ class App extends React.Component {
 		if(DEBUG) console.log("UPDATEALL")
 		ctx!.clearRect(0,0,screenWidth, screenHeight);
 
-		i_heart.nextState();
+		t_money.setText([money.toString()]);
+
+		if(DEBUG) i_heart.nextState();
 	}
 
 	drawAll(){
@@ -155,10 +172,18 @@ class App extends React.Component {
 		i_heart.draw();
 		i_lungs.draw();
 
+		
+
 		// dim black
-		if(gameState === 1 || activeAreaIndex !== 0){
+		if(gameState === 2 && activeAreaIndex !== 0){
 			i_dim_black.draw();
 		}
+		
+
+		//shop
+		i_money_panel.draw();
+		t_money.draw();
+		
 
 		// scanner
 		if(gameState === 2){
@@ -168,6 +193,9 @@ class App extends React.Component {
 		}
 
 		// pre game
+		if(gameState === 1){
+			i_dim_black.draw();
+		}
 		if(gameState === 1){
 			t_caren.draw();
 			t_howToPlay.draw();

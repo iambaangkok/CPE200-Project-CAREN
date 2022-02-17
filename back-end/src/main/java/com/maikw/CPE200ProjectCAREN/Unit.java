@@ -102,19 +102,27 @@ public class Unit {
         return angle;
     }
 
-    public static int directionValue(int angle, String direction){
+    public static int directionValue(double angle, String direction){
         if(direction.equals("")){
-            return switch (angle) {
-                case 90 -> 1;
-                case 45 -> 2;
-                case 0 -> 3;
-                case 315 -> 4;
-                case 270 -> 5;
-                case 225 -> 6;
-                case 180 -> 7;
-                case 135 -> 8;
-                default -> 0;
-            };
+            if(angle >= (90-22.5) && angle <= (90+22.5)){
+                return 1;
+            }else if(angle >= (45-22.5) && angle <= (45+22.5)){
+                return 2;
+            }else if((angle >= (360-22.5) && angle <= (360)) || (angle >= 0.0 && angle <= 22.5)){
+                return 3;
+            }else if(angle >= (315-22.5) && angle <= (315+22.5)){
+                return 4;
+            }else if(angle >= (270-22.5) && angle <= (270+22.5)){
+                return 5;
+            }else if(angle >= (225-22.5) && angle <= (225+22.5)){
+                return 6;
+            }else if(angle >= (180-22.5) && angle <= (180+22.5)){
+                return 7;
+            }else if(angle >= (135-22.5) && angle <= (135+22.5)){
+                return 8;
+            }else{
+                return 0;
+            }
         }else{
             return switch (direction) {
                 case "up" -> 1;

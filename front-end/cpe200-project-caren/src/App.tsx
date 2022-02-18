@@ -20,15 +20,20 @@ import p_heart_red from './assets/artworks/heart_red.png'
 import p_scanner from './assets/artworks/scanner.png'
 
 import p_money_panel from './assets/artworks/money_panel.png'
+
 import p_buy_melee from './assets/artworks/unitFrame_melee.png'
 import p_buy_melee_clicked from './assets/artworks/unitFrame_melee_clicked.png'
 import p_buy_melee_hover from './assets/artworks/unitFrame_melee_hover.png'
+import p_buy_melee_disabled from './assets/artworks/unitFrame_melee_disabled.png'
 import p_buy_ranged from './assets/artworks/unitFrame_ranged.png'
 import p_buy_ranged_clicked from './assets/artworks/unitFrame_ranged_clicked.png'
 import p_buy_ranged_hover from './assets/artworks/unitFrame_ranged_hover.png'
+import p_buy_ranged_disabled from './assets/artworks/unitFrame_ranged_disabled.png'
 import p_buy_aoe from './assets/artworks/unitFrame_aoe.png'
 import p_buy_aoe_clicked from './assets/artworks/unitFrame_aoe_clicked.png'
 import p_buy_aoe_hover from './assets/artworks/unitFrame_aoe_hover.png'
+import p_buy_aoe_disabled from './assets/artworks/unitFrame_aoe_disabled.png'
+
 import p_melee_icon from './assets/artworks/classIcons_shield.png'
 import p_ranged_icon from './assets/artworks/classIcons_gun.png'
 import p_aoe_icon from './assets/artworks/classIcons_rocket.png'
@@ -153,9 +158,9 @@ class App extends React.Component {
 		i_money_panel = new ImageObject(p_money_panel,1476,79);
 		t_money = new TextObject([money.toString()], 40, "'Press Start 2P'", 1696, 123, Config.COLOR_LIGHTBLUE, "center");
 
-		i_buy_melee = new ButtonObject([p_buy_melee,p_buy_melee_hover,p_buy_melee_clicked], 1712, 256);
-		i_buy_ranged = new ButtonObject([p_buy_ranged, p_buy_ranged_hover, p_buy_ranged_clicked], 1712, 381);
-		i_buy_aoe = new ButtonObject([p_buy_aoe, p_buy_aoe_hover, p_buy_aoe_clicked], 1712, 506);
+		i_buy_melee = new ButtonObject([p_buy_melee,p_buy_melee_hover,p_buy_melee_clicked,p_buy_melee_disabled], 1712, 256);
+		i_buy_ranged = new ButtonObject([p_buy_ranged, p_buy_ranged_hover, p_buy_ranged_clicked, p_buy_ranged_disabled], 1712, 381);
+		i_buy_aoe = new ButtonObject([p_buy_aoe, p_buy_aoe_hover, p_buy_aoe_clicked, p_buy_aoe_disabled], 1712, 506);
 
 		i_melee_icon = new ImageObject(p_melee_icon, 1657, 286);
 		i_ranged_icon = new ImageObject(p_ranged_icon, 1657, 410);
@@ -225,17 +230,15 @@ class App extends React.Component {
 
 		t_money.setText([money.toString()]);
 
-		// isHover == true
-		if(isHover){
-			if(gameState === 2){
+		if(gameState === 2){
+			if(isHover){
 				i_buy_melee.setHover(i_buy_melee.mouseInside(mousePosition));
 				i_buy_ranged.setHover(i_buy_ranged.mouseInside(mousePosition));	
 				i_buy_aoe.setHover(i_buy_aoe.mouseInside(mousePosition));
-
-				i_buy_melee.setDisabled(money >= buyMeleeCost);
-				i_buy_ranged.setDisabled(money >= buyRangedCost);
-				i_buy_aoe.setDisabled(money >= buyAoeCost);
 			}
+			i_buy_melee.setDisabled(!(money >= buyMeleeCost));
+			i_buy_ranged.setDisabled(!(money >= buyRangedCost));
+			i_buy_aoe.setDisabled(!(money >= buyAoeCost));
 		}
 		
 
@@ -360,21 +363,20 @@ function onMouseDown(e : MouseEvent){
 		}else if(i_scanner.mouseInside(mousePosition) === false && !(
 			i_buy_melee.mouseInside(mousePosition) || i_buy_ranged.mouseInside(mousePosition) || i_buy_aoe.mouseInside(mousePosition)
 		)){
-			if(i_brain.mouseInside(mousePosition)){
-				if(activeAreaIndex === 0){
-					activeAreaIndex = 1;
-				}
-			}else if(i_heart.mouseInside(mousePosition)){
-				if(activeAreaIndex === 0){
-					activeAreaIndex = 2;
-				}
-			}else if(i_lungs.mouseInside(mousePosition)){
-				if(activeAreaIndex === 0){
-					activeAreaIndex = 3;
-				}
-			}
-
 			activeAreaIndex = 0;
+		}
+		if(i_brain.mouseInside(mousePosition)){
+			if(activeAreaIndex === 0){
+				activeAreaIndex = 1;
+			}
+		}else if(i_heart.mouseInside(mousePosition)){
+			if(activeAreaIndex === 0){
+				activeAreaIndex = 2;
+			}
+		}else if(i_lungs.mouseInside(mousePosition)){
+			if(activeAreaIndex === 0){
+				activeAreaIndex = 3;
+			}
 		}
 
 		if(i_buy_melee.mouseInside(mousePosition) && money >= buyMeleeCost){

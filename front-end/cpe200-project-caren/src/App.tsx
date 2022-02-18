@@ -19,6 +19,15 @@ import p_heart_blue from './assets/artworks/heart_blue.png'
 import p_heart_red from './assets/artworks/heart_red.png'
 import p_scanner from './assets/artworks/scanner.png'
 
+import p_pause from './assets/artworks/timestepIcon_paused_blank.png';
+import p_pause_clicked from './assets/artworks/timestepIcon_paused_filled.png';
+import p_play from './assets/artworks/timestepIcon_normal_blank.png';
+import p_play_clicked from './assets/artworks/timestepIcon_normal_filled.png';
+import p_fastforward from './assets/artworks/timestepIcon_fastforward_blank.png';
+import p_fastforward_clicked from './assets/artworks/timestepIcon_fastforward_filled.png';
+import p_slowdown from './assets/artworks/timestepIcon_slowdown_blank.png';
+import p_slowdown_clicked from './assets/artworks/timestepIcon_slowdown_filled.png';
+
 import p_money_panel from './assets/artworks/money_panel.png'
 
 import p_buy_melee from './assets/artworks/unitFrame_melee.png'
@@ -37,6 +46,8 @@ import p_buy_aoe_disabled from './assets/artworks/unitFrame_aoe_disabled.png'
 import p_melee_icon from './assets/artworks/classIcons_shield.png'
 import p_ranged_icon from './assets/artworks/classIcons_gun.png'
 import p_aoe_icon from './assets/artworks/classIcons_rocket.png'
+
+
 import ButtonObject from './ButtonObject';
 
 var canvas : HTMLCanvasElement | null;
@@ -52,13 +63,22 @@ var i_lungs : ImageObject;
 var i_dim_black : ImageObject;
 var i_scanner : ImageObject;
 
+// wave
+var t_wave_text : TextObject;
+
+// timer
+var b_time_pause : ButtonObject;
+var b_time_play : ButtonObject;
+var b_time_fastforward : ButtonObject;
+var b_time_slowdown : ButtonObject;
+
 // shop
 var i_money_panel : ImageObject;
 var t_money : TextObject;
 
-var i_buy_melee : ButtonObject;
-var i_buy_ranged : ButtonObject;
-var i_buy_aoe : ButtonObject;
+var b_buy_melee : ButtonObject;
+var b_buy_ranged : ButtonObject;
+var b_buy_aoe : ButtonObject;
 var t_buy_melee_cost : TextObject;
 var t_buy_ranged_cost : TextObject;
 var t_buy_aoe_cost : TextObject;
@@ -82,18 +102,19 @@ var t_clickAnywhereToStart : TextObject;
 var gameState : number = 1; // 1 = pregame, 2 = game
 var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
 var areas = [null,null,null]; // area datas
-var money : number = 0; // money 
+
+var money : number = 0;
 var buyMeleeCost : number = 0;
 var buyRangedCost : number = 0;
 var buyAoeCost : number = 0;
+
+var currentWave : number = 0;
 
 /// FIELDS
 var isHover = false;
 var mousePosition : {x:number, y:number};
 var gameTime = 0;
 var frameTime = 1000/Config.FPS;
-
-/// CONSTANTS are moved to Config.tsx
 
 
 const DEBUG = true;
@@ -154,13 +175,22 @@ class App extends React.Component {
 		i_dim_black = new ImageObject(p_dim_black, 0,0);
 		i_scanner = new ImageObject(p_scanner, 245, 28);
 
+		// wave
+		t_wave_text = new TextObject(["WAVE " + currentWave.toString() + "/" + Config.MAX_WAVE.toString()], 48, "'Press Start 2P'", 97, 111);
+
+		// time
+		b_time_pause = new ButtonObject([p_pause, p_pause_clicked, p_pause_clicked, p_pause], 141, 172); b_time_pause.setToggle(true);
+		b_time_play = new ButtonObject([p_play, p_play_clicked, p_play_clicked, p_play], 197, 172); b_time_play.setToggle(true);
+		b_time_fastforward = new ButtonObject([p_fastforward, p_fastforward_clicked, p_fastforward_clicked, p_fastforward], 253, 172); b_time_fastforward.setToggle(true);
+		b_time_slowdown = new ButtonObject([p_slowdown, p_slowdown_clicked, p_slowdown_clicked, p_slowdown], 85, 172); b_time_slowdown.setToggle(true);
+
 		// shop
 		i_money_panel = new ImageObject(p_money_panel,1476,79);
 		t_money = new TextObject([money.toString()], 40, "'Press Start 2P'", 1696, 123, Config.COLOR_LIGHTBLUE, "center");
 
-		i_buy_melee = new ButtonObject([p_buy_melee,p_buy_melee_hover,p_buy_melee_clicked,p_buy_melee_disabled], 1712, 256);
-		i_buy_ranged = new ButtonObject([p_buy_ranged, p_buy_ranged_hover, p_buy_ranged_clicked, p_buy_ranged_disabled], 1712, 381);
-		i_buy_aoe = new ButtonObject([p_buy_aoe, p_buy_aoe_hover, p_buy_aoe_clicked, p_buy_aoe_disabled], 1712, 506);
+		b_buy_melee = new ButtonObject([p_buy_melee,p_buy_melee_hover,p_buy_melee_clicked,p_buy_melee_disabled], 1712, 256);
+		b_buy_ranged = new ButtonObject([p_buy_ranged, p_buy_ranged_hover, p_buy_ranged_clicked, p_buy_ranged_disabled], 1712, 381);
+		b_buy_aoe = new ButtonObject([p_buy_aoe, p_buy_aoe_hover, p_buy_aoe_clicked, p_buy_aoe_disabled], 1712, 506);
 
 		i_melee_icon = new ImageObject(p_melee_icon, 1657, 286);
 		i_ranged_icon = new ImageObject(p_ranged_icon, 1657, 410);
@@ -189,7 +219,7 @@ class App extends React.Component {
 			"   (or don’t, you can use our default programs)",
 			"• Survive the 5 VIRUS WAVES to win!"
 			],
-			18, "'Press Start 2P'", 112, 398, "white", "start", "top", 2)
+			18, "'Press Start 2P'", 112, 398, Config.COLOR_CREAMWHITE, "start", "top", 2)
 		t_clickAnywhereToStart = new TextObject(["CLICK ANYWHERE TO START"], 24, "'Press Start 2P'", 112, 904)
 	}
 
@@ -205,6 +235,7 @@ class App extends React.Component {
 			t_buy_aoe_cost = new TextObject([buyAoeCost.toString()], 20, "'Press Start 2P'", 1801, 497, Config.COLOR_LIGHTBLUE, "start");
 		});
 		
+		
 	}
 
 	fetchAll(){
@@ -212,6 +243,15 @@ class App extends React.Component {
 		GameController.getGameState().then(data => gameState = data);
 
 		GameController.getMoney().then(data => money = data);
+
+		GameController.getWave().then(data => currentWave = data);
+
+		GameController.getSpeedMultiplier().then(data => {
+			b_time_pause.setClicked(data.type === "pause");
+			b_time_play.setClicked(data.type === "play");
+			b_time_fastforward.setClicked(data.type === "fastforward");
+			b_time_slowdown.setClicked(data.type === "slowdown");
+		});
 
 		for(let i = 0 ; i < 3; ++i){
 			GameController.getArea(i+1).then(data => {
@@ -231,14 +271,17 @@ class App extends React.Component {
 		t_money.setText([money.toString()]);
 
 		if(gameState === 2){
+
 			if(isHover){
-				i_buy_melee.setHover(i_buy_melee.mouseInside(mousePosition));
-				i_buy_ranged.setHover(i_buy_ranged.mouseInside(mousePosition));	
-				i_buy_aoe.setHover(i_buy_aoe.mouseInside(mousePosition));
+				b_buy_melee.setHover(b_buy_melee.mouseInside(mousePosition));
+				b_buy_ranged.setHover(b_buy_ranged.mouseInside(mousePosition));	
+				b_buy_aoe.setHover(b_buy_aoe.mouseInside(mousePosition));
 			}
-			i_buy_melee.setDisabled(!(money >= buyMeleeCost));
-			i_buy_ranged.setDisabled(!(money >= buyRangedCost));
-			i_buy_aoe.setDisabled(!(money >= buyAoeCost));
+			b_buy_melee.setDisabled(!(money >= buyMeleeCost));
+			b_buy_ranged.setDisabled(!(money >= buyRangedCost));
+			b_buy_aoe.setDisabled(!(money >= buyAoeCost));
+
+			t_wave_text.setText(["WAVE " + currentWave.toString() + "/" + Config.MAX_WAVE.toString()]);
 		}
 		
 
@@ -254,35 +297,41 @@ class App extends React.Component {
 		i_heart.draw();
 		i_lungs.draw();
 
-		
-
 		// dim black
 		if(gameState === 2 && activeAreaIndex !== 0){
 			i_dim_black.draw();
 		}
 		
+		// wave
+		t_wave_text.draw();
+		
+		// time
+		b_time_pause.draw();
+		b_time_play.draw();
+		b_time_fastforward.draw();
+		b_time_slowdown.draw();
 
 		//shop
 		i_money_panel.draw();
 		t_money.draw();
 		
-		i_buy_melee.draw();
-		i_buy_ranged.draw();
-		i_buy_aoe.draw();
+		b_buy_melee.draw();
+		b_buy_ranged.draw();
+		b_buy_aoe.draw();
 
 		t_buy_melee_cost?.draw();
 		t_buy_ranged_cost?.draw();
 		t_buy_aoe_cost?.draw();
 
-		if(i_buy_melee.isHover()){
+		if(b_buy_melee.isHover()){
 			i_melee_icon.draw();
 			t_melee_desc.draw();
 		} 
-		if(i_buy_ranged.isHover()){
+		if(b_buy_ranged.isHover()){
 			i_ranged_icon.draw();
 			t_ranged_desc.draw();
 		} 
-		if(i_buy_aoe.isHover()){
+		if(b_buy_aoe.isHover()){
 			i_aoe_icon.draw();
 			t_aoe_desc.draw();
 		} 
@@ -335,9 +384,9 @@ function onMouseUp(e : MouseEvent){
 		// if(!i_buy_aoe.mouseInside(mousePosition)){
 		// 	i_buy_aoe.setClicked(false);
 		// }
-		i_buy_melee.mouseUp();
-		i_buy_ranged.mouseUp();
-		i_buy_aoe.mouseUp();
+		b_buy_melee.mouseUp();
+		b_buy_ranged.mouseUp();
+		b_buy_aoe.mouseUp();
 	}
 }
 
@@ -355,13 +404,13 @@ function onMouseDown(e : MouseEvent){
 	if(gameState === 2){
 		if(i_dim_black.mouseInside(mousePosition)){
 
-			
 		}
 
+		// scanner
 		if(activeAreaIndex === 0){
 
 		}else if(i_scanner.mouseInside(mousePosition) === false && !(
-			i_buy_melee.mouseInside(mousePosition) || i_buy_ranged.mouseInside(mousePosition) || i_buy_aoe.mouseInside(mousePosition)
+			b_buy_melee.mouseInside(mousePosition) || b_buy_ranged.mouseInside(mousePosition) || b_buy_aoe.mouseInside(mousePosition)
 		)){
 			activeAreaIndex = 0;
 		}
@@ -379,24 +428,43 @@ function onMouseDown(e : MouseEvent){
 			}
 		}
 
-		if(i_buy_melee.mouseInside(mousePosition) && money >= buyMeleeCost){
-			i_buy_melee.setClicked(true);
+		// shop
+		if(b_buy_melee.mouseInside(mousePosition) && money >= buyMeleeCost){
+			b_buy_melee.setClicked(true);
 			GameController.buyUnit("melee");
 		}else{
-			i_buy_melee.setClicked(false);
+			b_buy_melee.setClicked(false);
 		}
-		if(i_buy_ranged.mouseInside(mousePosition) && money >= buyRangedCost){
-			i_buy_ranged.setClicked(true);
+		if(b_buy_ranged.mouseInside(mousePosition) && money >= buyRangedCost){
+			b_buy_ranged.setClicked(true);
 			GameController.buyUnit("ranged");
 		}else{
-			i_buy_ranged.setClicked(false);
+			b_buy_ranged.setClicked(false);
 		}
-		if(i_buy_aoe.mouseInside(mousePosition) && money >= buyAoeCost){
-			i_buy_aoe.setClicked(true);
+		if(b_buy_aoe.mouseInside(mousePosition) && money >= buyAoeCost){
+			b_buy_aoe.setClicked(true);
 			GameController.buyUnit("aoe");
 		}else{
-			i_buy_aoe.setClicked(false);
+			b_buy_aoe.setClicked(false);
 		}
+
+		// time
+		if(b_time_pause.mouseInside(mousePosition)){
+			GameController.setSpeedMultiplier("pause");
+		}
+		if(b_time_play.mouseInside(mousePosition)){
+			GameController.setSpeedMultiplier("play");
+		}
+		if(b_time_fastforward.mouseInside(mousePosition)){
+			GameController.setSpeedMultiplier("fastforward");
+		}
+		if(b_time_slowdown.mouseInside(mousePosition)){
+			GameController.setSpeedMultiplier("slowdown");
+		}
+		b_time_pause.setClicked(b_time_pause.mouseInside(mousePosition));
+		b_time_play.setClicked(b_time_play.mouseInside(mousePosition));
+		b_time_fastforward.setClicked(b_time_fastforward.mouseInside(mousePosition));
+		b_time_slowdown.setClicked(b_time_slowdown.mouseInside(mousePosition));
 	}
 }
 

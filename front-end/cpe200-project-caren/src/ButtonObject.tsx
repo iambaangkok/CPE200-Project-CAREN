@@ -7,7 +7,7 @@ class ButtonObject extends ImageObject{
     toggle;
     hover;
     clicked;
-
+    disabled;
 
     constructor(imagePath : string[], x : number, y : number, scale?: number|undefined, width?: number|undefined, height?: number|undefined){
         super(imagePath, x, y, scale, width, height);
@@ -15,14 +15,17 @@ class ButtonObject extends ImageObject{
         this.toggle = false;
         this.hover = false;
         this.clicked = false;
+        this.disabled = false;
     }
 
 
     public draw(){
         if(DEBUG) console.log("draw button")
         if(DEBUG) console.log("instance of array: " + (this.image instanceof Array ) + " && " + ((this.image as HTMLImageElement[] ).length));
-        if(this.image instanceof Array && this.image.length >= 3){
-            if(this.clicked && this.hover){
+        if(this.image instanceof Array && this.image.length >= 4){
+            if(this.disabled){
+                this.state = 3;
+            }else if(this.clicked && this.hover){
                 this.state = 2;
             }else if(this.clicked){
                 this.state = 2;
@@ -33,7 +36,7 @@ class ButtonObject extends ImageObject{
             }
             this.context!.drawImage(this.image[this.state], this.position.x, this.position.y, this.width, this.height);
         }else{
-            if(DEBUG) console.log("button have only one image")
+            if(DEBUG) console.log("button have only " + ((this.image as HTMLImageElement[] ).length) + " image, needed 4")
         }
     }
 
@@ -67,6 +70,14 @@ class ButtonObject extends ImageObject{
 
     public isClicked(){
         return this.clicked;
+    }
+
+    public setDisabled(disabled : boolean){
+        this.disabled = disabled;
+    }
+
+    public isDisabled(){
+        return this.disabled;
     }
 
 }

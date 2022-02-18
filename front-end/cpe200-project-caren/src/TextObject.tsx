@@ -1,3 +1,4 @@
+import Config from "./Config";
 
 const DEBUG = true;
 
@@ -30,7 +31,7 @@ class TextObject{
         this.font = font;
 
         if(color === undefined){
-            this.color = "white";
+            this.color = Config.COLOR_CREAMWHITE;
         }else{
             this.color = color;
         }

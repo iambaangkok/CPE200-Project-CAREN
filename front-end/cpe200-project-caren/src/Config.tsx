@@ -6,7 +6,15 @@ class Config{
     public static FPS = 30;
 
     public static FETCH_INTERVAL_SECONDS = 1;
+
+    public static SCREENWIDTH = 1280;
+    public static SCREENHEIGHT = 720;
     
+    public static CANVAS_SCALE = 0.6666667; // scale relative to 1920x1080
+
+    
+
+
 }
 
 export default Config;

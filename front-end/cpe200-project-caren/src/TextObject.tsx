@@ -1,4 +1,3 @@
-import { throws } from "assert";
 
 const DEBUG = true;
 
@@ -13,8 +12,12 @@ class TextObject{
     color;
     align;
     baseline;
+    lineSpacingScale;
 
-    constructor(text : string[], size : number, font : string, x : number, y : number, color? : string|undefined, align? : string|undefined, baseline? : string|undefined){
+    constructor(text : string[], size : number, font : string, x : number, y : number,
+         color? : string|undefined, align? : string|undefined, baseline? : string|undefined,
+         lineSpacingScale? : number){
+
         this.canvas = document.querySelector('canvas');
         this.context = this.canvas!.getContext('2d');
         this.position = {
@@ -43,6 +46,12 @@ class TextObject{
         }else{
             this.baseline = baseline;
         }
+
+        if(lineSpacingScale === undefined){
+            this.lineSpacingScale = 1;
+        }else{
+            this.lineSpacingScale = lineSpacingScale;
+        }
     }
 
     draw(){
@@ -52,7 +61,7 @@ class TextObject{
         this.context!.textAlign = this.align as CanvasTextAlign;
         this.context!.textBaseline = this.baseline as CanvasTextBaseline;
         for(var i = 0 ; i < this.text.length; ++i){
-            this.context!.fillText(this.text[i], this.position.x, this.position.y + i*(this.size)*2);
+            this.context!.fillText(this.text[i], this.position.x, this.position.y + i*(this.size)*this.lineSpacingScale);
         }
     }
 
@@ -62,6 +71,10 @@ class TextObject{
 
     public setText(text : string[]){
         this.text = text;
+    }
+
+    public setColor(color : string){
+        this.color = color;
     }
 
 }

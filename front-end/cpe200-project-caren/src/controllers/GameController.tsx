@@ -7,11 +7,19 @@ const DEBUG = false;
 
 class GameController {
 
+  static async getUnitCost(){
+    // const url = baseURL + "/unitCost";
+    // var resp = await axios.get(url);
+
+    // return resp.data;
+    return {melee: 100, ranged: 150, aoe: 250};
+  }
+
   static async getMoney(){
     // const url = baseURL + "/money";
-    // var money = await axios.get(url);
+    // var resp = await axios.get(url);
 
-    // return money.data;
+    // return resp.data;
     return 1200;
   }
 

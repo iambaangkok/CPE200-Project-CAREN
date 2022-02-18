@@ -29,6 +29,9 @@ import p_buy_ranged_hover from './assets/artworks/unitFrame_ranged_hover.png'
 import p_buy_aoe from './assets/artworks/unitFrame_aoe.png'
 import p_buy_aoe_clicked from './assets/artworks/unitFrame_aoe_clicked.png'
 import p_buy_aoe_hover from './assets/artworks/unitFrame_aoe_hover.png'
+import p_melee_icon from './assets/artworks/classIcons_shield.png'
+import p_ranged_icon from './assets/artworks/classIcons_gun.png'
+import p_aoe_icon from './assets/artworks/classIcons_rocket.png'
 import ButtonObject from './ButtonObject';
 
 var canvas : HTMLCanvasElement | null;
@@ -51,6 +54,15 @@ var t_money : TextObject;
 var i_buy_melee : ButtonObject;
 var i_buy_ranged : ButtonObject;
 var i_buy_aoe : ButtonObject;
+var t_buy_melee_cost : TextObject;
+var t_buy_ranged_cost : TextObject;
+var t_buy_aoe_cost : TextObject;
+var i_melee_icon : ImageObject;
+var i_ranged_icon : ImageObject;
+var i_aoe_icon : ImageObject;
+var t_melee_desc : TextObject;
+var t_ranged_desc : TextObject;
+var t_aoe_desc : TextObject;
 
 // scanner
 var i_alertLight_blue: ImageObject;
@@ -66,6 +78,9 @@ var gameState : number = 1; // 1 = pregame, 2 = game
 var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
 var areas = [null,null,null]; // area datas
 var money : number = 0; // money 
+var buyMeleeCost : number = 0;
+var buyRangedCost : number = 0;
+var buyAoeCost : number = 0;
 
 /// FIELDS
 var isHover = false;
@@ -73,28 +88,22 @@ var mousePosition : {x:number, y:number};
 var gameTime = 0;
 var frameTime = 1000/Config.FPS;
 
-/// CONSTANTS
-const screenWidth = 1280;
-const screenHeight = 720;
+/// CONSTANTS are moved to Config.tsx
 
-const imageScaling = 0.6666667;
-
-console.log("top");
 
 const DEBUG = true;
+
+if(DEBUG) console.log("top");
 
 class App extends React.Component {
 	interval: NodeJS.Timer | undefined;
 	
-	constructor(props : any) {
-		super(props);
-	}
-
 	componentDidMount() {
 		if(DEBUG) console.log("MOUNTED");
 		this.interval = setInterval(() => this.setState({ time: Date.now() }), frameTime);
 		
 		this.initAll();
+		this.fetchInit();
 		this.fetchAll();
 		this.updateAll();
 	}
@@ -127,7 +136,7 @@ class App extends React.Component {
 		
 		
 		ctx = canvas!.getContext('2d')
-		ctx!.scale(imageScaling,imageScaling);
+		ctx!.scale(Config.CANVAS_SCALE,Config.CANVAS_SCALE);
 		ctx!.imageSmoothingEnabled = false;
 
 
@@ -148,11 +157,20 @@ class App extends React.Component {
 		i_buy_ranged = new ButtonObject([p_buy_ranged, p_buy_ranged_hover, p_buy_ranged_clicked], 1712, 381);
 		i_buy_aoe = new ButtonObject([p_buy_aoe, p_buy_aoe_hover, p_buy_aoe_clicked], 1712, 506);
 
+		i_melee_icon = new ImageObject(p_melee_icon, 1657, 286);
+		i_ranged_icon = new ImageObject(p_ranged_icon, 1657, 410);
+		i_aoe_icon = new ImageObject(p_aoe_icon, 1657, 534);
+
+		t_melee_desc = new TextObject(["SHORT-RANGED","TOUGH","FAST"], 20, "'Press Start 2P'", 1632, 274, Config.COLOR_LIGHTBLUE, "end");
+		t_ranged_desc = new TextObject(["LONG-RANGED","NORMAL","MEDIUM"], 20, "'Press Start 2P'", 1632, 398, Config.COLOR_LIGHTBLUE, "end");
+		t_aoe_desc = new TextObject(["MEDIUM-RANGED-AOE","FRAGILE","SLOW"], 20, "'Press Start 2P'", 1632, 526, Config.COLOR_LIGHTBLUE, "end");
+		
+
 		// scanner
-		i_alertLight_blue = new ImageObject(p_alertLight_blue,0,0)
+		i_alertLight_blue = new ImageObject(p_alertLight_blue,0,0);
 
 		// pregame
-		t_caren = new TextObject(["C.A.R.E.N"], 96, "'Press Start 2P'", 112, 235)
+		t_caren = new TextObject(["C.A.R.E.N"], 96, "'Press Start 2P'", 112, 235);
 		t_howToPlay = new TextObject([
 			"Covid VIRUS is attacking!",
 			"",
@@ -166,8 +184,22 @@ class App extends React.Component {
 			"   (or don’t, you can use our default programs)",
 			"• Survive the 5 VIRUS WAVES to win!"
 			],
-			18, "'Press Start 2P'", 112, 398)
+			18, "'Press Start 2P'", 112, 398, "white", "start", "top", 2)
 		t_clickAnywhereToStart = new TextObject(["CLICK ANYWHERE TO START"], 24, "'Press Start 2P'", 112, 904)
+	}
+
+	fetchInit(){
+		if(DEBUG) console.log("FETCHINIT")
+		GameController.getUnitCost().then(data => {
+			buyMeleeCost = data.melee;
+			buyRangedCost = data.ranged;
+			buyAoeCost = data.aoe;
+
+			t_buy_melee_cost = new TextObject([buyMeleeCost.toString()], 20, "'Press Start 2P'", 1801, 248, Config.COLOR_LIGHTBLUE, "start");
+			t_buy_ranged_cost = new TextObject([buyRangedCost.toString()], 20, "'Press Start 2P'", 1801, 372, Config.COLOR_LIGHTBLUE, "start");
+			t_buy_aoe_cost = new TextObject([buyAoeCost.toString()], 20, "'Press Start 2P'", 1801, 497, Config.COLOR_LIGHTBLUE, "start");
+		});
+		
 	}
 
 	fetchAll(){
@@ -176,7 +208,7 @@ class App extends React.Component {
 
 		GameController.getMoney().then(data => money = data);
 
-		for(var i = 0 ; i < 3; ++i){
+		for(let i = 0 ; i < 3; ++i){
 			GameController.getArea(i+1).then(data => {
 				areas[i] = data;
 				if(DEBUG) console.log(areas[i]);
@@ -189,7 +221,7 @@ class App extends React.Component {
 	
 	updateAll(){
 		if(DEBUG) console.log("UPDATEALL")
-		ctx!.clearRect(0,0,screenWidth, screenHeight);
+		ctx!.clearRect(0,0,Config.SCREENWIDTH, Config.SCREENHEIGHT);
 
 		t_money.setText([money.toString()]);
 
@@ -199,6 +231,10 @@ class App extends React.Component {
 				i_buy_melee.setHover(i_buy_melee.mouseInside(mousePosition));
 				i_buy_ranged.setHover(i_buy_ranged.mouseInside(mousePosition));	
 				i_buy_aoe.setHover(i_buy_aoe.mouseInside(mousePosition));
+
+				i_buy_melee.setDisabled(money >= buyMeleeCost);
+				i_buy_ranged.setDisabled(money >= buyRangedCost);
+				i_buy_aoe.setDisabled(money >= buyAoeCost);
 			}
 		}
 		
@@ -230,6 +266,23 @@ class App extends React.Component {
 		i_buy_melee.draw();
 		i_buy_ranged.draw();
 		i_buy_aoe.draw();
+
+		t_buy_melee_cost?.draw();
+		t_buy_ranged_cost?.draw();
+		t_buy_aoe_cost?.draw();
+
+		if(i_buy_melee.isHover()){
+			i_melee_icon.draw();
+			t_melee_desc.draw();
+		} 
+		if(i_buy_ranged.isHover()){
+			i_ranged_icon.draw();
+			t_ranged_desc.draw();
+		} 
+		if(i_buy_aoe.isHover()){
+			i_aoe_icon.draw();
+			t_aoe_desc.draw();
+		} 
 
 		// scanner
 		if(gameState === 2){
@@ -299,32 +352,49 @@ function onMouseDown(e : MouseEvent){
 	if(gameState === 2){
 		if(i_dim_black.mouseInside(mousePosition)){
 
-			if(activeAreaIndex === 0){
+			
+		}
 
-			}else if(i_scanner.mouseInside(mousePosition) === false){
-				activeAreaIndex = 0;
+		if(activeAreaIndex === 0){
+
+		}else if(i_scanner.mouseInside(mousePosition) === false && !(
+			i_buy_melee.mouseInside(mousePosition) || i_buy_ranged.mouseInside(mousePosition) || i_buy_aoe.mouseInside(mousePosition)
+		)){
+			if(i_brain.mouseInside(mousePosition)){
+				if(activeAreaIndex === 0){
+					activeAreaIndex = 1;
+				}
+			}else if(i_heart.mouseInside(mousePosition)){
+				if(activeAreaIndex === 0){
+					activeAreaIndex = 2;
+				}
+			}else if(i_lungs.mouseInside(mousePosition)){
+				if(activeAreaIndex === 0){
+					activeAreaIndex = 3;
+				}
 			}
+
+			activeAreaIndex = 0;
 		}
-		if(i_brain.mouseInside(mousePosition)){
-			if(activeAreaIndex === 0){
-				activeAreaIndex = 1;
-			}
-		}else if(i_heart.mouseInside(mousePosition)){
-			if(activeAreaIndex === 0){
-				activeAreaIndex = 2;
-			}
-		}else if(i_lungs.mouseInside(mousePosition)){
-			if(activeAreaIndex === 0){
-				activeAreaIndex = 3;
-			}
+
+		if(i_buy_melee.mouseInside(mousePosition) && money >= buyMeleeCost){
+			i_buy_melee.setClicked(true);
+			GameController.buyUnit("melee");
+		}else{
+			i_buy_melee.setClicked(false);
 		}
-		if(gameState === 2){
-			i_buy_melee.setClicked(i_buy_melee.mouseInside(mousePosition));
-			i_buy_ranged.setClicked(i_buy_ranged.mouseInside(mousePosition));	
-			i_buy_aoe.setClicked(i_buy_aoe.mouseInside(mousePosition));
+		if(i_buy_ranged.mouseInside(mousePosition) && money >= buyRangedCost){
+			i_buy_ranged.setClicked(true);
+			GameController.buyUnit("ranged");
+		}else{
+			i_buy_ranged.setClicked(false);
 		}
-		
-		
+		if(i_buy_aoe.mouseInside(mousePosition) && money >= buyAoeCost){
+			i_buy_aoe.setClicked(true);
+			GameController.buyUnit("aoe");
+		}else{
+			i_buy_aoe.setClicked(false);
+		}
 	}
 }
 

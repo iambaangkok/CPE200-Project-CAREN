@@ -24,6 +24,30 @@ public class Shop {
     }
 
     public void buyAOE(){
-        
+
+    }
+
+    public int getMaxCredit() {
+        return maxCredit;
+    }
+
+    public int getCurrentCredit() {
+        return currentCredit;
+    }
+
+    public void setCurrentCredit(int currentCredit) {
+        this.currentCredit = currentCredit;
+    }
+
+    public int getMeleePrice() {
+        return meleePrice;
+    }
+
+    public int getRangedPrice() {
+        return rangedPrice;
+    }
+
+    public int getAoePrice() {
+        return aoePrice;
     }
 }

@@ -42,7 +42,9 @@ public class InventoryController {
     public String pickupUnit(@RequestBody String type, Area area, double positionX, double positionY){
         if(area.canPlace(positionX, positionY)){
             Antibody ab = UnitFactory.createAntibody("",type);
-            area.addAntibody(ab); ab.setPositionX(positionX); ab.setPositionY(positionY);
+            ab.setArea(area);
+            area.addAntibody(ab);
+            ab.setPositionX(positionX); ab.setPositionY(positionY);
             switch (type) {
                 case "melee" -> {
                     if(inventory.canPickup(type)){

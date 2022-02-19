@@ -14,9 +14,22 @@ public class ShopController {
     }
 
     @CrossOrigin
-    @PostMapping(path = "/setcredit") // http:/localhost:8080/shop/setcredit
-    public int setCredit(@RequestBody int credit){
-        shop.setCurrentCredit(credit);
-        return credit;
+    @PostMapping(path = "/buyunit")
+    public String buyUnit(@RequestBody String type){
+        switch (type) {
+            case "melee" -> {
+                shop.buyMelee();
+                return "Buy Melee Success";
+            }
+            case "ranged" -> {
+                shop.buyRanged();
+                return "Buy Ranged Success";
+            }
+            case "aoe" -> {
+                shop.buyAOE();
+                return "Buy AOE Success";
+            }
+        }
+        return "Unsuccessful something went wrong";
     }
 }

@@ -23,6 +23,38 @@ class GameController {
     return 1200;
   }
 
+  static async getWave(){
+    // const url = baseURL + "/wave";
+    // var resp = await axios.get(url);
+
+    // return resp.data;
+    return {
+      waveNumber: 1, 
+      area1: {total: 6, melee: 5, ranged: 1, aoe: 0},
+      area2: {total: 1, melee: 1, ranged: 0, aoe: 0},
+      area3: {total: 1, melee: 1, ranged: 0, aoe: 0}
+    };
+  }
+
+  static async getSpeedMultiplier(){
+    // const url = baseURL + "/wave";
+    // var resp = await axios.get(url);
+
+    // return resp.data;
+    return {type: "play", multiplier: 1};
+  }
+
+  static async setSpeedMultiplier(type : string) {
+    // await axios({
+    //   method: 'post',
+    //   url: baseURL + "/time/speedmultiplier/set",
+    //   headers: {},
+    //   data: {
+    //     type: type,
+    //   }
+    // });
+  }
+
   static async buyUnit(type: string) {
     // await axios({
     //   method: 'post',

@@ -9,10 +9,10 @@ public class Shop {
 
     public Shop() {
         this.maxCredit = 9999;
-        this.currentCredit = 0;
+        this.currentCredit = 500;
         this.meleePrice = 100;
         this.rangedPrice = 200;
-        this.aoePrice = 150;
+        this.aoePrice = 250;
     }
 
     public void buyMelee(){
@@ -33,10 +33,6 @@ public class Shop {
 
     public int getCurrentCredit() {
         return currentCredit;
-    }
-
-    public void setCurrentCredit(int currentCredit) {
-        this.currentCredit = currentCredit;
     }
 
     public int getMeleePrice() {

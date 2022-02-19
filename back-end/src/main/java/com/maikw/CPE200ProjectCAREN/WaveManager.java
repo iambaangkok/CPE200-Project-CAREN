@@ -23,15 +23,15 @@ public class WaveManager {
         Wave wave = new Wave(wavenumber);
 
         for(int i = 0 ; i < area1melee;i++){
-            wave.addWave(UnitFactory.createVirus("viruemelee"+i, "melee"));
+            wave.addWave(UnitFactory.createVirus("melee"));
         }
 
         for(int i = 0 ; i < area1ranged ; i++){
-            wave.addWave(UnitFactory.createVirus("viruerange"+i, "range"));
+            wave.addWave(UnitFactory.createVirus("ranged"));
         }
 
         for (int i = 0 ; i < area1aoe; i++){
-            wave.addWave(UnitFactory.createVirus("virueaoe"+i, "aoe"));
+            wave.addWave(UnitFactory.createVirus("aoe"));
         }
         currentWaveCount += 1 ;
         return  wave;

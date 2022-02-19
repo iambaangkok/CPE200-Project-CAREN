@@ -31,7 +31,7 @@ public class BehaviorEvaluatorTest {
     public static void main(String[] args) {
         BehaviorEvaluator be = new BehaviorEvaluator(
             GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt"),
-            UnitFactory.createAntibody("dummyUnit", "melee")
+            UnitFactory.createAntibody("melee")
             );
         try{
             Node programNode = be.parseProgram();

@@ -12,7 +12,6 @@ public class Game {
     protected Double mousePositionX ;
     protected Double mousePositionY ;
     protected Integer activeAreaIndex;
-    protected ZoomManager zoomManager;
     protected TimeManager timeManager ;
     protected Inventory inventory ;
     protected List<Area> areas;

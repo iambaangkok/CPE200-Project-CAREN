@@ -12,11 +12,4 @@ public class ShopController {
     public Shop getShop(){
         return shop;
     }
-
-    @CrossOrigin
-    @PostMapping(path = "/setcredit") // http:/localhost:8080/shop/setcredit
-    public int setCredit(@RequestBody int credit){
-        shop.setCurrentCredit(credit);
-        return credit;
-    }
 }

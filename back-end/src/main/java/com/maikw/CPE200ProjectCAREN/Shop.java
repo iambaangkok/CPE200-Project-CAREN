@@ -35,10 +35,6 @@ public class Shop {
         return currentCredit;
     }
 
-    public void setCurrentCredit(int currentCredit) {
-        this.currentCredit = currentCredit;
-    }
-
     public int getMeleePrice() {
         return meleePrice;
     }

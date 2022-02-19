@@ -12,16 +12,17 @@ public class Game {
     protected Double mousePositionX ;
     protected Double mousePositionY ;
     protected Integer activeAreaIndex;
-    protected ZoomManager zoomManager;
     protected TimeManager timeManager ;
     protected Inventory inventory ;
     protected List<Area> areas;
     protected WaveManager waveManager ;
     protected GeneticCodeManager geneticCodeManager ;
+    protected Shop shop ;
+
 
 
     public Game(){
-
+        this.shop = new Shop();
 //    this.spawn = false ;
 //    this.areas = new ArrayList<Area>();
 //    this.timeManager = new TimeManager();
@@ -70,28 +71,29 @@ public class Game {
                     waveManager.waveInfo.get(4);
                 }
 
-
-
-
             }
         }
     }
 
     public static void main(String[] args) {
-        Game g = new Game();
-//        g.startGameLoop();
+//        Game g = new Game();
+////        g.startGameLoop();
+//
+//        while(true){
+//            g.waitState();
+//
+//        }
 
-        while(true){
+        Shop shop = new Shop();
 
-            g.waitState();
+        shop.buyMelee();
+        shop.buyMelee();
+        shop.buyMelee();
+        shop.buyMelee();
 
-
-        }
-
+        System.out.println(shop.getMaxCredit());
 
     }
-
-
 
 
     private void waitState(){
@@ -107,6 +109,20 @@ public class Game {
         }
     }
 
+
+
+
+    /***
+     * เซ็ตค่าเริ่มต้นของเกมส์ เช่น shop ประกาศแค่ครั้งเดียว
+     * สร้าง wave ไว้รอแค่ครั้งเดียว
+     *
+     */
+    private void setStart(){
+
+
+
+
+    }
 
 
     private void upDate(){

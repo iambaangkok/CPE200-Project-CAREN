@@ -47,6 +47,21 @@ import p_melee_icon from './assets/artworks/classIcons_shield.png'
 import p_ranged_icon from './assets/artworks/classIcons_gun.png'
 import p_aoe_icon from './assets/artworks/classIcons_rocket.png'
 
+import p_waveInfo_triangle from './assets/artworks/waveInfo_triangle.png'; 
+
+import p_unitIcon_melee_blank_blue from './assets/artworks/unitIcon_melee_blank_blue.png';
+import p_unitIcon_melee_filled_blue from './assets/artworks/unitIcon_melee_filled_blue.png';
+import p_unitIcon_ranged_blank_blue from './assets/artworks/unitIcon_ranged_blank_blue.png';
+import p_unitIcon_ranged_filled_blue from './assets/artworks/unitIcon_ranged_filled_blue.png';
+import p_unitIcon_aoe_blank_blue from './assets/artworks/unitIcon_aoe_blank_blue.png';
+import p_unitIcon_aoe_filled_blue from './assets/artworks/unitIcon_aoe_filled_blue.png';
+
+import p_unitIcon_melee_blank_red from './assets/artworks/unitIcon_melee_blank_red.png';
+import p_unitIcon_melee_filled_red from './assets/artworks/unitIcon_melee_filled_red.png';
+import p_unitIcon_ranged_blank_red from './assets/artworks/unitIcon_ranged_blank_red.png';
+import p_unitIcon_ranged_filled_red from './assets/artworks/unitIcon_ranged_filled_red.png';
+import p_unitIcon_aoe_blank_red from './assets/artworks/unitIcon_aoe_blank_red.png';
+import p_unitIcon_aoe_filled_red from './assets/artworks/unitIcon_aoe_filled_red.png';
 
 import ButtonObject from './ButtonObject';
 
@@ -65,6 +80,7 @@ var i_scanner : ImageObject;
 
 // wave
 var t_wave_text : TextObject;
+
 
 // timer
 var b_time_pause : ButtonObject;
@@ -108,7 +124,17 @@ var buyMeleeCost : number = 0;
 var buyRangedCost : number = 0;
 var buyAoeCost : number = 0;
 
-var currentWave : number = 0;
+var currentWave : {
+	waveNumber: number, 
+	area1: {total: number, melee: number, ranged: number, aoe: number},
+	area2: {total: number, melee: number, ranged: number, aoe: number},
+	area3: {total: number, melee: number, ranged: number, aoe: number}
+} = {
+	waveNumber: 0, 
+	area1: {total: 0, melee: 0, ranged: 0, aoe: 0},
+	area2: {total: 0, melee: 0, ranged: 0, aoe: 0},
+	area3: {total: 0, melee: 0, ranged: 0, aoe: 0}
+  };
 
 /// FIELDS
 var isHover = false;
@@ -244,7 +270,9 @@ class App extends React.Component {
 
 		GameController.getMoney().then(data => money = data);
 
-		GameController.getWave().then(data => currentWave = data);
+		GameController.getWave().then(data => {
+			currentWave = data;
+		});
 
 		GameController.getSpeedMultiplier().then(data => {
 			b_time_pause.setClicked(data.type === "pause");
@@ -281,7 +309,7 @@ class App extends React.Component {
 			b_buy_ranged.setDisabled(!(money >= buyRangedCost));
 			b_buy_aoe.setDisabled(!(money >= buyAoeCost));
 
-			t_wave_text.setText(["WAVE " + currentWave.toString() + "/" + Config.MAX_WAVE.toString()]);
+			t_wave_text.setText(["WAVE " + currentWave.waveNumber.toString() + "/" + Config.MAX_WAVE.toString()]);
 		}
 		
 

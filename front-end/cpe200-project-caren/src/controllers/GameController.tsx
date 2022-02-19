@@ -28,7 +28,12 @@ class GameController {
     // var resp = await axios.get(url);
 
     // return resp.data;
-    return 1;
+    return {
+      waveNumber: 1, 
+      area1: {total: 6, melee: 5, ranged: 1, aoe: 0},
+      area2: {total: 1, melee: 1, ranged: 0, aoe: 0},
+      area3: {total: 1, melee: 1, ranged: 0, aoe: 0}
+    };
   }
 
   static async getSpeedMultiplier(){

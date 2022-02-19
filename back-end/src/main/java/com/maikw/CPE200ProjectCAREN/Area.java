@@ -62,6 +62,13 @@ public class Area {
         }
     }
 
+    public boolean canPlace(double positionX, double positionY){
+        for(Unit u : units){
+            if(u.getPositionX() == positionX && u.getPositionY() == positionY) return false;
+        }
+        return true;
+    }
+
     public boolean isTaken(){
         return this.alertLevel() == 2;
     }

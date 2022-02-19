@@ -6,6 +6,7 @@ public class Shop {
     protected int meleePrice;
     protected int rangedPrice;
     protected int aoePrice;
+    protected Inventory inventory;
 
     public Shop() {
         this.maxCredit = 9999;
@@ -16,15 +17,39 @@ public class Shop {
     }
 
     public void buyMelee(){
-
+        if(canBuy("melee")){
+            inventory.increaseMeleeCount();
+            currentCredit -= meleePrice;
+        }else{
+            System.out.println("You have no enough credit.");
+        }
     }
 
     public void buyRanged(){
-
+        if(canBuy("ranged")){
+            inventory.increaseRangedCount();
+            currentCredit -= rangedPrice;
+        }else{
+            System.out.println("You have no enough credit.");
+        }
     }
 
     public void buyAOE(){
+        if(canBuy("aoe")){
+            inventory.increaseAoeCount();
+            currentCredit -= aoePrice;
+        }else{
+            System.out.println("You have no enough credit.");
+        }
+    }
 
+    public boolean canBuy(String type){
+        return switch (type) {
+            case "melee" -> currentCredit >= meleePrice;
+            case "ranged" -> currentCredit >= rangedPrice;
+            case "aoe" -> currentCredit >= aoePrice;
+            default -> false;
+        };
     }
 
     public int getMaxCredit() {
@@ -45,5 +70,9 @@ public class Shop {
 
     public int getAoePrice() {
         return aoePrice;
+    }
+
+    public void setInventory(Inventory inventory){
+        this.inventory = inventory;
     }
 }

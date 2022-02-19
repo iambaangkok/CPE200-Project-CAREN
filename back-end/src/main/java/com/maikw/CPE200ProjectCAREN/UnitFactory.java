@@ -1,13 +1,43 @@
 package com.maikw.CPE200ProjectCAREN;
 
 public class UnitFactory {
-    public static Antibody createAntibody(String name, String type){
+    private static int count = 0;
+
+    public static Antibody createAntibody(String type){
         String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt");
-        return new Antibody(name, type, g);
+        Antibody ab;
+        switch (type) {
+            case "melee" -> {
+                ab = new Antibody("antibody_melee" + count, type, g);
+            }
+            case "ranged" -> {
+                ab = new Antibody("antibody_ranged" + count, type, g);
+            }
+            case "aoe" -> {
+                ab =  new Antibody("antibody_aoe" + count, type, g);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        }
+        count++;
+        return ab;
     }
 
-    public static Virus createVirus(String name, String type){
+    public static Virus createVirus(String type){
         String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt");
-        return new Virus(name, type, g);
+        Virus v;
+        switch (type) {
+            case "melee" -> {
+                v = new Virus("virus_melee" + count, type, g);
+            }
+            case "ranged" -> {
+                v = new Virus("virus_ranged" + count, type, g);
+            }
+            case "aoe" -> {
+                v =  new Virus("virus_aoe" + count, type, g);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        }
+        count++;
+        return v;
     }
 }

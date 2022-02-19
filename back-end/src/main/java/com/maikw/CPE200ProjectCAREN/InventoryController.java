@@ -1,11 +1,17 @@
 package com.maikw.CPE200ProjectCAREN;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/inventory")
 public class InventoryController {
-    Inventory inventory = new Inventory();
+    private final Inventory inventory;
+
+    @Autowired
+    public InventoryController(Game game) {
+        this.inventory = game.inventory;
+    }
 
     @CrossOrigin
     @GetMapping
@@ -41,7 +47,7 @@ public class InventoryController {
     @PostMapping(path = "/pickupunit")
     public String pickupUnit(@RequestBody String type, Area area, double positionX, double positionY){
         if(area.canPlace(positionX, positionY)){
-            Antibody ab = UnitFactory.createAntibody("",type);
+            Antibody ab = UnitFactory.createAntibody(type);
             ab.setArea(area);
             area.addAntibody(ab);
             ab.setPositionX(positionX); ab.setPositionY(positionY);

@@ -1,5 +1,8 @@
 package com.maikw.CPE200ProjectCAREN;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +91,15 @@ public class Area {
     public String getName() {
         return name;
     }
+
+//    public static void main(String[] args) {
+//        Area area = new Area();
+//        Antibody ab = UnitFactory.createAntibody("melee");
+//        ab.setArea(area);
+//        Virus v = UnitFactory.createVirus("melee");
+//        v.setArea(area);
+//        area.addAntibody(ab); area.addVirus(v);
+//    }
 
 
 }

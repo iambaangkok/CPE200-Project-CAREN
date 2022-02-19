@@ -64,6 +64,7 @@ import p_unitIcon_aoe_blank_red from './assets/artworks/unitIcon_aoe_blank_red.p
 import p_unitIcon_aoe_filled_red from './assets/artworks/unitIcon_aoe_filled_red.png';
 
 import ButtonObject from './ButtonObject';
+import WaveInfo from './WaveInfo';
 
 var canvas : HTMLCanvasElement | null;
 var ctx: CanvasRenderingContext2D | null;
@@ -80,7 +81,9 @@ var i_scanner : ImageObject;
 
 // wave
 var t_wave_text : TextObject;
-
+var waveInfo_brain : WaveInfo;
+var waveInfo_heart : WaveInfo;
+var waveInfo_lungs : WaveInfo;
 
 // timer
 var b_time_pause : ButtonObject;
@@ -204,6 +207,34 @@ class App extends React.Component {
 		// wave
 		t_wave_text = new TextObject(["WAVE " + currentWave.toString() + "/" + Config.MAX_WAVE.toString()], 48, "'Press Start 2P'", 97, 111);
 
+		waveInfo_brain = new WaveInfo(
+			new ImageObject(p_waveInfo_triangle, 1140, 142),
+			new ImageObject([p_unitIcon_melee_blank_red,p_unitIcon_melee_filled_red], 1180, 142),
+			new ImageObject([p_unitIcon_ranged_blank_red,p_unitIcon_ranged_filled_red], 1180, 178),
+			new ImageObject([p_unitIcon_aoe_blank_red,p_unitIcon_aoe_filled_red], 1180, 214),
+			new TextObject([currentWave.area1.melee.toString()], 28, "'Press Start 2P'", 1224, 144, Config.COLOR_BRIGHTRED),
+			new TextObject([currentWave.area1.ranged.toString()], 28, "'Press Start 2P'", 1224, 180, Config.COLOR_BRIGHTRED),
+			new TextObject([currentWave.area1.aoe.toString()], 28, "'Press Start 2P'", 1224, 215, Config.COLOR_BRIGHTRED)
+		);
+		waveInfo_heart = new WaveInfo(
+			new ImageObject(p_waveInfo_triangle, 1131, 515),
+			new ImageObject([p_unitIcon_melee_blank_red,p_unitIcon_melee_filled_red], 1171, 515),
+			new ImageObject([p_unitIcon_ranged_blank_red,p_unitIcon_ranged_filled_red], 1171, 551),
+			new ImageObject([p_unitIcon_aoe_blank_red,p_unitIcon_aoe_filled_red], 1171, 587),
+			new TextObject([currentWave.area2.melee.toString()], 28, "'Press Start 2P'", 1215, 517, Config.COLOR_BRIGHTRED),
+			new TextObject([currentWave.area2.ranged.toString()], 28, "'Press Start 2P'", 1215, 553, Config.COLOR_BRIGHTRED),
+			new TextObject([currentWave.area2.aoe.toString()], 28, "'Press Start 2P'", 1215, 588, Config.COLOR_BRIGHTRED)
+		);
+		waveInfo_lungs = new WaveInfo(
+			new ImageObject(p_waveInfo_triangle, 1159, 648),
+			new ImageObject([p_unitIcon_melee_blank_red,p_unitIcon_melee_filled_red], 1199, 648),
+			new ImageObject([p_unitIcon_ranged_blank_red,p_unitIcon_ranged_filled_red], 1199, 684),
+			new ImageObject([p_unitIcon_aoe_blank_red,p_unitIcon_aoe_filled_red], 1199, 720),
+			new TextObject([currentWave.area3.melee.toString()], 28, "'Press Start 2P'", 1243, 650, Config.COLOR_BRIGHTRED),
+			new TextObject([currentWave.area3.ranged.toString()], 28, "'Press Start 2P'", 1243, 686, Config.COLOR_BRIGHTRED),
+			new TextObject([currentWave.area3.aoe.toString()], 28, "'Press Start 2P'", 1243, 721, Config.COLOR_BRIGHTRED)
+		);
+
 		// time
 		b_time_pause = new ButtonObject([p_pause, p_pause_clicked, p_pause_clicked, p_pause], 141, 172); b_time_pause.setToggle(true);
 		b_time_play = new ButtonObject([p_play, p_play_clicked, p_play_clicked, p_play], 197, 172); b_time_play.setToggle(true);
@@ -272,6 +303,9 @@ class App extends React.Component {
 
 		GameController.getWave().then(data => {
 			currentWave = data;
+			waveInfo_brain.setAllField(currentWave.area1);
+			waveInfo_heart.setAllField(currentWave.area2);
+			waveInfo_lungs.setAllField(currentWave.area3);
 		});
 
 		GameController.getSpeedMultiplier().then(data => {
@@ -332,7 +366,16 @@ class App extends React.Component {
 		
 		// wave
 		t_wave_text.draw();
-		
+
+		if(currentWave.area1.total > 0){
+			waveInfo_brain.draw();
+		}
+		if(currentWave.area2.total > 0){
+			waveInfo_heart.draw();
+		}
+		if(currentWave.area3.total > 0){
+			waveInfo_lungs.draw();
+		}
 		// time
 		b_time_pause.draw();
 		b_time_play.draw();

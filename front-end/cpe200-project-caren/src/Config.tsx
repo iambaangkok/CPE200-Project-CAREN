@@ -3,6 +3,7 @@ class Config{
 
     public static COLOR_LIGHTBLUE = "#92E8C0";
     public static COLOR_CREAMWHITE = "#F5FFE8";
+    public static COLOR_BRIGHTRED = "#E64539";
 
     public static FPS = 30;
 

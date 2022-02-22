@@ -71,6 +71,7 @@ import p_invenButton_middle from './assets/artworks/invenButton_middle.png';
 import p_invenButton_middle_blank from './assets/artworks/invenButton_middle_blank.png';
 import p_invenButton_bottom from './assets/artworks/invenButton_bottom.png';
 import p_invenButton_bottom_blank from './assets/artworks/invenButton_bottom_blank.png';
+import Vector2 from './Vector2';
 
 
 var canvas : HTMLCanvasElement | null;
@@ -140,6 +141,7 @@ var t_clickAnywhereToStart : TextObject;
 var gameState : number = 1; // 1 = pregame, 2 = game
 var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
 var areas = [null,null,null]; // area datas
+var scannerRadius : number = 100; 
 
 var money : number = 0;
 var buyMeleeCost : number = 0;
@@ -160,7 +162,7 @@ var currentWave : {
 
 var inventory : {
 	melee : number,
-	ranged : number,
+	ranged : number,	
 	aoe : number,
 } = {
 	melee : 0,
@@ -170,7 +172,8 @@ var inventory : {
 
 /// FIELDS
 var isHover = false;
-var mousePosition : {x:number, y:number};
+var mousePosition : Vector2;
+var scannerMousePosition : Vector2;
 var gameTime = 0;
 var frameTime = 1000/Config.FPS;
 
@@ -335,10 +338,6 @@ class App extends React.Component {
 			t_buy_ranged_cost = new TextObject([buyRangedCost.toString()], 20, "'Press Start 2P'", 1801, 372, Config.COLOR_LIGHTBLUE, "start");
 			t_buy_aoe_cost = new TextObject([buyAoeCost.toString()], 20, "'Press Start 2P'", 1801, 497, Config.COLOR_LIGHTBLUE, "start");
 		});
-
-		
-		
-		
 	}
 
 	fetchAll(){
@@ -518,6 +517,7 @@ function onMouseUp(e : MouseEvent){
 function onMouseDown(e : MouseEvent){
 	if (DEBUG) console.log("mousedown");
 	if (true) console.log(mousePosition);
+	if (true) console.log(scannerMousePosition);
 
 	if(gameState === 1){
 		if(i_dim_black.mouseInside(mousePosition)){
@@ -553,16 +553,17 @@ function onMouseDown(e : MouseEvent){
 				b_invenButton_middle.setClicked(false);
 				b_invenButton_bottom.setClicked(true);
 			}else{
-				var position = {x: 0, y: 0};
-				if(b_invenButton_top.isClicked() && inventory.melee > 0){
-					GameController.placeUnit("melee", activeAreaIndex, position);
-					inventory.melee -= 1;
-				}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
-					GameController.placeUnit("ranged", activeAreaIndex, position);
-					inventory.ranged -= 1;
-				}else if(b_invenButton_bottom.isClicked() && inventory.aoe > 0){
-					GameController.placeUnit("aoe", activeAreaIndex, position);
-					inventory.aoe -= 1;
+				if(mouseInScannerRadius()){
+					if(b_invenButton_top.isClicked() && inventory.melee > 0){
+						GameController.placeUnit("melee", activeAreaIndex, scannerToGameCoodinate(scannerMousePosition));
+						inventory.melee -= 1;
+					}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
+						GameController.placeUnit("ranged", activeAreaIndex, scannerToGameCoodinate(scannerMousePosition));
+						inventory.ranged -= 1;
+					}else if(b_invenButton_bottom.isClicked() && inventory.aoe > 0){
+						GameController.placeUnit("aoe", activeAreaIndex, scannerToGameCoodinate(scannerMousePosition));
+						inventory.aoe -= 1;
+					}
 				}
 			}
 
@@ -624,7 +625,32 @@ function onMouseDown(e : MouseEvent){
 
 function getMousePosition(canvas : HTMLCanvasElement, e : MouseEvent){
 	var canvasRect = canvas.getBoundingClientRect();
-	mousePosition = {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top};
+	mousePosition = {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top} as Vector2;
+	scannerMousePosition = {x: e.clientX - canvasRect.left - Config.SCANNER_CENTER.x, y: e.clientY - canvasRect.top - Config.SCANNER_CENTER.y} as Vector2;
+
+	
+
 	return mousePosition;
+}
+
+function scannerToCanvasCoordinate(coordinate : Vector2){
+	var canvasRect = canvas!.getBoundingClientRect();
+	return {x: coordinate.x + Config.SCANNER_CENTER.x, y: coordinate.y + Config.SCANNER_CENTER.y} as Vector2
+}
+
+function canvasToScannerCoordinate(coordinate : Vector2){
+	var canvasRect = canvas!.getBoundingClientRect();
+	return {x: coordinate.x - canvasRect.left - Config.SCANNER_CENTER.x, y: coordinate.y - canvasRect.top - Config.SCANNER_CENTER.y} as Vector2
+}
+
+function scannerToGameCoodinate(coordinate : Vector2){
+	var scale = scannerRadius/Config.SCANNER_RADIUS;
+	var v = Vector2.getCopy(coordinate);
+	v.scale(scale);
+	return v;
+}
+
+function mouseInScannerRadius(){
+	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerMousePosition) <= Config.SCANNER_RADIUS;
 }
 

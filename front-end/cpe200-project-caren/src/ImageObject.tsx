@@ -1,5 +1,6 @@
+import Config from "./Config";
 
-const DEBUG = false;
+const DEBUG = Config.DEBUG;
 
 class ImageObject{
 

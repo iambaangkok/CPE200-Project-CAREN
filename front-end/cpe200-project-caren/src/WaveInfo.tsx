@@ -1,7 +1,8 @@
+import Config from "./Config";
 import ImageObject from "./ImageObject";
 import TextObject from "./TextObject";
 
-const DEBUG = true;
+const DEBUG = Config.DEBUG;
 
 class WaveInfo{
     triangle: ImageObject;

@@ -129,6 +129,13 @@ var t_inven_melee : TextObject;
 var t_inven_ranged : TextObject;
 var t_inven_aoe : TextObject;
 
+var i_unitIcon_melee_blue : ImageObject;
+var i_unitIcon_ranged_blue : ImageObject;
+var i_unitIcon_aoe_blue : ImageObject;
+var i_unitIcon_melee_red : ImageObject;
+var i_unitIcon_ranged_red : ImageObject;
+var i_unitIcon_aoe_red : ImageObject;
+
 var i_alertLight_blue: ImageObject;
 
 // pregame
@@ -140,7 +147,15 @@ var t_clickAnywhereToStart : TextObject;
 /// FETCHABLE FIELDS
 var gameState : number = 1; // 1 = pregame, 2 = game
 var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
-var areas = [null,null,null]; // area datas
+var areas : {units : any[], viruses : any[], antibodies : any[], name : string, taken : boolean}[] 
+= [	{
+		units: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}, {position : new Vector2(0,0), type: "aoe"}],
+		viruses: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}],
+		antibodies: [{position : new Vector2(0,0), type: "aoe"}],
+		name: "gg",
+		taken: false
+	}
+]; // area datas
 var scannerRadius : number = 100; 
 
 var money : number = 0;
@@ -221,11 +236,9 @@ class App extends React.Component {
 		canvas!.addEventListener('mousemove', function(e){ onMouseHover(e); getMousePosition(canvas!, e)});
 		canvas!.addEventListener('mouseout', function(e){ onMouseHover(e); getMousePosition(canvas!, e)});
 		
-		
 		ctx = canvas!.getContext('2d')
 		ctx!.scale(Config.CANVAS_SCALE,Config.CANVAS_SCALE);
 		ctx!.imageSmoothingEnabled = false;
-
 
 		i_main_background = new ImageObject(p_main_background,0,0)
 		i_brain = new ImageObject([p_brain_blue, p_brain_red],808,74)
@@ -307,6 +320,14 @@ class App extends React.Component {
 		t_inven_aoe = new TextObject(['x' + inventory.aoe.toString()], 20, "'Press Start 2P'", 1488, 676, Config.COLOR_LIGHTBLUE, "center");
 
 		i_alertLight_blue = new ImageObject(p_alertLight_blue,0,0);
+
+		i_unitIcon_melee_blue = new ImageObject(p_unitIcon_melee_filled_blue, 0, 0); i_unitIcon_melee_blue.setAlign("center"); i_unitIcon_melee_blue.setBaseLine("middle");
+		i_unitIcon_ranged_blue = new ImageObject(p_unitIcon_ranged_filled_blue, 0, 0); i_unitIcon_ranged_blue.setAlign("center"); i_unitIcon_ranged_blue.setBaseLine("middle");
+		i_unitIcon_aoe_blue = new ImageObject(p_unitIcon_aoe_filled_blue, 0, 0); i_unitIcon_aoe_blue.setAlign("center"); i_unitIcon_aoe_blue.setBaseLine("middle");
+		i_unitIcon_melee_red = new ImageObject(p_unitIcon_melee_filled_red, 0, 0); i_unitIcon_melee_red.setAlign("center"); i_unitIcon_melee_red.setBaseLine("middle");
+		i_unitIcon_ranged_red = new ImageObject(p_unitIcon_ranged_filled_red, 0, 0); i_unitIcon_ranged_red.setAlign("center"); i_unitIcon_ranged_red.setBaseLine("middle");
+		i_unitIcon_aoe_red = new ImageObject(p_unitIcon_aoe_filled_red, 0, 0); i_unitIcon_aoe_red.setAlign("center"); i_unitIcon_aoe_red.setBaseLine("middle");
+
 
 		// pregame
 		t_caren = new TextObject(["C.A.R.E.N"], 96, "'Press Start 2P'", 112, 235);
@@ -473,6 +494,8 @@ class App extends React.Component {
 				t_inven_melee.draw();
 				t_inven_ranged.draw();
 				t_inven_aoe.draw();
+
+				drawUnits();
 			}
 		}
 
@@ -553,15 +576,15 @@ function onMouseDown(e : MouseEvent){
 				b_invenButton_middle.setClicked(false);
 				b_invenButton_bottom.setClicked(true);
 			}else{
-				if(mouseInScannerRadius()){
+				if(mouseInScannerRadius() && activeAreaIndex !== 0){
 					if(b_invenButton_top.isClicked() && inventory.melee > 0){
-						GameController.placeUnit("melee", activeAreaIndex, scannerToGameCoodinate(scannerMousePosition));
+						GameController.placeUnit("melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.melee -= 1;
 					}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
-						GameController.placeUnit("ranged", activeAreaIndex, scannerToGameCoodinate(scannerMousePosition));
+						GameController.placeUnit("ranged", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.ranged -= 1;
 					}else if(b_invenButton_bottom.isClicked() && inventory.aoe > 0){
-						GameController.placeUnit("aoe", activeAreaIndex, scannerToGameCoodinate(scannerMousePosition));
+						GameController.placeUnit("aoe", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.aoe -= 1;
 					}
 				}
@@ -623,18 +646,48 @@ function onMouseDown(e : MouseEvent){
 	}
 }
 
+function drawUnits(){
+	if(activeAreaIndex !== 0){
+		if(DEBUG) console.log("draw units")
+		areas[activeAreaIndex-1].viruses.forEach(unit => {
+			
+			var img = i_unitIcon_melee_red;
+			if(unit.type === "ranged"){
+				img = i_unitIcon_ranged_red;
+			}else if(unit.type === "aoe"){
+				img = i_unitIcon_aoe_red;
+			}
+
+			var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(unit.position)));
+			Vector2.scale(pos, 1/Config.CANVAS_SCALE)
+			img.setPosition(pos);
+			img.draw();
+		});
+		areas[activeAreaIndex-1].antibodies.forEach(unit => {
+			var img = i_unitIcon_melee_blue;
+			if(unit.type === "ranged"){
+				img = i_unitIcon_ranged_blue;
+			}else if(unit.type === "aoe"){
+				img = i_unitIcon_aoe_blue;
+			}
+
+			var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(unit.position)));
+			Vector2.scale(pos, 1/Config.CANVAS_SCALE)
+			img.setPosition(pos);
+			img.draw();
+		});
+	}
+}
+
+
 function getMousePosition(canvas : HTMLCanvasElement, e : MouseEvent){
 	var canvasRect = canvas.getBoundingClientRect();
 	mousePosition = {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top} as Vector2;
-	scannerMousePosition = {x: e.clientX - canvasRect.left - Config.SCANNER_CENTER.x, y: e.clientY - canvasRect.top - Config.SCANNER_CENTER.y} as Vector2;
-
-	
-
+	scannerMousePosition = {x: mousePosition.x - Config.SCANNER_CENTER.x, y: mousePosition.y - Config.SCANNER_CENTER.y} as Vector2;
 	return mousePosition;
 }
 
 function scannerToCanvasCoordinate(coordinate : Vector2){
-	var canvasRect = canvas!.getBoundingClientRect();
 	return {x: coordinate.x + Config.SCANNER_CENTER.x, y: coordinate.y + Config.SCANNER_CENTER.y} as Vector2
 }
 
@@ -643,8 +696,15 @@ function canvasToScannerCoordinate(coordinate : Vector2){
 	return {x: coordinate.x - canvasRect.left - Config.SCANNER_CENTER.x, y: coordinate.y - canvasRect.top - Config.SCANNER_CENTER.y} as Vector2
 }
 
-function scannerToGameCoodinate(coordinate : Vector2){
+function scannerToGameCoordinate(coordinate : Vector2){
 	var scale = scannerRadius/Config.SCANNER_RADIUS;
+	var v = Vector2.getCopy(coordinate);
+	v.scale(scale);
+	return v;
+}
+
+function gameToScannerCoordinate(coordinate : Vector2){
+	var scale = Config.SCANNER_RADIUS/scannerRadius;
 	var v = Vector2.getCopy(coordinate);
 	v.scale(scale);
 	return v;

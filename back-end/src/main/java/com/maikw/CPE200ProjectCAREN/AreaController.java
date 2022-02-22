@@ -1,5 +1,6 @@
 package com.maikw.CPE200ProjectCAREN;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,9 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/area") // http://localhost:8080/area
 public class AreaController {
-    Area area = new Area("Area1");
-    Area area2 = new Area("Area2");
-    Area area3 = new Area("Area3");
+    private final Area area;
+    private final Area area2;
+    private final Area area3;
+
+    @Autowired
+    public AreaController(Game game) {
+        this.area = game.areas.get(0);
+        this.area2 = game.areas.get(1);
+        this.area3 = game.areas.get(2);
+    }
 
     @CrossOrigin
     @GetMapping(path = "/getarea1") // http://localhost:8080/area/getarea1

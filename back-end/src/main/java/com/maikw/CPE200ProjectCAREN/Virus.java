@@ -7,7 +7,7 @@ public class Virus extends Unit{
     }
 
     public int creditReward(){
-        return 20;
+        return 50;
     }
     
 }

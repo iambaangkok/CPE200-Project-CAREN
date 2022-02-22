@@ -1,9 +1,12 @@
 package com.maikw.CPE200ProjectCAREN;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Component
 public class Game {
     protected Integer state  = 1 ;
     protected Boolean spawn ;
@@ -23,11 +26,11 @@ public class Game {
 
     public Game(){
         this.shop = new Shop();
-//    this.spawn = false ;
-//    this.areas = new ArrayList<Area>();
-//    this.timeManager = new TimeManager();
-//    this.inventory = new Inventory();
-//    this.waveManager = new WaveManager();
+//        this.spawn = false ;
+//        this.areas = new ArrayList<Area>();
+//        this.timeManager = new TimeManager();
+//        this.inventory = new Inventory();
+//        this.waveManager = new WaveManager();
 
     }
 

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Config from '../Config';
+import Vector2 from '../Vector2';
 
 const baseURL = Config.SERVER_URL;
 
@@ -93,8 +94,17 @@ class GameController {
 
   static async getArea(areaIndex : number){
     const url = baseURL + "/area/getarea" + (areaIndex);
-    var area = await axios.get(url);
+    if(areaIndex === 1){
+      return {
+        units: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}, {position : new Vector2(0,0), type: "aoe"}],
+        viruses: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}],
+        antibodies: [{position : new Vector2(0,0), type: "aoe"}],
+        name: "gg",
+        taken: false
+      };
+    }
 
+    var area = await axios.get(url);
     return area.data;
   }
 

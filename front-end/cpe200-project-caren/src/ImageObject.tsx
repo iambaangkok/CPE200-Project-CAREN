@@ -1,4 +1,5 @@
 import Config from "./Config";
+import Vector2 from "./Vector2";
 
 const DEBUG = Config.DEBUG;
 
@@ -140,6 +141,10 @@ class ImageObject{
         if(this.image instanceof Array){
             this.state = (this.state+1) % this.maxState!;
         }
+    }
+
+    public setPosition(position : Vector2){
+        this.position = position;
     }
 
     public setState(state : number){

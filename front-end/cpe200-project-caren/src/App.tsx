@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import Config from './Config';
 import ImageObject from './ImageObject';
+import ButtonObject from './ButtonObject';
+import WaveInfo from './WaveInfo';
 import TextObject from './TextObject';
 
 // controllers
@@ -63,8 +65,14 @@ import p_unitIcon_ranged_filled_red from './assets/artworks/unitIcon_ranged_fill
 import p_unitIcon_aoe_blank_red from './assets/artworks/unitIcon_aoe_blank_red.png';
 import p_unitIcon_aoe_filled_red from './assets/artworks/unitIcon_aoe_filled_red.png';
 
-import ButtonObject from './ButtonObject';
-import WaveInfo from './WaveInfo';
+import p_invenButton_top from './assets/artworks/invenButton_top.png';
+import p_invenButton_top_blank from './assets/artworks/invenButton_top_blank.png';
+import p_invenButton_middle from './assets/artworks/invenButton_middle.png';
+import p_invenButton_middle_blank from './assets/artworks/invenButton_middle_blank.png';
+import p_invenButton_bottom from './assets/artworks/invenButton_bottom.png';
+import p_invenButton_bottom_blank from './assets/artworks/invenButton_bottom_blank.png';
+import Vector2 from './Vector2';
+
 
 var canvas : HTMLCanvasElement | null;
 var ctx: CanvasRenderingContext2D | null;
@@ -77,7 +85,6 @@ var i_lungs : ImageObject;
 
 // dim black
 var i_dim_black : ImageObject;
-var i_scanner : ImageObject;
 
 // wave
 var t_wave_text : TextObject;
@@ -109,6 +116,26 @@ var t_ranged_desc : TextObject;
 var t_aoe_desc : TextObject;
 
 // scanner
+var i_scanner : ImageObject;
+var b_invenButton_top : ButtonObject;
+var b_invenButton_middle : ButtonObject;
+var b_invenButton_bottom : ButtonObject;
+
+var i_invenIcon_melee : ImageObject;
+var i_invenIcon_ranged : ImageObject;
+var i_invenIcon_aoe : ImageObject;
+
+var t_inven_melee : TextObject;
+var t_inven_ranged : TextObject;
+var t_inven_aoe : TextObject;
+
+var i_unitIcon_melee_blue : ImageObject;
+var i_unitIcon_ranged_blue : ImageObject;
+var i_unitIcon_aoe_blue : ImageObject;
+var i_unitIcon_melee_red : ImageObject;
+var i_unitIcon_ranged_red : ImageObject;
+var i_unitIcon_aoe_red : ImageObject;
+
 var i_alertLight_blue: ImageObject;
 
 // pregame
@@ -120,7 +147,16 @@ var t_clickAnywhereToStart : TextObject;
 /// FETCHABLE FIELDS
 var gameState : number = 1; // 1 = pregame, 2 = game
 var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
-var areas = [null,null,null]; // area datas
+var areas : {units : any[], viruses : any[], antibodies : any[], name : string, taken : boolean}[] 
+= [	{
+		units: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}, {position : new Vector2(0,0), type: "aoe"}],
+		viruses: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}],
+		antibodies: [{position : new Vector2(0,0), type: "aoe"}],
+		name: "gg",
+		taken: false
+	}
+]; // area datas
+var scannerRadius : number = 100; 
 
 var money : number = 0;
 var buyMeleeCost : number = 0;
@@ -139,14 +175,25 @@ var currentWave : {
 	area3: {total: 0, melee: 0, ranged: 0, aoe: 0}
   };
 
+var inventory : {
+	melee : number,
+	ranged : number,	
+	aoe : number,
+} = {
+	melee : 0,
+	ranged : 0,
+	aoe : 0
+};
+
 /// FIELDS
 var isHover = false;
-var mousePosition : {x:number, y:number};
+var mousePosition : Vector2;
+var scannerMousePosition : Vector2;
 var gameTime = 0;
 var frameTime = 1000/Config.FPS;
 
 
-const DEBUG = true;
+const DEBUG = Config.DEBUG;
 
 if(DEBUG) console.log("top");
 
@@ -189,11 +236,9 @@ class App extends React.Component {
 		canvas!.addEventListener('mousemove', function(e){ onMouseHover(e); getMousePosition(canvas!, e)});
 		canvas!.addEventListener('mouseout', function(e){ onMouseHover(e); getMousePosition(canvas!, e)});
 		
-		
 		ctx = canvas!.getContext('2d')
 		ctx!.scale(Config.CANVAS_SCALE,Config.CANVAS_SCALE);
 		ctx!.imageSmoothingEnabled = false;
-
 
 		i_main_background = new ImageObject(p_main_background,0,0)
 		i_brain = new ImageObject([p_brain_blue, p_brain_red],808,74)
@@ -202,10 +247,9 @@ class App extends React.Component {
 
 		// dim black
 		i_dim_black = new ImageObject(p_dim_black, 0,0);
-		i_scanner = new ImageObject(p_scanner, 245, 28);
 
 		// wave
-		t_wave_text = new TextObject(["WAVE " + currentWave.toString() + "/" + Config.MAX_WAVE.toString()], 48, "'Press Start 2P'", 97, 111);
+		t_wave_text = new TextObject(["WAVE " + currentWave.waveNumber.toString() + "/" + Config.MAX_WAVE.toString()], 48, "'Press Start 2P'", 97, 111);
 
 		waveInfo_brain = new WaveInfo(
 			new ImageObject(p_waveInfo_triangle, 1140, 142),
@@ -259,7 +303,31 @@ class App extends React.Component {
 		
 
 		// scanner
+		i_scanner = new ImageObject(p_scanner, 245, 28);
+		b_invenButton_top = new ButtonObject([p_invenButton_top_blank, p_invenButton_top,p_invenButton_top,p_invenButton_top_blank], 1416, 356); 
+		b_invenButton_top.setToggle(true); b_invenButton_top.setClicked(true);
+		b_invenButton_middle = new ButtonObject([p_invenButton_middle_blank, p_invenButton_middle,p_invenButton_middle,p_invenButton_middle_blank], 1440, 494); 
+		b_invenButton_middle.setToggle(true);
+		b_invenButton_bottom = new ButtonObject([p_invenButton_bottom_blank, p_invenButton_bottom,p_invenButton_bottom,p_invenButton_bottom_blank], 1416, 604); 
+		b_invenButton_bottom.setToggle(true);
+
+		i_invenIcon_melee = new ImageObject(p_unitIcon_melee_blank_blue, 1448, 395);
+		i_invenIcon_ranged = new ImageObject(p_unitIcon_ranged_blank_blue, 1467, 516);
+		i_invenIcon_aoe = new ImageObject(p_unitIcon_aoe_blank_blue, 1472, 629);
+
+		t_inven_melee = new TextObject(['x' + inventory.melee.toString()], 20, "'Press Start 2P'", 1468, 438, Config.COLOR_LIGHTBLUE, "center");
+		t_inven_ranged = new TextObject(['x' + inventory.ranged.toString()], 20, "'Press Start 2P'", 1486, 561, Config.COLOR_LIGHTBLUE, "center");
+		t_inven_aoe = new TextObject(['x' + inventory.aoe.toString()], 20, "'Press Start 2P'", 1488, 676, Config.COLOR_LIGHTBLUE, "center");
+
 		i_alertLight_blue = new ImageObject(p_alertLight_blue,0,0);
+
+		i_unitIcon_melee_blue = new ImageObject(p_unitIcon_melee_filled_blue, 0, 0); i_unitIcon_melee_blue.setAlign("center"); i_unitIcon_melee_blue.setBaseLine("middle");
+		i_unitIcon_ranged_blue = new ImageObject(p_unitIcon_ranged_filled_blue, 0, 0); i_unitIcon_ranged_blue.setAlign("center"); i_unitIcon_ranged_blue.setBaseLine("middle");
+		i_unitIcon_aoe_blue = new ImageObject(p_unitIcon_aoe_filled_blue, 0, 0); i_unitIcon_aoe_blue.setAlign("center"); i_unitIcon_aoe_blue.setBaseLine("middle");
+		i_unitIcon_melee_red = new ImageObject(p_unitIcon_melee_filled_red, 0, 0); i_unitIcon_melee_red.setAlign("center"); i_unitIcon_melee_red.setBaseLine("middle");
+		i_unitIcon_ranged_red = new ImageObject(p_unitIcon_ranged_filled_red, 0, 0); i_unitIcon_ranged_red.setAlign("center"); i_unitIcon_ranged_red.setBaseLine("middle");
+		i_unitIcon_aoe_red = new ImageObject(p_unitIcon_aoe_filled_red, 0, 0); i_unitIcon_aoe_red.setAlign("center"); i_unitIcon_aoe_red.setBaseLine("middle");
+
 
 		// pregame
 		t_caren = new TextObject(["C.A.R.E.N"], 96, "'Press Start 2P'", 112, 235);
@@ -291,8 +359,6 @@ class App extends React.Component {
 			t_buy_ranged_cost = new TextObject([buyRangedCost.toString()], 20, "'Press Start 2P'", 1801, 372, Config.COLOR_LIGHTBLUE, "start");
 			t_buy_aoe_cost = new TextObject([buyAoeCost.toString()], 20, "'Press Start 2P'", 1801, 497, Config.COLOR_LIGHTBLUE, "start");
 		});
-		
-		
 	}
 
 	fetchAll(){
@@ -301,11 +367,13 @@ class App extends React.Component {
 
 		GameController.getMoney().then(data => money = data);
 
+		if(gameState === 2)
 		GameController.getWave().then(data => {
 			currentWave = data;
 			waveInfo_brain.setAllField(currentWave.area1);
 			waveInfo_heart.setAllField(currentWave.area2);
 			waveInfo_lungs.setAllField(currentWave.area3);
+			t_wave_text.setText(["WAVE " + currentWave.waveNumber.toString() + "/" + Config.MAX_WAVE.toString()]);
 		});
 
 		GameController.getSpeedMultiplier().then(data => {
@@ -321,6 +389,10 @@ class App extends React.Component {
 				if(DEBUG) console.log(areas[i]);
 			});
 		}
+
+		GameController.getInventory().then(data => {
+			inventory = data;
+		});
 		
 		if(DEBUG) console.log(gameState)
 	}
@@ -328,7 +400,7 @@ class App extends React.Component {
 	
 	updateAll(){
 		if(DEBUG) console.log("UPDATEALL")
-		ctx!.clearRect(0,0,Config.SCREENWIDTH, Config.SCREENHEIGHT);
+		ctx!.clearRect(0,0,Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
 		t_money.setText([money.toString()]);
 
@@ -343,7 +415,9 @@ class App extends React.Component {
 			b_buy_ranged.setDisabled(!(money >= buyRangedCost));
 			b_buy_aoe.setDisabled(!(money >= buyAoeCost));
 
-			t_wave_text.setText(["WAVE " + currentWave.waveNumber.toString() + "/" + Config.MAX_WAVE.toString()]);
+			t_inven_melee.setText(['x' + inventory.melee.toString()]);
+			t_inven_ranged.setText(['x' + inventory.ranged.toString()]);
+			t_inven_aoe.setText(['x' + inventory.aoe.toString()]);
 		}
 		
 
@@ -411,6 +485,17 @@ class App extends React.Component {
 		if(gameState === 2){
 			if(activeAreaIndex !== 0){
 				i_scanner.draw();
+				b_invenButton_top.draw();
+				b_invenButton_middle.draw();
+				b_invenButton_bottom.draw();
+				i_invenIcon_melee.draw();
+				i_invenIcon_ranged.draw();
+				i_invenIcon_aoe.draw();
+				t_inven_melee.draw();
+				t_inven_ranged.draw();
+				t_inven_aoe.draw();
+
+				drawUnits();
 			}
 		}
 
@@ -446,15 +531,6 @@ function onMouseUp(e : MouseEvent){
 	if (DEBUG) console.log("mouseup");
 
 	if(gameState === 2){
-		// if(!i_buy_melee.mouseInside(mousePosition)){
-		// 	i_buy_melee.setClicked(false);
-		// }
-		// if(!i_buy_ranged.mouseInside(mousePosition)){
-		// 	i_buy_ranged.setClicked(false);	
-		// }
-		// if(!i_buy_aoe.mouseInside(mousePosition)){
-		// 	i_buy_aoe.setClicked(false);
-		// }
 		b_buy_melee.mouseUp();
 		b_buy_ranged.mouseUp();
 		b_buy_aoe.mouseUp();
@@ -463,7 +539,8 @@ function onMouseUp(e : MouseEvent){
 
 function onMouseDown(e : MouseEvent){
 	if (DEBUG) console.log("mousedown");
-	if (DEBUG) console.log(mousePosition);
+	if (true) console.log(mousePosition);
+	if (true) console.log(scannerMousePosition);
 
 	if(gameState === 1){
 		if(i_dim_black.mouseInside(mousePosition)){
@@ -480,10 +557,40 @@ function onMouseDown(e : MouseEvent){
 		// scanner
 		if(activeAreaIndex === 0){
 
-		}else if(i_scanner.mouseInside(mousePosition) === false && !(
-			b_buy_melee.mouseInside(mousePosition) || b_buy_ranged.mouseInside(mousePosition) || b_buy_aoe.mouseInside(mousePosition)
-		)){
+		}else if(i_scanner.mouseInside(mousePosition) === false
+			&& !(b_buy_melee.mouseInside(mousePosition) || b_buy_ranged.mouseInside(mousePosition) || b_buy_aoe.mouseInside(mousePosition))
+		){
 			activeAreaIndex = 0;
+		}
+		if(i_scanner.mouseInside(mousePosition)){
+			if(b_invenButton_top.mouseInside(mousePosition)){
+				b_invenButton_top.setClicked(true);
+				b_invenButton_middle.setClicked(false);
+				b_invenButton_bottom.setClicked(false);
+			}else if(b_invenButton_middle.mouseInside(mousePosition)){
+				b_invenButton_top.setClicked(false);
+				b_invenButton_middle.setClicked(true);
+				b_invenButton_bottom.setClicked(false);
+			}else if(b_invenButton_bottom.mouseInside(mousePosition)){
+				b_invenButton_top.setClicked(false);
+				b_invenButton_middle.setClicked(false);
+				b_invenButton_bottom.setClicked(true);
+			}else{
+				if(mouseInScannerRadius() && activeAreaIndex !== 0){
+					if(b_invenButton_top.isClicked() && inventory.melee > 0){
+						GameController.placeUnit("melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						inventory.melee -= 1;
+					}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
+						GameController.placeUnit("ranged", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						inventory.ranged -= 1;
+					}else if(b_invenButton_bottom.isClicked() && inventory.aoe > 0){
+						GameController.placeUnit("aoe", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						inventory.aoe -= 1;
+					}
+				}
+			}
+
+
 		}
 		if(i_brain.mouseInside(mousePosition)){
 			if(activeAreaIndex === 0){
@@ -539,9 +646,71 @@ function onMouseDown(e : MouseEvent){
 	}
 }
 
+function drawUnits(){
+	if(activeAreaIndex !== 0){
+		if(DEBUG) console.log("draw units")
+		areas[activeAreaIndex-1].viruses.forEach(unit => {
+			
+			var img = i_unitIcon_melee_red;
+			if(unit.type === "ranged"){
+				img = i_unitIcon_ranged_red;
+			}else if(unit.type === "aoe"){
+				img = i_unitIcon_aoe_red;
+			}
+
+			var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(unit.position)));
+			Vector2.scale(pos, 1/Config.CANVAS_SCALE)
+			img.setPosition(pos);
+			img.draw();
+		});
+		areas[activeAreaIndex-1].antibodies.forEach(unit => {
+			var img = i_unitIcon_melee_blue;
+			if(unit.type === "ranged"){
+				img = i_unitIcon_ranged_blue;
+			}else if(unit.type === "aoe"){
+				img = i_unitIcon_aoe_blue;
+			}
+
+			var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(unit.position)));
+			Vector2.scale(pos, 1/Config.CANVAS_SCALE)
+			img.setPosition(pos);
+			img.draw();
+		});
+	}
+}
+
+
 function getMousePosition(canvas : HTMLCanvasElement, e : MouseEvent){
 	var canvasRect = canvas.getBoundingClientRect();
-	mousePosition = {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top};
+	mousePosition = {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top} as Vector2;
+	scannerMousePosition = {x: mousePosition.x - Config.SCANNER_CENTER.x, y: mousePosition.y - Config.SCANNER_CENTER.y} as Vector2;
 	return mousePosition;
+}
+
+function scannerToCanvasCoordinate(coordinate : Vector2){
+	return {x: coordinate.x + Config.SCANNER_CENTER.x, y: coordinate.y + Config.SCANNER_CENTER.y} as Vector2
+}
+
+function canvasToScannerCoordinate(coordinate : Vector2){
+	var canvasRect = canvas!.getBoundingClientRect();
+	return {x: coordinate.x - canvasRect.left - Config.SCANNER_CENTER.x, y: coordinate.y - canvasRect.top - Config.SCANNER_CENTER.y} as Vector2
+}
+
+function scannerToGameCoordinate(coordinate : Vector2){
+	var scale = scannerRadius/Config.SCANNER_RADIUS;
+	var v = Vector2.getCopy(coordinate);
+	v.scale(scale);
+	return v;
+}
+
+function gameToScannerCoordinate(coordinate : Vector2){
+	var scale = Config.SCANNER_RADIUS/scannerRadius;
+	var v = Vector2.getCopy(coordinate);
+	v.scale(scale);
+	return v;
+}
+
+function mouseInScannerRadius(){
+	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerMousePosition) <= Config.SCANNER_RADIUS;
 }
 

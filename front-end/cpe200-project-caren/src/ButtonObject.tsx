@@ -1,6 +1,7 @@
+import Config from "./Config";
 import ImageObject from "./ImageObject";
 
-const DEBUG = true;
+const DEBUG = Config.DEBUG;
 
 class ButtonObject extends ImageObject{
 

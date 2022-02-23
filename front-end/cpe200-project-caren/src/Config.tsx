@@ -1,3 +1,5 @@
+import Vector2 from "./Vector2";
+
 class Config{
     public static SERVER_URL = "http://localhost:8080";
 
@@ -9,14 +11,17 @@ class Config{
 
     public static FETCH_INTERVAL_SECONDS = 1;
 
-    public static SCREENWIDTH = 1280;
-    public static SCREENHEIGHT = 720;
+    public static SCREEN_WIDTH = 1280;
+    public static SCREEN_HEIGHT = 720;
+
+    public static SCANNER_CENTER = {x: 605, y : 360} as Vector2
+    public static SCANNER_RADIUS = 315;
     
     public static CANVAS_SCALE = 0.6666667; // scale relative to 1920x1080
 
     public static MAX_WAVE = 5;
 
-
+    public static DEBUG = false;
 }
 
 export default Config;

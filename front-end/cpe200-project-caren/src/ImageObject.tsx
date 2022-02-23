@@ -1,5 +1,7 @@
+import Config from "./Config";
+import Vector2 from "./Vector2";
 
-const DEBUG = false;
+const DEBUG = Config.DEBUG;
 
 class ImageObject{
 
@@ -11,6 +13,8 @@ class ImageObject{
     width;
     height;
     scale;
+    align; // default left
+    baseline; // default top
 
     // multi state support
     isMultiState;
@@ -57,6 +61,9 @@ class ImageObject{
             this.width = width;
             this.height = height;
         }
+
+        this.align = "start";
+        this.baseline = "top";
     }
 
     protected createImageArray(imagePaths : string[]){
@@ -80,21 +87,54 @@ class ImageObject{
 
     public draw(){
         if(DEBUG) console.log("draw image")
+        var pos = this.position;
+        var w = this.width;
+        var h = this.height;
+
+        if(this.align === "center"){
+            pos.x -= w/2;
+        }else if(this.align === "end"){
+            pos.x -= w;
+        }
+
+        if(this.baseline === "middle"){
+            pos.y -= h/2;
+        }else if(this.baseline === "bottom"){
+            pos.y -= h;
+        }
+
         if(this.image instanceof Array){
-            this.context!.drawImage(this.image[this.state], this.position.x, this.position.y, this.width, this.height);
+            this.context!.drawImage(this.image[this.state], pos.x, pos.y, w, h);
         }else{
-            this.context!.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+            this.context!.drawImage(this.image, pos.x, pos.y, w, h);
         }
     }
 
     protected update(){
         this.draw();
-        // fetch here
     }
 
     public mouseInside(mousePos : {x : number, y : number}){
-        return (mousePos.x >= (this.position.x)*this.scale && mousePos.x <= (this.position.x+this.width)*this.scale
-            && mousePos.y >= (this.position.y)*this.scale && mousePos.y <= (this.position.y+this.height)*this.scale);
+
+        var pos = this.position;
+        var w = this.width;
+        var h = this.height;
+
+        if(this.align === "center"){
+            pos.x -= w/2;
+        }else if(this.align === "end"){
+            pos.x -= w;
+        }
+
+        if(this.baseline === "middle"){
+            pos.y -= h/2;
+        }else if(this.baseline === "bottom"){
+            pos.y -= h;
+        }
+
+
+        return (mousePos.x >= (pos.x)*this.scale && mousePos.x <= (pos.x+w)*this.scale
+            && mousePos.y >= (pos.y)*this.scale && mousePos.y <= (pos.y+h)*this.scale);
     }
 
     public nextState(){
@@ -103,10 +143,22 @@ class ImageObject{
         }
     }
 
+    public setPosition(position : Vector2){
+        this.position = position;
+    }
+
     public setState(state : number){
         if(this.image instanceof Array){
             this.state = (state) % this.maxState!;
         }
+    }
+
+    public setAlign(align : "start" | "center" | "end"){
+        this.align = align;
+    }
+
+    public setBaseLine(baseline : "top" | "middle" | "bottom"){
+        this.baseline = baseline;
     }
 }
 

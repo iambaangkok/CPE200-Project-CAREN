@@ -1,6 +1,6 @@
 import Config from "./Config";
 
-const DEBUG = true;
+const DEBUG = Config.DEBUG;
 
 class TextObject{
 

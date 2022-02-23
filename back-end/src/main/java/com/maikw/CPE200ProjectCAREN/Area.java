@@ -11,6 +11,7 @@ public class Area {
     protected List<Unit> units;
     protected List<Virus> viruses;
     protected List<Antibody> antibodies;
+    protected double radius = 100;
     protected String name;
 
     public Area(String name){
@@ -90,6 +91,10 @@ public class Area {
 
     public String getName() {
         return name;
+    }
+
+    public double getRadius(){
+        return radius;
     }
 
 //    public static void main(String[] args) {

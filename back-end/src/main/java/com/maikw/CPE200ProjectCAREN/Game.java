@@ -52,31 +52,7 @@ public class Game {
 
     public void startGameLoop(){
 
-
-
-
-        while(true) {
-            if (state == 1) {
-                System.out.println("");
-            }
-            if (state == 2) {
-
-                waveManager.getWaveInfo();
-
-                if (waveManager.currentWaveCount == 1) {
-                    waveManager.waveInfo.get(0);
-                } else if (waveManager.currentWaveCount == 2) {
-                    waveManager.waveInfo.get(1);
-                } else if (waveManager.currentWaveCount == 3) {
-                    waveManager.waveInfo.get(2);
-                } else if (waveManager.currentWaveCount == 4) {
-                    waveManager.waveInfo.get(3);
-                } else {
-                    waveManager.waveInfo.get(4);
-                }
-
-            }
-        }
+        
     }
 
     public static void main(String[] args) {

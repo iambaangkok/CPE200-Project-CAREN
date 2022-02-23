@@ -89,6 +89,8 @@ public class Game {
 //        }
 
         Shop shop = new Shop();
+        Inventory inventory = new Inventory();
+        shop.setInventory(inventory);
 
         shop.buyMelee();
         shop.buyMelee();

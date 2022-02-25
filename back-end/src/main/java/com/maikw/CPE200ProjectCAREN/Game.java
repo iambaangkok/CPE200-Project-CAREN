@@ -35,13 +35,6 @@ public class Game {
 
     }
 
-    public void move(){
-
-
-    }
-
-
-
     public List<Integer> getScreen(){
         List<Integer> s = new ArrayList<Integer>();
         s.add(screenWidth);
@@ -49,34 +42,47 @@ public class Game {
         return  s;
     }
 
-
     public void startGameLoop(){
 
-        
+
+    }
+
+
+    /***
+     * เซ็ตค่าเริ่มต้นของเกมส์ เช่น shop ประกาศแค่ครั้งเดียว
+     * สร้าง wave ไว้รอแค่ครั้งเดียว
+     *
+     */
+    private void setStart(){
+
+
+
+
+    }
+
+    public void classSingleton(){
+
+    }
+
+    /***
+     * สร้างไวรัส และ เข้าถึง Virus แต่ละตัว
+     * @param
+     */
+    public void callOutVirus(Integer waveNumber){
+        waveManager.genVirus();
+        waveManager.allwave.get("Wave_"+waveNumber.toString());
+
+    }
+
+
+    public void putVirusToArea(){
+
     }
 
     public static void main(String[] args) {
-//        Game g = new Game();
-////        g.startGameLoop();
-//
-//        while(true){
-//            g.waitState();
-//
-//        }
-
-        Shop shop = new Shop();
-        Inventory inventory = new Inventory();
-        shop.setInventory(inventory);
-
-        shop.buyMelee();
-        shop.buyMelee();
-        shop.buyMelee();
-        shop.buyMelee();
-
-        System.out.println(shop.getMaxCredit());
-
+        Game game = new Game();
+        game.callOutVirus(1);
     }
-
 
     private void waitState(){
         try{
@@ -93,28 +99,9 @@ public class Game {
 
 
 
-
-    /***
-     * เซ็ตค่าเริ่มต้นของเกมส์ เช่น shop ประกาศแค่ครั้งเดียว
-     * สร้าง wave ไว้รอแค่ครั้งเดียว
-     *
-     */
-    private void setStart(){
-
-
-
-
-    }
-
-
     private void upDate(){
 
-        if(state == 1 ){
-            if(spawn != false){
 
-                spawn = false;
-            }
-        }
 
 
     }

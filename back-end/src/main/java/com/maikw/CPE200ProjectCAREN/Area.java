@@ -89,6 +89,7 @@ public class Area {
     public void evaluate(){
         for(Unit unit : units){
             unit.evaluate();
+            System.out.println(name);
         }
     }
 
@@ -104,7 +105,8 @@ public class Area {
     }
 
 
-    public void snap() {
+    public void snapViruse() {
+        units.removeAll(viruses);
         viruses.clear();
     }
     public boolean getAlertLevel(){

@@ -167,7 +167,6 @@ public class Unit {
     }
 
     private int senseAntibodyEval(List<Antibody> antibodies){
-        System.out.println("This X: " + this.positionX + " This Y: " + this.positionY);
         double min = Integer.MAX_VALUE;
         int directionAngle = 0;
         for (Antibody a : antibodies) {
@@ -215,26 +214,22 @@ public class Unit {
                 }
             }
         }
+
+        int classValue = 0;
+        if(classUnit.equals("Virus")){
+            classValue = 1;
+        }else if(classUnit.equals("Antibody")){
+            classValue = 2;
+        }
+
         if (min == Integer.MAX_VALUE) {
             return 0;
         } else if (min <= dangerRange) {
-            if(classUnit.equals("Virus")){
-                return 10 + 1;
-            }else if(classUnit.equals("Antibody")){
-                return 10 + 2;
-            }
+            return 10 + classValue;
         } else if (min <= attackRange) {
-            if(classUnit.equals("Virus")){
-                return 20 + 1;
-            }else if(classUnit.equals("Antibody")){
-                return 20 + 2;
-            }
+            return 20 + classValue;
         } else if (min <= detectRange) {
-            if(classUnit.equals("Virus")){
-                return 30 + 1;
-            }else if(classUnit.equals("Antibody")){
-                return 30 + 2;
-            }
+            return 30 + classValue;
         }
         return 0;
     }

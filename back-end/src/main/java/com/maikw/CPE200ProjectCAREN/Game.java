@@ -25,7 +25,7 @@ public class Game {
 
     public Game(){
         this.shop = new Shop();
-        this.spawn = false ;
+        this.spawn = true ;
         this.areas = new ArrayList<Area>();
         areas.add(new Area("area1")); areas.add(new Area("area2")); areas.add(new Area("area3"));
         this.timeManager = new TimeManager();
@@ -48,7 +48,7 @@ public class Game {
         waveManager.genVirus();
 
         while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
-                || areas.get(2).antibodies.size() != 0){
+                || areas.get(2).antibodies.size() != 0 || spawn){
 
             waitState(timeManager.timeSate.get(0));
 
@@ -56,12 +56,20 @@ public class Game {
 //                continue;
 //            }
 
-            if(spawn == false){waitState(2); this.spawn = true;} //timeManager.timeSate.get(1)
+            {
+                // เป็นช่วงที่รอให้ คนเล่นวาง anti เข้ามาทำรอบเดียว
+                Antibody A = UnitFactory.createAntibody("melee");
+                A.setArea(areas.get(0));
+                areas.get(0).addAntibody(A);
+            }
+            if(spawn == true){waitState(2); this.spawn = false;} //timeManager.timeSate.get(1)
             if(areas.get(0).viruses.size() == 0 && areas.get(1).viruses.size() == 0
                     && areas.get(2).viruses.size() == 0 ) {
                 waveManager.currentWaveCount += 1;
                 if (waveManager.currentWaveCount <= waveManager.maxWaveCount) {
+
                     waitState(1);    //timeManager.timeSate.get(4)
+
                     putVirusToArea(0);
                     putVirusToArea(1);
                     putVirusToArea(2);
@@ -84,9 +92,14 @@ public class Game {
             areas.get(0).evaluate();
             areas.get(1).evaluate();
             areas.get(2).evaluate();
+            // ตี
+//            areas.get(0).evaluate();
+//            areas.get(1).evaluate();
+//            areas.get(2).evaluate();
 
 
         }
+        System.out.println("you อ่อนหัด");
 
     }
 
@@ -109,19 +122,25 @@ public class Game {
 
         Game game = new Game();
 
-        Antibody A = UnitFactory.createAntibody("melee");
-        A.setArea(game.areas.get(0));
-        game.areas.get(0).addAntibody(A);
+//        Antibody A = UnitFactory.createAntibody("melee");
+//        A.setArea(game.areas.get(0));
+//        game.areas.get(0).addAntibody(A);
+//
+//        Antibody B = UnitFactory.createAntibody("melee");
+//        B.setArea(game.areas.get(1));
+//        game.areas.get(1).addAntibody(B);
+
+
         game.startGameLoop();
     }
 
     private void waitState(int time){
         try{
             for(int i = 1 ; i <= time ; i++) {
-//            System.out.println("Start of delay: "+ new Date());
+
                 System.out.println("current time "+i+ " second");
                 Thread.sleep(1000);
-//            System.out.println("End of delay: "+ new Date());
+
             }
         }catch (InterruptedException ex){
             ex.printStackTrace();

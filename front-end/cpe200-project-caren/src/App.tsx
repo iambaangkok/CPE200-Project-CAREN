@@ -612,16 +612,21 @@ function onMouseDown(e : MouseEvent){
 			}else{
 				if(mouseInScannerRadius() && activeAreaIndex !== 0){
 					var detect = detectClickOnAntibodies(mousePosition);
+					console.log(detect)
 					if(detect !== null){ // if clicked on antibody
+						console.log("CLICKED ON ANTI!!!!!!")
 						GameController.pickUpUnit(detect);
 					}
 					else if(b_invenButton_top.isClicked() && inventory.melee > 0){
+						console.log("PLACE MELEE")
 						GameController.placeUnit("melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.melee -= 1;
 					}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
+						console.log("PLACE RANGED")
 						GameController.placeUnit("ranged", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.ranged -= 1;
 					}else if(b_invenButton_bottom.isClicked() && inventory.aoe > 0){
+						console.log("PLACE AOE")
 						GameController.placeUnit("aoe", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.aoe -= 1;
 					}
@@ -686,23 +691,36 @@ function onMouseDown(e : MouseEvent){
 
 // returns name of antibody clicked. if there are none clicked, return null
 function detectClickOnAntibodies(mousePos : Vector2){
-	areas[activeAreaIndex-1].antibodies.forEach(unit => {
+	var name = null;
+
+	for(let i = 0 ; i < areas[activeAreaIndex-1].antibodies.length; ++i){
+		var anti = areas[activeAreaIndex-1].antibodies[i];
 		var img = i_unitIcon_melee_blue;
-		if(unit.type === "ranged"){
+		if(anti.type === "ranged"){
 			img = i_unitIcon_ranged_blue;
-		}else if(unit.type === "aoe"){
+		}else if(anti.type === "aoe"){
 			img = i_unitIcon_aoe_blue;
 		}
 
-		var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(unit.position)));
+		var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(anti.position)));
 		Vector2.scale(pos, 1/Config.CANVAS_SCALE)
 		img.setPosition(pos);
-		if(img.mouseInside(mousePos)){ /// THIS ANTIBODY GOT CLICKED
-			return unit.name;
-		}
-	});
+		console.log("anti: " + img.position.x + "," + img.position.y + "  w h s: " + img.width + "," + img.height + "," + img.scale);
+		console.log("anti: " + (img.position.x-img.width/2) + "-" + (img.position.x-img.width/2+img.width) 
+		+ "," + (img.position.y-img.height/2) + "-" + (img.position.y-img.height/2+img.height) )
 
-	return null;
+
+		//console.log("mouseInside: " + img.mouseInside(mousePosition))
+		
+		if(img.mouseInside(mousePosition)){ /// THIS ANTIBODY GOT CLICKED
+			console.log("detectClickOnAntibodies() RETURN")
+			//name = anti.name;
+			name = "ggwp";
+		}
+	}
+		
+
+	return name;
 }
 
 function drawUnits(){

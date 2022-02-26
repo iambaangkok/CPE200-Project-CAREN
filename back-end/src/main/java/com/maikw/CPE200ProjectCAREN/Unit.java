@@ -1,5 +1,6 @@
 package com.maikw.CPE200ProjectCAREN;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class Unit {
     protected int attackDamage;
     protected double detectRange;
     protected double attackRange;
+    protected double aoeRadius;
     protected double dangerRange;
     protected int lifeSteal = 10;
     protected String type;
@@ -34,6 +36,7 @@ public class Unit {
         this.type = type;
         this.detectRange = 40;
         this.dangerRange = 5;
+        this.aoeRadius = 0;
         switch (type) {
             case "melee" -> {
                 this.attackDamage = 20;
@@ -48,6 +51,7 @@ public class Unit {
             case "aoe" -> {
                 this.attackDamage = 15;
                 this.attackRange = 10;
+                this.aoeRadius = 5;
                 this.moveSpeed = 1;
             }
         }
@@ -69,12 +73,13 @@ public class Unit {
     }
 
     public void attack(String direction){
+        attackEval(this.unitClass, direction);
         System.out.println("Unit " + name + " attacked " + direction);
     }
 
     public void attack(Unit target){
         target.takeDamage(attackDamage);
-        System.out.println("Unit " + target.name + " current hp = " + target.currentHealth);
+        System.out.println("Unit " + target.name + "received damage current hp = " + target.currentHealth);
     }
 
     public void takeDamage(int dmg){
@@ -178,30 +183,47 @@ public class Unit {
 
     }
 
-    private int senseEval(String classUnit){
-        List<? extends Unit> units = null;
-        if(classUnit.equals("virus")){
-            units = this.area.getViruses();
-        }else if(classUnit.equals("antibody")){
-            units = this.area.getAntibodies();
-        }
-        double min = Integer.MAX_VALUE;
-        int directionAngle = 0;
-        for (Unit u : units) {
-            double angle = getAngle(this, u);
-            int directionValue = directionValue(angle,"");
-            double range = range(this, u);
-            if (this.detectRange < range) {
-            } else {
-                if (range < min){
-                    min = range;
-                    directionAngle = directionValue;
+    public static int directionConverter(String direction){
+        return switch (direction) {
+            case "up" -> 90;
+            case "upright" -> 45;
+            case "right" -> 0;
+            case "downright" -> 315;
+            case "down" -> 270;
+            case "downleft" -> 225;
+            case "left" -> 180;
+            case "upleft" -> 135;
+            default -> 0;
+        };
+    }
+
+    public void attackEval(String targetUnit, String direction){
+        Unit target = findClosestUnit(targetUnit);
+        double range = range(this, target);
+        double angle = getAngle(this, target);
+        int directionAngle = directionConverter(direction);
+        if(range < attackRange && angle >= (directionAngle-22.5) && angle <= (directionAngle+22.5)){
+            this.attack(target);
+            if(this.type.equals("aoe")){
+                List<Unit> units = this.area.getUnits();
+                for(Unit u : units){
+                    range = range(target,u);
+                    if(range <= this.aoeRadius){
+                        if(!u.getName().equals(this.name)){
+                            attack(u);
+                        }
+                    }
                 }
             }
         }
-        if (min == Integer.MAX_VALUE) {
-            return 0;
-        } else if (min <= dangerRange) {
+    }
+
+    private int senseEval(String classUnit){
+        Unit closestUnit = findClosestUnit(classUnit);
+        double angle = getAngle(this, closestUnit);
+        int directionAngle = directionValue(angle, "");
+        double min = range(this,closestUnit);
+        if (min <= dangerRange) {
             return 10  + directionAngle;
         } else if (min <= attackRange) {
             return 20 + directionAngle;
@@ -232,9 +254,9 @@ public class Unit {
         }
 
         int classValue = 0;
-        if(classUnit.equals("Virus")){
+        if(classUnit.equals("virus")){
             classValue = 1;
-        }else if(classUnit.equals("Antibody")){
+        }else if(classUnit.equals("antibody")){
             classValue = 2;
         }
 
@@ -248,6 +270,29 @@ public class Unit {
             return 30 + classValue;
         }
         return 0;
+    }
+
+    public Unit findClosestUnit(String classUnit){
+        Unit closestUnit = null;
+        List<? extends Unit> units = null;
+        if(classUnit.equals("virus")){
+            units = this.area.getViruses();
+        }else if(classUnit.equals("antibody")){
+            units = this.area.getAntibodies();
+        }else if(classUnit.equals("all")){
+            units = this.area.getUnits();
+        }
+        double min = Integer.MAX_VALUE;
+        for (Unit u : units) {
+            double range = range(this, u);
+            if (this.detectRange > range) {
+                if (range < min){
+                    min = range;
+                    closestUnit = u;
+                }
+            }
+        }
+        return closestUnit;
     }
 
     public double getPositionX() {

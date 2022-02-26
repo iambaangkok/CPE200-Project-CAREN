@@ -73,7 +73,10 @@ public class Unit {
     }
 
     public void attack(String direction){
-        attackEval(this.unitClass, direction);
+        String targetClass = "";
+        if(this.unitClass.equals("virus")) targetClass = "antibody";
+        else if(this.unitClass.equals("antibody")) targetClass = "virus";
+        attackEval(targetClass, direction);
         System.out.println("Unit " + name + " attacked " + direction);
     }
 

@@ -3,7 +3,6 @@ package com.maikw.CPE200ProjectCAREN;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component("game")
@@ -57,12 +56,12 @@ public class Game {
 //                continue;
 //            }
 
-            if(spawn == false){waitState(timeManager.timeSate.get(1)); this.spawn = true;}
+            if(spawn == false){waitState(2); this.spawn = true;} //timeManager.timeSate.get(1)
             if(areas.get(0).viruses.size() == 0 && areas.get(1).viruses.size() == 0
                     && areas.get(2).viruses.size() == 0 ) {
                 waveManager.currentWaveCount += 1;
                 if (waveManager.currentWaveCount <= waveManager.maxWaveCount) {
-                    waitState(timeManager.timeSate.get(4));
+                    waitState(1);    //timeManager.timeSate.get(4)
                     putVirusToArea(0);
                     putVirusToArea(1);
                     putVirusToArea(2);
@@ -72,12 +71,15 @@ public class Game {
                     System.out.println(areas.get(2).viruses.size());
 
                     System.out.println("Snapppp!");
-//                    areas.get(0).snap();
-//                    areas.get(1).snap();
-//                    areas.get(2).snap();
+                    areas.get(0).snapViruse();
+                    areas.get(1).snapViruse();
+                    areas.get(2).snapViruse();
                 }
                 else{System.out.println("Win");}
             }
+            areas.get(0).snapViruse();
+            areas.get(1).snapViruse();
+            areas.get(2).snapViruse();
             // คำสั่งเดินของ Unit ในแต่ละ area
             areas.get(0).evaluate();
             areas.get(1).evaluate();

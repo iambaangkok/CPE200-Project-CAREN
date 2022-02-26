@@ -26,7 +26,7 @@ public class Unit {
     protected String type;
     protected String name;
     protected Map<String, Double> variables;
-    protected Node programNode;
+    public Node programNode;
     protected Area area;
     protected String unitClass;
 

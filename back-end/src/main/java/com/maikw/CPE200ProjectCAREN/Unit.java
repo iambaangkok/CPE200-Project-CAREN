@@ -15,12 +15,13 @@ public class Unit {
     protected int maxHealth = 100;
     protected int currentHealth = 100;
     protected int moveCost = 20;
-    protected int attackDamage = 0;
-    protected double detectRange = 0.0;
-    protected double attackRange = 0.0;
-    protected double dangerRange = 0.0;
+    protected int moveSpeed;
+    protected int attackDamage;
+    protected double detectRange;
+    protected double attackRange;
+    protected double dangerRange;
     protected int lifeSteal = 10;
-    protected String type = "";
+    protected String type;
     protected String name;
     protected Map<String, Double> variables;
     protected Node programNode;
@@ -33,15 +34,22 @@ public class Unit {
         this.type = type;
         this.detectRange = 40;
         this.dangerRange = 5;
-        if(type.equals("melee")){
-            this.attackDamage = 20;
-            this.attackRange = 10;
-        }else if(type.equals("ranged")){
-            this.attackDamage = 20;
-            this.attackRange = 30;
-        }else if(type.equals("aoe")){
-            this.attackDamage = 15;
-            this.attackRange = 10;
+        switch (type) {
+            case "melee" -> {
+                this.attackDamage = 20;
+                this.attackRange = 10;
+                this.moveSpeed = 3;
+            }
+            case "ranged" -> {
+                this.attackDamage = 20;
+                this.attackRange = 30;
+                this.moveSpeed = 2;
+            }
+            case "aoe" -> {
+                this.attackDamage = 15;
+                this.attackRange = 10;
+                this.moveSpeed = 1;
+            }
         }
         BehaviorEvaluator be = new BehaviorEvaluator(geneticCode,this);
         try{
@@ -53,6 +61,7 @@ public class Unit {
 
     public void move(String direction){
         if (sense("nearby", direction) == 0){
+            positionEval(this.moveSpeed,direction);
             System.out.println("Unit " + name + " moved " + direction);
         }else{
             System.out.println("There is already a unit there. Unit " + name + " can't move to " + direction);
@@ -90,6 +99,32 @@ public class Unit {
 
     public static double range(Unit a, Unit b){
         return Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2));
+    }
+
+    private void positionEval(int moveSpeed, String direction){
+        switch (direction) {
+            case "up" -> this.positionY += moveSpeed;
+            case "upright" -> {
+                this.positionX += moveSpeed;
+                this.positionY += moveSpeed;
+            }
+            case "right" -> this.positionX += moveSpeed;
+            case "downright" -> {
+                this.positionX += moveSpeed;
+                this.positionY -= moveSpeed;
+            }
+            case "down" -> this.positionY -= moveSpeed;
+            case "downleft" -> {
+                this.positionX -= moveSpeed;
+                this.positionY -= moveSpeed;
+            }
+            case "left" -> this.positionX -= moveSpeed;
+            case "upleft" -> {
+                this.positionX -= moveSpeed;
+                this.positionY += moveSpeed;
+            }
+        }
+
     }
 
     public static double getAngle(Unit a, Unit b){
@@ -150,7 +185,7 @@ public class Unit {
         int directionAngle = 0;
         for (Unit u : units) {
             double angle = getAngle(this, u);
-            int directionValue = directionValue((int) angle,"");
+            int directionValue = directionValue(angle,"");
             double range = range(this, u);
             if (this.detectRange < range) {
             } else {
@@ -174,12 +209,11 @@ public class Unit {
 
     private int senseUnitEval(List<Unit> units, String direction){
         double min = Integer.MAX_VALUE;
-        int directionAngle = 0;
         int baseDirectionValue = directionValue(0, direction);
         String classUnit = "";
         for (Unit u : units) {
             double angle = getAngle(this, u);
-            int directionValue = directionValue((int) angle,"");
+            int directionValue = directionValue(angle,"");
             double range = range(this, u);
             if (directionValue != baseDirectionValue) {
             }else{
@@ -187,7 +221,6 @@ public class Unit {
                 } else {
                     if (range < min) {
                         min = range;
-                        directionAngle = directionValue;
                         classUnit = u.getUnitClass();
                     }
                 }

@@ -21,7 +21,6 @@ public class Game {
     protected WaveManager waveManager ;
     protected GeneticCodeManager geneticCodeManager ;
     protected Shop shop ;
-
     protected Unit unit;
 
 
@@ -48,25 +47,41 @@ public class Game {
     public void startGameLoop(){
         System.out.println("Yaeggggg");
         waveManager.genVirus();
-        while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0 || areas.get(2).antibodies.size() != 0){
-            waitState(1);
 
-            if(spawn == false){waitState(30);}
-            // ยังไม่ได้เพิ่มค่าของ currentWaveCount ต้องไปหาที่เพิ่มด้วย
-            if(waveManager.currentWaveCount <= waveManager.maxWaveCount){
-                waitState(15);
-                putVirusToArea(0); putVirusToArea(1); putVirusToArea(2);
+        while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
+                || areas.get(2).antibodies.size() != 0){
+
+            waitState(timeManager.timeSate.get(0));
+
+//            if(timeManager.pause == true){
+//                continue;
+//            }
+
+            if(spawn == false){waitState(timeManager.timeSate.get(1)); this.spawn = true;}
+            if(areas.get(0).viruses.size() == 0 && areas.get(1).viruses.size() == 0
+                    && areas.get(2).viruses.size() == 0 ) {
+                waveManager.currentWaveCount += 1;
+                if (waveManager.currentWaveCount <= waveManager.maxWaveCount) {
+                    waitState(timeManager.timeSate.get(4));
+                    putVirusToArea(0);
+                    putVirusToArea(1);
+                    putVirusToArea(2);
+
+                    System.out.println(areas.get(0).viruses.size());
+                    System.out.println(areas.get(1).viruses.size());
+                    System.out.println(areas.get(2).viruses.size());
+
+                    System.out.println("Snapppp!");
+//                    areas.get(0).snap();
+//                    areas.get(1).snap();
+//                    areas.get(2).snap();
+                }
+                else{System.out.println("Win");}
             }
-
-            System.out.println(areas.get(0).viruses.size());
-            System.out.println(areas.get(1).viruses.size());
-            System.out.println(areas.get(2).viruses.size());
-            
-
-            areas.get(0).snap();
-            areas.get(1).snap();
-            areas.get(2).snap();
-
+            // คำสั่งเดินของ Unit ในแต่ละ area
+            areas.get(0).evaluate();
+            areas.get(1).evaluate();
+            areas.get(2).evaluate();
 
 
         }
@@ -100,7 +115,7 @@ public class Game {
 
     private void waitState(int time){
         try{
-            for(int i = 0 ; i <= time ; i++) {
+            for(int i = 1 ; i <= time ; i++) {
 //            System.out.println("Start of delay: "+ new Date());
                 System.out.println("current time "+i+ " seccon");
                 Thread.sleep(1000);

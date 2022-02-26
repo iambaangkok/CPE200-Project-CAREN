@@ -25,5 +25,7 @@ public class AssignmentStatementNode implements Node{
         variableNode.print(0);
         System.out.print(" = ");
         expressionNode.print(0);
+        System.out.println(" EQUALS " + expressionNode.evaluate());
+
     }
 }

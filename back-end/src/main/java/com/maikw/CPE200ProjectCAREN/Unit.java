@@ -61,7 +61,7 @@ public class Unit {
 
     public void move(String direction){
         if (sense("nearby", direction) == 0){
-            positionEval(this.moveSpeed,direction);
+            positionEval(direction);
             System.out.println("Unit " + name + " moved " + direction);
         }else{
             System.out.println("There is already a unit there. Unit " + name + " can't move to " + direction);
@@ -73,13 +73,17 @@ public class Unit {
     }
 
     public void attack(Unit target){
-        if(target.currentHealth <= this.attackDamage){
-            target.currentHealth = 0;
-        }else{
-            target.currentHealth -= this.attackDamage;
-        }
+        target.takeDamage(attackDamage);
         System.out.println("Unit " + target.name + " current hp = " + target.currentHealth);
-    }    
+    }
+
+    public void takeDamage(int dmg){
+        if(this.currentHealth <= dmg){
+            this.currentHealth = 0;
+        }else{
+            this.currentHealth -= dmg;
+        }
+    }
 
     public int sense(String mode, String direction){
         System.out.println("Unit " + name + " sensed " + mode + " " + direction);
@@ -101,7 +105,7 @@ public class Unit {
         return Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2));
     }
 
-    private void positionEval(int moveSpeed, String direction){
+    private void positionEval(String direction){
         switch (direction) {
             case "up" -> this.positionY += moveSpeed;
             case "upright" -> {

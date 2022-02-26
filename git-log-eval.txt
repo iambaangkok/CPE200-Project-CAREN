@@ -1,3 +1,395 @@
+* commit 2be34f32290de61b1b3c326fe8f9f3353c701a45
+| Author: Nonthawt20 <Nonthawt20@gmail.com>
+| Date:   Wed Feb 23 15:17:59 2022 +0700
+| 
+|     ไม่มีอะไรสำคัญ
+|   
+*   commit d85f22fb5e73e4493bd588ec24eff8b6082723e1
+|\  Merge: 9b53169 406d414
+| | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | Date:   Wed Feb 23 15:16:50 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | 
+| * commit 406d4141ba779e08eb8dd3144a504765df521a12
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 23 15:14:53 2022 +0700
+| | 
+| |     fixed main (set Inventory)
+| | 
+| * commit ff48d47258f475b6aa511b5a43c27bde787ca30d
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Wed Feb 23 15:14:41 2022 +0700
+| | 
+| |     added radius to area
+| | 
+| * commit 5ff41f74392c1d89bb2b80f63b64e84dc7cbc7fe
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Tue Feb 22 23:55:44 2022 +0700
+| | 
+| |     front-end: added drawUnit() for unit drawing in area to App, added gameToScannerCoordinate() to App
+| | 
+| * commit af3e024a86610faa9170b507d6bdb7a19f81cfef
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Tue Feb 22 23:54:49 2022 +0700
+| | 
+| |     front-end: added dummy data in getArea() in GameController
+| | 
+| * commit ece2b5ec73560fc9f32b396c09e6ddf2a3be3f51
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Tue Feb 22 23:54:19 2022 +0700
+| | 
+| |     front-end: added setPosition to ImageObject
+| | 
+| * commit 2c7e67f1069da0317f2ffce03fe70b0983e5deb7
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Tue Feb 22 22:56:48 2022 +0700
+| | 
+| |     front-end: added align & baseline support for ImageObject
+| | 
+| * commit 9d131a98b618376d85ee4adecd0fa224bd2276f1
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Tue Feb 22 20:43:16 2022 +0700
+| | 
+| |     front-end: added functions related to scanner coordinate, changed all {x,y} pair to Vector2, added better unit placement in scanner
+| |     
+| |     scannerToCanvasCoordinate(coordinate : Vector2)
+| |     canvasToScannerCoordinate(coordinate : Vector2)
+| |     
+| |     scannerToGameCoodinate(coordinate : Vector2)
+| |     mouseInScannerRadius()
+| | 
+| * commit c90bc1b44535a5982832c4bbdd97b212660126e3
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Tue Feb 22 20:40:37 2022 +0700
+| | 
+| |     front-end: added Vector2 for dealing with (x, y) type data
+| | 
+| * commit 8c15191844d31e3e422352c06294ee435d06d673
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Tue Feb 22 20:17:25 2022 +0700
+| | 
+| |     back-end: uncommented all parts of Game constructor, added @Component("game") to game
+| |     
+| |     why was this part commented anyway?????
+| | 
+| * commit f3df9d0c5455ed45d90ac4cd415dfe1f33968015
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Tue Feb 22 20:13:57 2022 +0700
+| | 
+| |     back-end: fixed path for GeneticCodeManager in UnitFactory & BehaviorEvalTest
+| |   
+| *   commit 6788cb4309f77dcb0219c584ea9aa5faaa697a9c
+| |\  Merge: ca87375 b0f2811
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 22 15:03:13 2022 +0700
+| | | 
+| | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | | 
+| * | commit ca8737584d2f995f80c13ba2eac93eb479343e92
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 22 15:03:10 2022 +0700
+| | | 
+| | |     front-end: finished inventory
+| | | 
+| * | commit 655051bb019b5305e51ece0c4a7fe897d74b7e13
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 22 15:02:47 2022 +0700
+| | | 
+| | |     front-end: linked all DEBUG to Config.DEBUG
+| | | 
+| * | commit 8b889e23687419f51e90ea8095aaf1fccc9f16e4
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Tue Feb 22 15:02:19 2022 +0700
+| | | 
+| | |     front-end: added inventory buttons images
+| | | 
+* | | commit 9b53169de53ce05d99c998adcf4dbd228d94ce9a
+| |/  Author: Nonthawt20 <Nonthawt20@gmail.com>
+|/|   Date:   Wed Feb 23 15:16:45 2022 +0700
+| |   
+| |       fix การสร้าง method เล็กน้อย
+| | 
+* | commit b0f28113c5688291920d7d2afb35f33f7863c1b3
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 16:31:37 2022 +0700
+| | 
+| |     added @Componet and @Autowire
+| | 
+* | commit 6ac3386b30f2e576c7df2d79c875487b71ac5155
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 16:05:54 2022 +0700
+| | 
+| |     changed creditReward value
+| | 
+* | commit e2c3406021e882f90aa6e3069e122cbf0bb6278c
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 16:05:08 2022 +0700
+| | 
+| |     reimplemented virusToSpawn method in Antibody
+| | 
+* | commit 3999a49f7b48b806250e0e96e8d39343d6fdbd1e
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 15:57:49 2022 +0700
+| | 
+| |     removed name parameter
+| | 
+* | commit 0d0b6f867dfefb85794f7c3156d5135904ce5554
+|/  Author: rbzgamer <kuro123520@hotmail.com>
+|   Date:   Sat Feb 19 15:53:03 2022 +0700
+|   
+|       changed parameter UnitFactory
+| 
+* commit fe0992ac64597e606839389d61e6cd45ab4f32b0
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Sat Feb 19 15:25:08 2022 +0700
+| 
+|     (Auto in Baangkok's notebook) added set area in pickupUnit to InventoryController
+|   
+*   commit 9122bbeadf7502a28f710fee5e2b0a49ba11db2d
+|\  Merge: 0922630 ae9f242
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 14:32:28 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | 
+| * commit ae9f2420825587327aacace007f984ba26cc682a
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Sat Feb 19 14:29:26 2022 +0700
+| | 
+| |     front-end: added COLOR_BRIGHTRED to Config
+| | 
+| * commit e6725edf9597db3e9bbb93dbdcfaffb0f7b1c33f
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Sat Feb 19 14:29:09 2022 +0700
+| | 
+| |     front-end: added WaveInfo class, finished most waveinfo stuff
+| | 
+* | commit 092263059b50e67312b65f041f9e00255af37ad9
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 14:32:14 2022 +0700
+| | 
+| |     added method canBuy  and implemented buy method
+| | 
+* | commit d2f665ba80ad860899d72d9cc0cdfafe3b9b3bd0
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 14:31:39 2022 +0700
+| | 
+| |     added Implemented InventoryController
+| | 
+* | commit 6e3681a5a81f577d99f1e047ec60464a7b460ed5
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 14:28:08 2022 +0700
+| | 
+| |     changed setter to increase and decrease and added canPickup method to Inventory
+| | 
+* | commit 97e9c0b43ee22d633c77528eafef035a6cc6f117
+|/  Author: rbzgamer <kuro123520@hotmail.com>
+|   Date:   Sat Feb 19 14:27:22 2022 +0700
+|   
+|       added canPlace method in Area
+|   
+*   commit a3b2fc55ccca470f18fbf0a15cd5d06f6e38b42d
+|\  Merge: 63be878 ca645f5
+| | Author: Nonthawt20 <Nonthawt20@gmail.com>
+| | Date:   Sat Feb 19 13:14:51 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | 
+| * commit ca645f5c0c5fc9f453ee9bcb42c1786b4f00dc92
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 13:13:21 2022 +0700
+| | 
+| |     deleted zoom and change starting credit
+| |   
+| *   commit 665dfaabd96df77b97d8d276cb099641be11c5ee
+| |\  Merge: d392fe2 96aa94f
+| | | Author: rbzgamer <kuro123520@hotmail.com>
+| | | Date:   Sat Feb 19 12:03:32 2022 +0700
+| | | 
+| | |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | | 
+| | * commit 96aa94ff96d68b6a5d6019fb154b5d10e64c8c28
+| | | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | | Date:   Sat Feb 19 12:02:39 2022 +0700
+| | | 
+| | |     front-end: restructured currentWave info from GameController, added unitIcon imports
+| | | 
+| * | commit d392fe21dfb201a87ceaa72c7d75afe50b9e9cd4
+| |/  Author: rbzgamer <kuro123520@hotmail.com>
+| |   Date:   Sat Feb 19 12:03:23 2022 +0700
+| |   
+| |       added buyUnit in ShopController
+| | 
+| * commit ae452c864043ff8555bfeea8a37bc05d074f351d
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 11:55:45 2022 +0700
+| | 
+| |     deleted setCredit and @Post setCredit
+| | 
+| * commit 212f7bddb53f366c7a3ceb8df517489911bf98ab
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Sat Feb 19 11:54:53 2022 +0700
+| | 
+| |     removed zoom
+| | 
+| * commit c1cec9e69a1ff42ec1a03c04796c6aae1b6439b0
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 18 23:31:21 2022 +0700
+| | 
+| |     front-end: added wave text, 4 speed multiplier buttons -> finished time stuff
+| | 
+| * commit 8e243064fae1ae64086f5c37b639a635ca1dc470
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 18 23:30:27 2022 +0700
+| | 
+| |     front-end: changed TextObject default color from "white" to COLOR_CREAMWHITE
+| | 
+* | commit 63be878329f3e3428294de15cac49796837c6b76
+|/  Author: Nonthawt20 <Nonthawt20@gmail.com>
+|   Date:   Sat Feb 19 13:14:47 2022 +0700
+|   
+|       test shop
+| 
+* commit 3259da8ce0e206d3ab4ce6da3ac1a5c0da6f8809
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Fri Feb 18 21:19:27 2022 +0700
+| 
+|     front-end: added disabling to the 3 buttons / bug fixes with filename & imports
+|   
+*   commit ae11ecb95eafd16cd6c8a09b00c04090b6d1e419
+|\  Merge: 0cf0929 c27bacb
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 18 21:05:17 2022 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/iambaangkok/CPE200-Project-CAREN
+| | 
+| * commit c27bacbcf642d158a2d8691e60a000a56c98b800
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Fri Feb 18 20:24:05 2022 +0700
+| | 
+| |     added ShopController (uncomplete but almost)
+| | 
+| * commit 8f721d7a076449bdf9c9a35814b6a7e348c97496
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Fri Feb 18 20:23:11 2022 +0700
+| | 
+| |     added shop getter and setter
+| | 
+| * commit 14895bdc4f2af1e51df352bd3666f252996f3f79
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Fri Feb 18 20:17:30 2022 +0700
+| | 
+| |     added empty shop method and constructor
+| | 
+| * commit 73a9923670196d2d2a4fc250179de9b37fe0102a
+| | Author: rbzgamer <kuro123520@hotmail.com>
+| | Date:   Fri Feb 18 20:17:12 2022 +0700
+| | 
+| |     added empty zoom method
+| | 
+* | commit 0cf092973863ddebe4a31fb90b0ec698d47de31d
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 18 21:05:14 2022 +0700
+| | 
+| |     front-end: added details to the 3 buy buttons -> shop system is finished
+| | 
+* | commit dee9bd70ceef5e84faebf106c6831447ebbaca9f
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 18 21:04:54 2022 +0700
+| | 
+| |     front-end: added 4th state : disabled to ButtonObject
+| | 
+* | commit 78e8fc29d17bd69d035f5df50c44fb6cd172ee1c
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 18 20:52:30 2022 +0700
+| | 
+| |     front-end: moved most constants from App to Config
+| | 
+* | commit 1f7d2031f6c26e18103e6f9cffe77f9b6d500b1c
+| | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| | Date:   Fri Feb 18 20:52:10 2022 +0700
+| | 
+| |     front-end: added getUnitCost() to GameController
+| | 
+* | commit 32e54befec7a7c10917bfa40eb4d1a12baa328ec
+|/  Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+|   Date:   Fri Feb 18 20:51:48 2022 +0700
+|   
+|       front-end: added support for line-spacing to TextObject
+| 
+* commit eabacea2c8d4a6759db854c0326db9ea3512ad2c
+| Author: rbzgamer <kuro123520@hotmail.com>
+| Date:   Fri Feb 18 00:10:52 2022 +0700
+| 
+|     change angle to double and added condition for wide detect
+| 
+* commit b7bfaa18ca3cfa51a77e2ac8bc26dab9937a1cb0
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 23:49:22 2022 +0700
+| 
+|     front-end: added FETCH_INTERVAL_SECONDS to Config
+| 
+* commit f4c9be6339bb430e746e63c8c8e01629a853a009
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 23:08:49 2022 +0700
+| 
+|     front-end: added FPS, working buy buttons
+| 
+* commit 694962ececc699f19ef0e2bfbebc02ba7ea02cc4
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 23:08:19 2022 +0700
+| 
+|     front-end: redraw buy buttons
+| 
+* commit 4258bdc7e0769c4ff688cdc85c0043a199f0b905
+| Author: Nonthawt20 <Nonthawt20@gmail.com>
+| Date:   Thu Feb 17 22:22:26 2022 +0700
+| 
+|     add wait wave
+| 
+* commit 7693799705b9b1d770814258172365653a2fb831
+| Author: Nonthawt20 <Nonthawt20@gmail.com>
+| Date:   Thu Feb 17 20:34:25 2022 +0700
+| 
+|     chang filed name of wave
+| 
+* commit b453d13be2bde047e07d657c24240d85c68cb4c8
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 17:23:48 2022 +0700
+| 
+|     front-end: added ButtonObject, 3 buy buttons, buy button state images
+| 
+* commit 6648ff66fcf13cfc497c5bf020199b8ac0332b5b
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 14:59:14 2022 +0700
+| 
+|     front-end: added antibody credits to App
+| 
+* commit 045acd744c9029d4000e384758ca39e580db1f21
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 14:58:45 2022 +0700
+| 
+|     front-end: added setText(text) for TextObject
+| 
+* commit b0c65d2e8778676f8ea62bcf659d77c2b5a01f7d
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 14:58:12 2022 +0700
+| 
+|     front-end: added getMoney() to GameController
+| 
+* commit 36369457e29ad312c276cea27aa8bf009003f59f
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 14:57:40 2022 +0700
+| 
+|     front-end: added Config class
+| 
+* commit aba0e076c0a9d0b1a804dd6f6b5188587418a8f0
+| Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
+| Date:   Thu Feb 17 09:57:44 2022 +0700
+| 
+|     general: added design overview document feb8 & feb16, git log eval feb16
+| 
 * commit 50fac8cb3b3fe3a79fbf966988d39c2a669bcb3f
 | Author: Baangkok Vanijyananda <iambaangkok@gmail.com>
 | Date:   Wed Feb 16 23:43:05 2022 +0700

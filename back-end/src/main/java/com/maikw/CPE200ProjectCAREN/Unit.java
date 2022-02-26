@@ -76,10 +76,10 @@ public class Unit {
         System.out.println("Unit " + name + " sensed " + mode + " " + direction);
         switch (mode) {
             case "virus" -> {
-                return senseVirusEval(area.getViruses());
+                return senseEval("virus");
             }
             case "antibody" -> {
-                return senseAntibodyEval(area.getAntibodies());
+                return senseEval("antibody");
             }
             case "nearby" -> {
                 return senseUnitEval(area.getUnits(), direction);
@@ -92,8 +92,8 @@ public class Unit {
         return Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2));
     }
 
-    public static int getAngle(Unit a, Unit b){
-        int angle = (int) Math.toDegrees(Math.atan2(b.positionY - a.positionY, b.positionX - a.positionX));
+    public static double getAngle(Unit a, Unit b){
+        double angle = Math.toDegrees(Math.atan2(b.positionY - a.positionY, b.positionX - a.positionX));
 
         if (angle < 0) {
             angle += 360;
@@ -139,40 +139,19 @@ public class Unit {
 
     }
 
-    private int senseVirusEval(List<Virus> viruses){
+    private int senseEval(String classUnit){
+        List<? extends Unit> units = null;
+        if(classUnit.equals("virus")){
+            units = this.area.getViruses();
+        }else if(classUnit.equals("antibody")){
+            units = this.area.getAntibodies();
+        }
         double min = Integer.MAX_VALUE;
         int directionAngle = 0;
-        for (Virus v : viruses) {
-            double angle = getAngle(this, v);
+        for (Unit u : units) {
+            double angle = getAngle(this, u);
             int directionValue = directionValue((int) angle,"");
-            double range = range(this, v);
-            if (this.detectRange < range) {
-            } else {
-                if (range < min){
-                    min = range;
-                    directionAngle = directionValue;
-                }
-            }
-        }
-        if (min == Integer.MAX_VALUE) {
-            return 0;
-        } else if (min <= dangerRange) {
-            return 10  + directionAngle;
-        } else if (min <= attackRange) {
-            return 20 + directionAngle;
-        } else if (min <= detectRange) {
-            return 30 + directionAngle;
-        }
-        return 0;
-    }
-
-    private int senseAntibodyEval(List<Antibody> antibodies){
-        double min = Integer.MAX_VALUE;
-        int directionAngle = 0;
-        for (Antibody a : antibodies) {
-            double angle = getAngle(this, a);
-            int directionValue = directionValue((int) angle,"");
-            double range = range(this, a);
+            double range = range(this, u);
             if (this.detectRange < range) {
             } else {
                 if (range < min){

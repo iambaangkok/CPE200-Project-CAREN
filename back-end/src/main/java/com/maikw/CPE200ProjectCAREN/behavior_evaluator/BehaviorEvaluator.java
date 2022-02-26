@@ -17,6 +17,7 @@ public class BehaviorEvaluator{
             this.tkz = new Tokenizer(src);
             factory = NodeFactory.instance();
             this.unit = unit;
+            if(DEBUG) System.out.println("FILE: "  + src);
         }catch(SyntaxError e){
             System.out.println(e.getMessage());
         }
@@ -29,7 +30,7 @@ public class BehaviorEvaluator{
         
         while(tkz.peek() != null){
             String s = tkz.peek();
-            if(DEBUG) System.out.println(s);
+            //if(DEBUG) System.out.println(s);
             if(s.matches(Regex.S_OPERATOR) || s.matches(Regex.S_NUMBER) || s.matches(Regex.S_DIRECTION) || s.matches(Regex.S_SENSOR)){ /// invalid case
                 tkz.consume();
                 throw new SyntaxError();
@@ -125,7 +126,8 @@ public class BehaviorEvaluator{
     public Node parseExpression() throws SyntaxError, EvaluationError{
         if(DEBUG) System.out.println("parseExpression " + tkz.peek());
         Node expression = parseTerm();
-        while (tkz.peek().equals("+") || tkz.peek("-")) {
+        while (tkz.peek() != null 
+            && (tkz.peek().equals("+") || tkz.peek("-"))) {
             String op = tkz.consume();
             Node rightTerm = parseTerm();
             if(op.equals("+")){
@@ -145,7 +147,8 @@ public class BehaviorEvaluator{
         if(DEBUG) System.out.println("parseTerm " + tkz.peek());
         Node term = parseFactor();
 
-        while (tkz.peek().equals("*") || tkz.peek("/") || tkz.peek("%")) {
+        while (tkz.peek() != null 
+            && (tkz.peek().equals("*") || tkz.peek("/") || tkz.peek("%"))) {
             String op = tkz.consume();
             Node rightTerm = parseFactor();
 
@@ -173,19 +176,23 @@ public class BehaviorEvaluator{
     //Factor → Power ^ Factor | Power
     public Node parseFactor() throws SyntaxError, EvaluationError{
         if(DEBUG) System.out.println("parseFactor " + tkz.peek());
-        Node term = parsePower();
-
-        while (tkz.peek("^")) {
-            String op = tkz.consume();
-            Node v2 = parsePower();
-
-            if(op.equals("^")){
-                term = factory.createNode(term,"*",v2);
-            }else{
-                throw new SyntaxError("parseFactor() unpassable");        
-            }
+        Node power = parsePower();
+        if(tkz.peek("\\^")){
+            tkz.consume();
+            Node binArith = factory.createNode(power, "^", parseFactor());
+            return binArith;
         }
-        return term;
+//        while (tkz.peek("^")) {
+//            String op = tkz.consume();
+//            Node v2 = parsePower();
+//
+//            if(op.equals("^")){
+//                term = factory.createNode(term,"*",v2);
+//            }else{
+//                throw new SyntaxError("parseFactor() unpassable");
+//            }
+//        }
+        return power;
     }
 
     //Power → <number> | <identifier> | ( Expression ) | SensorExpression

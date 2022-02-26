@@ -30,6 +30,19 @@ public class Area {
         this.addUnit(dummy);
     }
 
+
+    /**
+     *
+     * @param dummy รับเป็น list ของ Virus เพื่อที่ง่ายต่อการใช้งานที่เก็บมา
+     */
+    public void addAllVirus(List<Virus> dummy){
+        for(Virus virus : dummy){
+            this.viruses.add(virus);
+            this.addUnit(virus);
+        }
+
+    }
+
     public void addAntibody(Antibody dummy){
         this.antibodies.add(dummy);
         this.addUnit(dummy);
@@ -75,6 +88,10 @@ public class Area {
 
     public boolean isTaken(){
         return this.alertLevel() == 2;
+    }
+
+    public void snap(){
+        viruses.clear();
     }
 
     public List<Unit> getUnits() {

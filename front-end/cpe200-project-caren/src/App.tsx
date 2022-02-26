@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
 import Config from './Config';
+
 import ImageObject from './ImageObject';
 import ButtonObject from './ButtonObject';
 import WaveInfo from './WaveInfo';
 import TextObject from './TextObject';
+import Vector2 from './Vector2';
 
 // controllers
 import GameController from './controllers/GameController';
@@ -12,7 +14,6 @@ import GameController from './controllers/GameController';
 // pngs
 import p_main_background from './assets/artworks/main_background.png'
 import p_dim_black from './assets/artworks/dim_black.png'
-import p_alertLight_blue from './assets/artworks/alertLight_blue.png'
 import p_brain_blue from './assets/artworks/brain_blue.png'
 import p_brain_red from './assets/artworks/brain_red.png'
 import p_lungs_blue from './assets/artworks/lungs_blue.png'
@@ -71,8 +72,12 @@ import p_invenButton_middle from './assets/artworks/invenButton_middle.png';
 import p_invenButton_middle_blank from './assets/artworks/invenButton_middle_blank.png';
 import p_invenButton_bottom from './assets/artworks/invenButton_bottom.png';
 import p_invenButton_bottom_blank from './assets/artworks/invenButton_bottom_blank.png';
-import Vector2 from './Vector2';
 
+import p_alertLight_blue from './assets/artworks/alertLight_blue.png';
+import p_alertLight_yellow from './assets/artworks/alertLight_yellow.png';
+import p_alertLight_red from './assets/artworks/alertLight_red.png';
+
+/////////////////////////////////////////////
 
 var canvas : HTMLCanvasElement | null;
 var ctx: CanvasRenderingContext2D | null;
@@ -136,7 +141,9 @@ var i_unitIcon_melee_red : ImageObject;
 var i_unitIcon_ranged_red : ImageObject;
 var i_unitIcon_aoe_red : ImageObject;
 
-var i_alertLight_blue: ImageObject;
+var i_alertLight_top: ImageObject;
+var i_alertLight_middle: ImageObject;
+var i_alertLight_bottom: ImageObject;
 
 // pregame
 var t_caren : TextObject;
@@ -147,13 +154,14 @@ var t_clickAnywhereToStart : TextObject;
 /// FETCHABLE FIELDS
 var gameState : number = 1; // 1 = pregame, 2 = game
 var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
-var areas : {units : any[], viruses : any[], antibodies : any[], name : string, taken : boolean}[] 
+var areas : {units : any[], viruses : any[], antibodies : any[], name : string, taken : boolean, alertLevel : 0 | 1 | 2}[] 
 = [	{
 		units: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}, {position : new Vector2(0,0), type: "aoe"}],
 		viruses: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}],
 		antibodies: [{position : new Vector2(0,0), type: "aoe"}],
 		name: "gg",
-		taken: false
+		taken: false,
+		alertLevel : 0
 	}
 ]; // area datas
 var scannerRadius : number = 100; 
@@ -192,6 +200,8 @@ var scannerMousePosition : Vector2;
 var gameTime = 0;
 var frameTime = 1000/Config.FPS;
 
+var clientKey : string | null;
+
 
 const DEBUG = Config.DEBUG;
 
@@ -202,6 +212,12 @@ class App extends React.Component {
 	
 	componentDidMount() {
 		if(DEBUG) console.log("MOUNTED");
+		clientKey = localStorage.getItem(Config.LOCALSTORAGE_KEY);
+		if(clientKey === null){
+			clientKey = "no_local_storage";
+			GameController.connectGame(clientKey).then(data => {clientKey = data});
+		}
+
 		this.interval = setInterval(() => this.setState({ time: Date.now() }), frameTime);
 		
 		this.initAll();
@@ -227,8 +243,8 @@ class App extends React.Component {
 	initAll(){
 		if(DEBUG) console.log("INITALL")
 		canvas = document.querySelector('canvas');
-		canvas!.width = 1280
-		canvas!.height = 720
+		canvas!.width = Config.SCREEN_WIDTH*Config.CANVAS_SCALE;
+		canvas!.height = Config.SCREEN_HEIGHT*Config.CANVAS_SCALE;
 
 		// EVENTLISTENERS
 		canvas!.addEventListener('mousedown', function(e){ onMouseDown(e); getMousePosition(canvas!, e)});
@@ -319,7 +335,6 @@ class App extends React.Component {
 		t_inven_ranged = new TextObject(['x' + inventory.ranged.toString()], 20, "'Press Start 2P'", 1486, 561, Config.COLOR_LIGHTBLUE, "center");
 		t_inven_aoe = new TextObject(['x' + inventory.aoe.toString()], 20, "'Press Start 2P'", 1488, 676, Config.COLOR_LIGHTBLUE, "center");
 
-		i_alertLight_blue = new ImageObject(p_alertLight_blue,0,0);
 
 		i_unitIcon_melee_blue = new ImageObject(p_unitIcon_melee_filled_blue, 0, 0); i_unitIcon_melee_blue.setAlign("center"); i_unitIcon_melee_blue.setBaseLine("middle");
 		i_unitIcon_ranged_blue = new ImageObject(p_unitIcon_ranged_filled_blue, 0, 0); i_unitIcon_ranged_blue.setAlign("center"); i_unitIcon_ranged_blue.setBaseLine("middle");
@@ -327,6 +342,11 @@ class App extends React.Component {
 		i_unitIcon_melee_red = new ImageObject(p_unitIcon_melee_filled_red, 0, 0); i_unitIcon_melee_red.setAlign("center"); i_unitIcon_melee_red.setBaseLine("middle");
 		i_unitIcon_ranged_red = new ImageObject(p_unitIcon_ranged_filled_red, 0, 0); i_unitIcon_ranged_red.setAlign("center"); i_unitIcon_ranged_red.setBaseLine("middle");
 		i_unitIcon_aoe_red = new ImageObject(p_unitIcon_aoe_filled_red, 0, 0); i_unitIcon_aoe_red.setAlign("center"); i_unitIcon_aoe_red.setBaseLine("middle");
+
+		i_alertLight_top = new ImageObject([p_alertLight_blue, p_alertLight_yellow, p_alertLight_red],320,376);
+		i_alertLight_middle = new ImageObject([p_alertLight_blue, p_alertLight_yellow, p_alertLight_red],297,497);
+		i_alertLight_bottom = new ImageObject([p_alertLight_blue, p_alertLight_yellow, p_alertLight_red],297,629);
+
 
 
 		// pregame
@@ -418,6 +438,16 @@ class App extends React.Component {
 			t_inven_melee.setText(['x' + inventory.melee.toString()]);
 			t_inven_ranged.setText(['x' + inventory.ranged.toString()]);
 			t_inven_aoe.setText(['x' + inventory.aoe.toString()]);
+
+			i_alertLight_top.setState(areas[0].alertLevel);
+			i_alertLight_middle.setState(areas[1].alertLevel);
+			i_alertLight_bottom.setState(areas[2].alertLevel);
+
+			i_brain.setState((areas[0].taken)? 1 : 0);
+			i_heart.setState((areas[1].taken)? 1 : 0);
+			i_lungs.setState((areas[2].taken)? 1 : 0);
+
+
 		}
 		
 
@@ -494,6 +524,10 @@ class App extends React.Component {
 				t_inven_melee.draw();
 				t_inven_ranged.draw();
 				t_inven_aoe.draw();
+
+				i_alertLight_top.draw();
+				i_alertLight_middle.draw();
+				i_alertLight_bottom.draw();
 
 				drawUnits();
 			}
@@ -577,7 +611,11 @@ function onMouseDown(e : MouseEvent){
 				b_invenButton_bottom.setClicked(true);
 			}else{
 				if(mouseInScannerRadius() && activeAreaIndex !== 0){
-					if(b_invenButton_top.isClicked() && inventory.melee > 0){
+					var detect = detectClickOnAntibodies(mousePosition);
+					if(detect !== null){ // if clicked on antibody
+						GameController.pickUpUnit(detect);
+					}
+					else if(b_invenButton_top.isClicked() && inventory.melee > 0){
 						GameController.placeUnit("melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.melee -= 1;
 					}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
@@ -644,6 +682,27 @@ function onMouseDown(e : MouseEvent){
 		b_time_fastforward.setClicked(b_time_fastforward.mouseInside(mousePosition));
 		b_time_slowdown.setClicked(b_time_slowdown.mouseInside(mousePosition));
 	}
+}
+
+// returns name of antibody clicked. if there are none clicked, return null
+function detectClickOnAntibodies(mousePos : Vector2){
+	areas[activeAreaIndex-1].antibodies.forEach(unit => {
+		var img = i_unitIcon_melee_blue;
+		if(unit.type === "ranged"){
+			img = i_unitIcon_ranged_blue;
+		}else if(unit.type === "aoe"){
+			img = i_unitIcon_aoe_blue;
+		}
+
+		var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(unit.position)));
+		Vector2.scale(pos, 1/Config.CANVAS_SCALE)
+		img.setPosition(pos);
+		if(img.mouseInside(mousePos)){ /// THIS ANTIBODY GOT CLICKED
+			return unit.name;
+		}
+	});
+
+	return null;
 }
 
 function drawUnits(){

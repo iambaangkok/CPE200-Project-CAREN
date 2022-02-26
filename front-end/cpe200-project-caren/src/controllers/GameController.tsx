@@ -8,6 +8,34 @@ const DEBUG = Config.DEBUG;
 
 class GameController {
 
+  static async connectGame(clientKey : string){
+    // var resp = await axios({
+    //   method: 'post',
+    //   url: baseURL + "/inventory/placeunit",
+    //   headers: {},
+    //   data: {
+    //     clientKey,
+    //   }
+    // });
+
+    // // if have backend have key, good! return the one that was sent.
+    // // if backend have no key, generate a new one and return it.
+
+    // return resp.data;
+    return "dummykey"
+  }
+
+  static async pickUpUnit(name : string){
+    // await axios({
+    //   method: 'post',
+    //   url: baseURL + "/inventory/pickupunit",
+    //   headers: {},
+    //   data: {
+    //     name,
+    //   }
+    // });
+  }
+
   static async placeUnit(type : string, areaIndex : number, position : {x : number, y : number}){
     // await axios({
     //   method: 'post',
@@ -94,13 +122,14 @@ class GameController {
 
   static async getArea(areaIndex : number){
     const url = baseURL + "/area/getarea" + (areaIndex);
-    if(areaIndex === 1){
+    if(true){//areaIndex === 1){
       return {
         units: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}, {position : new Vector2(0,0), type: "aoe"}],
         viruses: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}],
         antibodies: [{position : new Vector2(0,0), type: "aoe"}],
         name: "gg",
-        taken: false
+        taken: false,
+    		alertLevel : 0
       };
     }
 

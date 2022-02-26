@@ -117,7 +117,7 @@ public class Game {
         try{
             for(int i = 1 ; i <= time ; i++) {
 //            System.out.println("Start of delay: "+ new Date());
-                System.out.println("current time "+i+ " seccon");
+                System.out.println("current time "+i+ " second");
                 Thread.sleep(1000);
 //            System.out.println("End of delay: "+ new Date());
             }

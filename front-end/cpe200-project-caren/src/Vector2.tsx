@@ -19,10 +19,23 @@ class Vector2{
     public scale(scale : number){
         this.x *= scale;
         this.y *= scale;    
+        return this;
     }
 
     public static getCopy(v : Vector2){
         return new Vector2(v.x, v.y);
+    }
+
+    public add(v : Vector2){
+        this.x += v.x;
+        this.y += v.y;
+        return this;
+    }
+
+    public deduct(v : Vector2){
+        this.x -= v.x;
+        this.y -= v.y;
+        return this;
     }
 }
 

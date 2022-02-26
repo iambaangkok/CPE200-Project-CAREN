@@ -202,6 +202,10 @@ var frameTime = 1000/Config.FPS;
 
 var clientKey : string | null;
 
+var zoomPosition : Vector2 = {x:0,y:0} as Vector2;
+var zoomScale : number = 1;
+
+
 
 const DEBUG = Config.DEBUG;
 
@@ -251,6 +255,7 @@ class App extends React.Component {
 		canvas!.addEventListener('mouseup', function(e){ onMouseUp(e); getMousePosition(canvas!, e)});
 		canvas!.addEventListener('mousemove', function(e){ onMouseHover(e); getMousePosition(canvas!, e)});
 		canvas!.addEventListener('mouseout', function(e){ onMouseHover(e); getMousePosition(canvas!, e)});
+		canvas!.addEventListener('wheel', function(e){onWheel(e)});
 		
 		ctx = canvas!.getContext('2d')
 		ctx!.scale(Config.CANVAS_SCALE,Config.CANVAS_SCALE);
@@ -571,6 +576,22 @@ function onMouseUp(e : MouseEvent){
 	}
 }
 
+function onWheel(e : WheelEvent){
+	if(!mouseInScannerRadius()){
+		return;
+	}
+	var zoomDelta = -e.deltaY * Config.ZOOM_SCALE_STEP;
+	console.log("zoomDelta: " + zoomDelta);
+	zoomScale = Math.min(Math.max(Config.ZOOM_MIN_SCALE, zoomScale + zoomDelta), Config.ZOOM_MAX_SCALE);
+	if(zoomScale === Config.ZOOM_MIN_SCALE){
+		zoomPosition = new Vector2(0,0);
+	}else{
+		var scannerMousePos = Vector2.getCopy(scannerMousePosition);
+		scannerMousePos.scale((zoomScale)/(Config.ZOOM_MAX_SCALE-Config.ZOOM_MIN_SCALE));
+		zoomPosition = scannerMousePos;
+	}
+}
+
 function onMouseDown(e : MouseEvent){
 	if (DEBUG) console.log("mousedown");
 	if (true) console.log(mousePosition);
@@ -598,42 +619,40 @@ function onMouseDown(e : MouseEvent){
 		}
 		if(i_scanner.mouseInside(mousePosition)){
 			if(b_invenButton_top.mouseInside(mousePosition)){
-				b_invenButton_top.setClicked(true);
+
+				b_invenButton_top.setClicked(!b_invenButton_top.isClicked());
 				b_invenButton_middle.setClicked(false);
 				b_invenButton_bottom.setClicked(false);
 			}else if(b_invenButton_middle.mouseInside(mousePosition)){
 				b_invenButton_top.setClicked(false);
-				b_invenButton_middle.setClicked(true);
+				b_invenButton_middle.setClicked(!b_invenButton_middle.isClicked());
 				b_invenButton_bottom.setClicked(false);
 			}else if(b_invenButton_bottom.mouseInside(mousePosition)){
 				b_invenButton_top.setClicked(false);
 				b_invenButton_middle.setClicked(false);
-				b_invenButton_bottom.setClicked(true);
+				b_invenButton_bottom.setClicked(!b_invenButton_bottom.isClicked());
 			}else{
 				if(mouseInScannerRadius() && activeAreaIndex !== 0){
 					var detect = detectClickOnAntibodies(mousePosition);
-					console.log(detect)
 					if(detect !== null){ // if clicked on antibody
-						console.log("CLICKED ON ANTI!!!!!!")
+						if(DEBUG) console.log("CLICKED ON ANTI!!!!!!")
 						GameController.pickUpUnit(detect);
 					}
 					else if(b_invenButton_top.isClicked() && inventory.melee > 0){
-						console.log("PLACE MELEE")
+						if(DEBUG) console.log("PLACE MELEE")
 						GameController.placeUnit("melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.melee -= 1;
 					}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
-						console.log("PLACE RANGED")
+						if(DEBUG) console.log("PLACE RANGED")
 						GameController.placeUnit("ranged", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.ranged -= 1;
 					}else if(b_invenButton_bottom.isClicked() && inventory.aoe > 0){
-						console.log("PLACE AOE")
+						if(DEBUG) console.log("PLACE AOE")
 						GameController.placeUnit("aoe", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.aoe -= 1;
 					}
 				}
 			}
-
-
 		}
 		if(i_brain.mouseInside(mousePosition)){
 			if(activeAreaIndex === 0){
@@ -694,26 +713,32 @@ function detectClickOnAntibodies(mousePos : Vector2){
 	var name = null;
 
 	for(let i = 0 ; i < areas[activeAreaIndex-1].antibodies.length; ++i){
-		var anti = areas[activeAreaIndex-1].antibodies[i];
+		var unit = areas[activeAreaIndex-1].antibodies[i];
 		var img = i_unitIcon_melee_blue;
-		if(anti.type === "ranged"){
+		if(unit.type === "ranged"){
 			img = i_unitIcon_ranged_blue;
-		}else if(anti.type === "aoe"){
+		}else if(unit.type === "aoe"){
 			img = i_unitIcon_aoe_blue;
 		}
 
-		var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(anti.position)));
-		Vector2.scale(pos, 1/Config.CANVAS_SCALE)
+		var scannerCoordinate = gameToScannerCoordinate(unit.position);
+			scannerCoordinate.add(zoomPosition);
+			scannerCoordinate.scale(zoomScale);
+
+		var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(scannerCoordinate));
+		pos.scale(1/Config.CANVAS_SCALE);
+
+		img.setScale(zoomScale);
 		img.setPosition(pos);
-		console.log("anti: " + img.position.x + "," + img.position.y + "  w h s: " + img.width + "," + img.height + "," + img.scale);
-		console.log("anti: " + (img.position.x-img.width/2) + "-" + (img.position.x-img.width/2+img.width) 
-		+ "," + (img.position.y-img.height/2) + "-" + (img.position.y-img.height/2+img.height) )
 
-
-		//console.log("mouseInside: " + img.mouseInside(mousePosition))
+		//console.log("anti: " + img.position.x + "," + img.position.y + "  w h s: " + img.width + "," + img.height + "," + img.scale);
+		//  console.log("anti: " + (img.position.x-img.width/2) + "-" + (img.position.x-img.width/2+img.width) 
+		// + "," + (img.position.y-img.height/2) + "-" + (img.position.y-img.height/2+img.height) )
+		// console.log("anti: " + (img.position.x-img.width/2)*s + "-" + (img.position.x-img.width/2+img.width)*s 
+		// + "," + (img.position.y-img.height/2)*s+ "-" + (img.position.y-img.height/2+img.height)*s )
 		
 		if(img.mouseInside(mousePosition)){ /// THIS ANTIBODY GOT CLICKED
-			console.log("detectClickOnAntibodies() RETURN")
+			 console.log("detectClickOnAntibodies() RETURN")
 			//name = anti.name;
 			name = "ggwp";
 		}
@@ -727,7 +752,6 @@ function drawUnits(){
 	if(activeAreaIndex !== 0){
 		if(DEBUG) console.log("draw units")
 		areas[activeAreaIndex-1].viruses.forEach(unit => {
-			
 			var img = i_unitIcon_melee_red;
 			if(unit.type === "ranged"){
 				img = i_unitIcon_ranged_red;
@@ -735,10 +759,22 @@ function drawUnits(){
 				img = i_unitIcon_aoe_red;
 			}
 
-			var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(unit.position)));
-			Vector2.scale(pos, 1/Config.CANVAS_SCALE)
+			var scannerCoordinate = gameToScannerCoordinate(unit.position);
+			scannerCoordinate.add(zoomPosition);
+			scannerCoordinate.scale(zoomScale);
+
+			var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(scannerCoordinate));
+			pos.scale(1/Config.CANVAS_SCALE);
+
+			img.setScale(zoomScale);
 			img.setPosition(pos);
-			img.draw();
+
+			var scannerPos = Vector2.getCopy(pos);
+			scannerPos.scale(Config.CANVAS_SCALE)
+			scannerPos = canvasToScannerCoordinate(scannerPos)
+
+			if(inScannerRadius(scannerPos))
+				img.draw();
 		});
 		areas[activeAreaIndex-1].antibodies.forEach(unit => {
 			var img = i_unitIcon_melee_blue;
@@ -748,10 +784,22 @@ function drawUnits(){
 				img = i_unitIcon_aoe_blue;
 			}
 
-			var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(gameToScannerCoordinate(unit.position)));
-			Vector2.scale(pos, 1/Config.CANVAS_SCALE)
+			var scannerCoordinate = gameToScannerCoordinate(unit.position);
+			scannerCoordinate.add(zoomPosition);
+			scannerCoordinate.scale(zoomScale);
+
+			var pos : Vector2 = Vector2.getCopy(scannerToCanvasCoordinate(scannerCoordinate));
+			pos.scale(1/Config.CANVAS_SCALE);
+
+			img.setScale(zoomScale);
 			img.setPosition(pos);
-			img.draw();
+
+			var scannerPos = Vector2.getCopy(pos);
+			scannerPos.scale(Config.CANVAS_SCALE)
+			scannerPos = canvasToScannerCoordinate(scannerPos)
+
+			if(inScannerRadius(scannerPos))
+				img.draw();
 		});
 	}
 }
@@ -770,6 +818,7 @@ function scannerToCanvasCoordinate(coordinate : Vector2){
 
 function canvasToScannerCoordinate(coordinate : Vector2){
 	var canvasRect = canvas!.getBoundingClientRect();
+	//console.log("coord: " + (coordinate.x - canvasRect.left - Config.SCANNER_CENTER.x) +"," + (coordinate.y - canvasRect.top - Config.SCANNER_CENTER.y));
 	return {x: coordinate.x - canvasRect.left - Config.SCANNER_CENTER.x, y: coordinate.y - canvasRect.top - Config.SCANNER_CENTER.y} as Vector2
 }
 
@@ -789,5 +838,9 @@ function gameToScannerCoordinate(coordinate : Vector2){
 
 function mouseInScannerRadius(){
 	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerMousePosition) <= Config.SCANNER_RADIUS;
+}
+
+function inScannerRadius(pos : Vector2){
+	return Vector2.distanceBetweenPoint(new Vector2(0,0), pos) <= Config.SCANNER_RADIUS;
 }
 

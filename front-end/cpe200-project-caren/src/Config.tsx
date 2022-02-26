@@ -15,6 +15,10 @@ class Config{
 
     public static SCANNER_CENTER = {x: 605, y : 360} as Vector2
     public static SCANNER_RADIUS = 315;
+
+    public static ZOOM_MIN_SCALE = 1;
+    public static ZOOM_MAX_SCALE = 3;
+    public static ZOOM_SCALE_STEP = 0.002;
     
     public static CANVAS_SCALE = 0.6666667; // scale relative to SCREEN_WIDTH, SCREEN_HEIGHT
 

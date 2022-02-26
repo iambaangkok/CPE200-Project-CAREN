@@ -44,7 +44,7 @@ class ImageObject{
         this.state = 0;
 
         if(scale === undefined){
-            this.scale = 0.6666667;
+            this.scale = 1;
         }else{
             this.scale = scale;
         }
@@ -90,23 +90,24 @@ class ImageObject{
         var pos = this.position;
         var w = this.width;
         var h = this.height;
+        var s = this.scale;
 
         if(this.align === "center"){
-            pos.x -= w/2;
+            pos.x -= w/2 * s;
         }else if(this.align === "end"){
-            pos.x -= w;
+            pos.x -= w  * s;
         }
 
         if(this.baseline === "middle"){
-            pos.y -= h/2;
+            pos.y -= h/2 * s;
         }else if(this.baseline === "bottom"){
-            pos.y -= h;
+            pos.y -= h * s;
         }
 
         if(this.image instanceof Array){
-            this.context!.drawImage(this.image[this.state], pos.x, pos.y, w, h);
+            this.context!.drawImage(this.image[this.state], pos.x, pos.y, w*s, h*s);
         }else{
-            this.context!.drawImage(this.image, pos.x, pos.y, w, h);
+            this.context!.drawImage(this.image, pos.x, pos.y, w*s, h*s);
         }
     }
 
@@ -119,22 +120,21 @@ class ImageObject{
         var pos = this.position;
         var w = this.width;
         var h = this.height;
-
+        var s = this.scale*Config.CANVAS_SCALE;
         if(this.align === "center"){
-            pos.x -= w/2;
+            pos.x -= w/2 * s;
         }else if(this.align === "end"){
-            pos.x -= w;
+            pos.x -= w * s;
         }
 
         if(this.baseline === "middle"){
-            pos.y -= h/2;
+            pos.y -= h/2 * s;
         }else if(this.baseline === "bottom"){
-            pos.y -= h;
+            pos.y -= h * s;
         }
 
-
-        return (mousePos.x >= (pos.x)*this.scale && mousePos.x <= (pos.x+w)*this.scale
-            && mousePos.y >= (pos.y)*this.scale && mousePos.y <= (pos.y+h)*this.scale);
+        return (mousePos.x >= (pos.x)*Config.CANVAS_SCALE && mousePos.x <= (pos.x+w)*Config.CANVAS_SCALE
+            && mousePos.y >= (pos.y)*Config.CANVAS_SCALE && mousePos.y <= (pos.y+h)*Config.CANVAS_SCALE);
     }
 
     public nextState(){
@@ -160,6 +160,11 @@ class ImageObject{
     public setBaseLine(baseline : "top" | "middle" | "bottom"){
         this.baseline = baseline;
     }
+
+    public setScale(scale: number){
+        this.scale = scale;
+    }
+
 }
 
 

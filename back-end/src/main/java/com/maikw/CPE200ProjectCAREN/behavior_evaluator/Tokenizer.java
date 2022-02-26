@@ -56,7 +56,9 @@ public class Tokenizer{
      *  @param regex
      */
     boolean peek(String regex) {
-        return peek().matches(regex);
+        if(peek() != null)
+            return peek().matches(regex);
+        return false;
     }
 
     /**

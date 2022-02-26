@@ -77,6 +77,10 @@ public class Area {
         return this.alertLevel() == 2;
     }
 
+    public boolean getAlertLevel(){
+        return this.getAlertLevel();
+    }
+
     public List<Unit> getUnits() {
         return units;
     }

@@ -120,21 +120,20 @@ class ImageObject{
         var pos = this.position;
         var w = this.width;
         var h = this.height;
-        var s = this.scale*Config.CANVAS_SCALE;
         if(this.align === "center"){
-            pos.x -= w/2 * s;
+            pos.x -= w/2 * this.scale;
         }else if(this.align === "end"){
-            pos.x -= w * s;
+            pos.x -= w * this.scale;
         }
 
         if(this.baseline === "middle"){
-            pos.y -= h/2 * s;
+            pos.y -= h/2 * this.scale;
         }else if(this.baseline === "bottom"){
-            pos.y -= h * s;
+            pos.y -= h * this.scale;
         }
 
-        return (mousePos.x >= (pos.x)*Config.CANVAS_SCALE && mousePos.x <= (pos.x+w)*Config.CANVAS_SCALE
-            && mousePos.y >= (pos.y)*Config.CANVAS_SCALE && mousePos.y <= (pos.y+h)*Config.CANVAS_SCALE);
+        return (mousePos.x >= (pos.x)*Config.CANVAS_SCALE && mousePos.x <= (pos.x+w*this.scale)*Config.CANVAS_SCALE
+            && mousePos.y >= (pos.y)*Config.CANVAS_SCALE && mousePos.y <= (pos.y+h*this.scale)*Config.CANVAS_SCALE);
     }
 
     public nextState(){

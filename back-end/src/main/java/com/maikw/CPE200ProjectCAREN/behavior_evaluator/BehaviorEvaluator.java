@@ -174,17 +174,20 @@ public class BehaviorEvaluator{
     public Node parseFactor() throws SyntaxError, EvaluationError{
         if(DEBUG) System.out.println("parseFactor " + tkz.peek());
         Node term = parsePower();
-
-        while (tkz.peek("^")) {
-            String op = tkz.consume();
-            Node v2 = parsePower();
-
-            if(op.equals("^")){
-                term = factory.createNode(term,"*",v2);
-            }else{
-                throw new SyntaxError("parseFactor() unpassable");        
-            }
+        if(tkz.peek("^")){
+            Node binArith = factory.createNode(term, "^", parseFactor());
+            return binArith;
         }
+//        while (tkz.peek("^")) {
+//            String op = tkz.consume();
+//            Node v2 = parsePower();
+//
+//            if(op.equals("^")){
+//                term = factory.createNode(term,"*",v2);
+//            }else{
+//                throw new SyntaxError("parseFactor() unpassable");
+//            }
+//        }
         return term;
     }
 

@@ -29,17 +29,9 @@ public class BehaviorEvaluatorTest {
     // }
 
     public static void main(String[] args) {
-        BehaviorEvaluator be = new BehaviorEvaluator(
-            GeneticCodeManager.getAsString("back-end/geneticcodes/sampleteam/working/sampleteam_w0.txt"),
-            UnitFactory.createAntibody("melee")
-            );
-        try{
-            Node programNode = be.parseProgram();
-            programNode.print(0);
-            //programNode.evaluate();
-        }catch(SyntaxError e){
-            System.out.println(e.getMessage());
-        }
+        String gCode = GeneticCodeManager.getAsString("geneticcodes/maikoiwang/expressions/maikoiwang_e0.txt");
+        Unit unit = new Unit("gCode_testUnit", "melee", gCode);
+        unit.programNode.print(0);
     }
     
     // public static void main(String[] args) {

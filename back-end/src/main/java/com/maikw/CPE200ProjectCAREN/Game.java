@@ -50,6 +50,12 @@ public class Game {
         while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
                 || areas.get(2).antibodies.size() != 0 || spawn){
 
+
+
+            while(timeManager.inputType.equals("pause")) {
+                System.out.println("pause state");
+            }
+
             waitState(timeManager.timeSate.get(0));
 
 //            if(timeManager.pause == true){
@@ -62,6 +68,7 @@ public class Game {
                 A.setArea(areas.get(0));
                 areas.get(0).addAntibody(A);
             }
+
             if(spawn == true){waitState(2); this.spawn = false;} //timeManager.timeSate.get(1)
             if(areas.get(0).viruses.size() == 0 && areas.get(1).viruses.size() == 0
                     && areas.get(2).viruses.size() == 0 ) {
@@ -137,9 +144,16 @@ public class Game {
     private void waitState(int time){
         try{
             for(int i = 1 ; i <= time ; i++) {
+                // ทำ if หรือ switch ทำการเลือกใช้ว่ามันทำอะไรอยู่
+                if(timeManager.inputType.equals("slowdown")){
+                    Thread.sleep((int)(1000*timeManager.slowDownMultiplier));
+                    System.out.println("current time "+i*(int)(1000*timeManager.slowDownMultiplier)+ " second");
+                }
+                else if(timeManager.inputType.equals("fastforward")) {
+                    Thread.sleep((int)(1000*timeManager.fastForwardMuliplier));
+                    System.out.println("current time "+i*(int)(1000*timeManager.fastForwardMuliplier)+ " second");
+                }
 
-                System.out.println("current time "+i+ " second");
-                Thread.sleep(1000);
 
             }
         }catch (InterruptedException ex){

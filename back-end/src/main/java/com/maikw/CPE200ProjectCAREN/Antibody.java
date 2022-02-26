@@ -6,11 +6,18 @@ public class Antibody extends Unit{
         this.unitClass = "antibody";
     }
 
-    public Virus virusToSpawn(){
+    @Override
+    public void takeDamage(int dmg){
+        super.takeDamage(dmg);
+        if(this.getCurrentHealth() <= 0) virusToSpawn();
+    }
+
+    public void virusToSpawn(){
         Virus reborn = UnitFactory.createVirus(this.getType());
         this.area.removeAntibody(this);
         this.area.addVirus(reborn);
-        return reborn;
+        reborn.setPositionX(this.getPositionX());
+        reborn.setPositionY(this.getPositionY());
     }
     
 }

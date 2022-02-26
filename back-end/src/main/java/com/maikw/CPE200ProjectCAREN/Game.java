@@ -9,12 +9,12 @@ import java.util.List;
 @Component("game")
 public class Game {
     protected Integer state  = 1 ;
-    protected Boolean spawn ;
+    protected Boolean spawn ;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว
     protected Integer screenWidth  = 1024 ;
     protected Integer screenHeight = 768 ;
     protected Double mousePositionX ;
     protected Double mousePositionY ;
-    protected Integer activeAreaIndex;
+    protected Integer activeAreaIndex ;
     protected TimeManager timeManager ;
     protected Inventory inventory ;
     protected List<Area> areas;
@@ -22,6 +22,7 @@ public class Game {
     protected GeneticCodeManager geneticCodeManager ;
     protected Shop shop ;
 
+    protected Unit unit;
 
 
     public Game(){
@@ -33,7 +34,9 @@ public class Game {
         this.inventory = new Inventory();
         this.waveManager = new WaveManager();
 
+
     }
+
 
     public List<Integer> getScreen(){
         List<Integer> s = new ArrayList<Integer>();
@@ -43,7 +46,30 @@ public class Game {
     }
 
     public void startGameLoop(){
+        System.out.println("Yaeggggg");
+        waveManager.genVirus();
+        while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0 || areas.get(2).antibodies.size() != 0){
+            waitState(1);
 
+            if(spawn == false){waitState(30);}
+            // ยังไม่ได้เพิ่มค่าของ currentWaveCount ต้องไปหาที่เพิ่มด้วย
+            if(waveManager.currentWaveCount <= waveManager.maxWaveCount){
+                waitState(15);
+                putVirusToArea(0); putVirusToArea(1); putVirusToArea(2);
+            }
+
+            System.out.println(areas.get(0).viruses.size());
+            System.out.println(areas.get(1).viruses.size());
+            System.out.println(areas.get(2).viruses.size());
+            
+
+            areas.get(0).snap();
+            areas.get(1).snap();
+            areas.get(2).snap();
+
+
+
+        }
 
     }
 
@@ -51,42 +77,30 @@ public class Game {
     /***
      * เซ็ตค่าเริ่มต้นของเกมส์ เช่น shop ประกาศแค่ครั้งเดียว
      * สร้าง wave ไว้รอแค่ครั้งเดียว
-     *
      */
     private void setStart(){
 
 
-
-
-    }
-
-    public void classSingleton(){
-
-    }
-
-    /***
-     * สร้างไวรัส และ เข้าถึง Virus แต่ละตัว
-     * @param
-     */
-    public void callOutVirus(Integer waveNumber){
-        waveManager.genVirus();
-        waveManager.allwave.get("Wave_"+waveNumber.toString());
-
     }
 
 
-    public void putVirusToArea(){
-
+    public void putVirusToArea(int area){
+        areas.get(area).addAllVirus(waveManager.allwave.get("Wave_"+waveManager.currentWaveCount.toString()));
     }
 
     public static void main(String[] args) {
+
         Game game = new Game();
-        game.callOutVirus(1);
+
+        Antibody A = UnitFactory.createAntibody("melee");
+        A.setArea(game.areas.get(0));
+        game.areas.get(0).addAntibody(A);
+        game.startGameLoop();
     }
 
-    private void waitState(){
+    private void waitState(int time){
         try{
-            for(int i = 0 ; i <= 20 ; i++) {
+            for(int i = 0 ; i <= time ; i++) {
 //            System.out.println("Start of delay: "+ new Date());
                 System.out.println("current time "+i+ " seccon");
                 Thread.sleep(1000);
@@ -100,8 +114,6 @@ public class Game {
 
 
     private void upDate(){
-
-
 
 
     }

@@ -3,7 +3,7 @@ package com.maikw.CPE200ProjectCAREN;
 public class Antibody extends Unit{
     public Antibody(String name, String type, String geneticCode) {
         super(name, type, geneticCode);
-        this.unitClass = "Antibody";
+        this.unitClass = "antibody";
     }
 
     public Virus virusToSpawn(){

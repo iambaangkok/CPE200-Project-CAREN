@@ -90,8 +90,12 @@ public class Area {
         return this.alertLevel() == 2;
     }
 
-    public void snap(){
+
+    public void snap() {
         viruses.clear();
+    }
+    public boolean getAlertLevel(){
+        return this.getAlertLevel();
     }
 
     public List<Unit> getUnits() {

@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class WaveManager {
         protected Integer maxWaveCount  = 5 ;
-        protected Integer currentWaveCount  = 1 ;
+        protected Integer currentWaveCount  = 0 ;
+        protected Integer waveCount  = 1 ;
         protected  Integer timeBetweenWave  = 20 ;
         protected List<Virus> viruses ;
         protected Map<String,List<Virus>> allwave ;
@@ -19,7 +20,7 @@ public class WaveManager {
 
     }
 
-    public void createUnitVirus(int area1melee, int area1ranged, int area1aoe) {
+    private void createUnitVirus(int area1melee, int area1ranged, int area1aoe) {
 
         for(int i = 0 ; i < area1melee;i++){
             viruses.add(UnitFactory.createVirus( "melee"));
@@ -31,8 +32,8 @@ public class WaveManager {
             viruses.add(UnitFactory.createVirus( "aoe"));
         }
 
-        allwave.put("Wave_"+ currentWaveCount.toString() ,viruses);
-        currentWaveCount+=1;
+        allwave.put("Wave_"+ waveCount.toString() ,viruses);
+        waveCount+=1;
         this.viruses = new ArrayList<>();
     }
 
@@ -53,7 +54,7 @@ public class WaveManager {
     }
 
     public Integer getCurrentWaveCount() {
-        return currentWaveCount;
+        return waveCount;
     }
 
     public Integer getTimeBetweenWave() {

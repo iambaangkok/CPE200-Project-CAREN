@@ -10,7 +10,7 @@ public class BehaviorEvaluator{
     protected NodeFactory factory;
     protected Unit unit;
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     public BehaviorEvaluator(String src, Unit unit) {
         try{
@@ -205,10 +205,15 @@ public class BehaviorEvaluator{
         }else if(tkz.peek(Regex.S_VARIABLE)){
             VariableNode variableNode = parseVariable();
             return variableNode;
-        }else if(tkz.peek("(")){
-            tkz.consume("(");
+        }else if(tkz.peek().equals("(")){
+            if(DEBUG) System.out.println("(");
+            tkz.consume();
             Node expressionNode = parseExpression();
-            tkz.consume(")");
+            if(!tkz.peek().equals(")")){
+                throw new SyntaxError("Unmatched closing ')'");
+            }
+            if(DEBUG) System.out.println(")");
+            tkz.consume();
             return expressionNode;
         }else if(tkz.peek(Regex.S_SENSOR)){
             Node sensorNode = parseSensor();

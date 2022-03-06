@@ -10,7 +10,7 @@ public class BehaviorEvaluator{
     protected NodeFactory factory;
     protected Unit unit;
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public BehaviorEvaluator(String src, Unit unit) {
         try{
@@ -205,7 +205,7 @@ public class BehaviorEvaluator{
         }else if(tkz.peek(Regex.S_VARIABLE)){
             VariableNode variableNode = parseVariable();
             return variableNode;
-        }else if(tkz.peek().equals("(")){
+        }else if(tkz.peek() != null && tkz.peek().equals("(")){
             if(DEBUG) System.out.println("(");
             tkz.consume();
             Node expressionNode = parseExpression();

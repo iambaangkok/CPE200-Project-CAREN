@@ -209,7 +209,7 @@ public class BehaviorEvaluator{
             if(DEBUG) System.out.println("(");
             tkz.consume();
             Node expressionNode = parseExpression();
-            if(tkz.peek() != null && !tkz.peek().equals(")")){
+            if(tkz.peek() == null || !tkz.peek().equals(")")){
                 throw new SyntaxError("Unmatched closing ')'");
             }
             if(DEBUG) System.out.println(")");

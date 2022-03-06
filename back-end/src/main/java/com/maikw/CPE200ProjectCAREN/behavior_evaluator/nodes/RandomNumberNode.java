@@ -12,7 +12,7 @@ public class RandomNumberNode extends VariableNode{
 
     @Override
     public double evaluate() {
-        return random.nextDouble()*100;
+        return random.nextInt()%100;
     }
 
     @Override

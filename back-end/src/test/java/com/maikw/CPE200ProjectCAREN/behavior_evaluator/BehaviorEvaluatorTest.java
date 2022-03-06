@@ -1,54 +1,55 @@
 package com.maikw.CPE200ProjectCAREN.behavior_evaluator;
 
 
-import com.maikw.CPE200ProjectCAREN.Antibody;
-import com.maikw.CPE200ProjectCAREN.Area;
+import java.io.FileReader;
+import java.util.Scanner;
+
 import com.maikw.CPE200ProjectCAREN.GeneticCodeManager;
 import com.maikw.CPE200ProjectCAREN.Unit;
-import com.maikw.CPE200ProjectCAREN.UnitFactory;
-import com.maikw.CPE200ProjectCAREN.Virus;
-import com.maikw.CPE200ProjectCAREN.behavior_evaluator.nodes.Node;
 
 import org.junit.jupiter.api.Test;
 
 public class BehaviorEvaluatorTest {
 
-    // @Test
-    // public void validGeneticCodeTest_1(){
-    //     BehaviorEvaluator be = new BehaviorEvaluator(
-    //         GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt"),
-    //         new Unit("","")
-    //         );
-    //     try{
-    //         Node programNode = be.parseProgram();
-    //         programNode.evaluate();
-    //     }catch(SyntaxError e){
-    //         System.out.println(e.getMessage());
-    //     }
-        
-    // }
+    public static Exception E_NULL = new NullPointerException();
+    public static Exception E_SYNTAX = new SyntaxError();
 
-    public static void main(String[] args) {
-        String gCode = GeneticCodeManager.getAsString("geneticcodes/maikoiwang/expressions/maikoiwang_e0.txt");
-        Unit unit = new Unit("gCode_testUnit", "melee", gCode);
-        unit.programNode.print(0);
+    @Test
+    public void valid_expressions(){
+        String filePath = "geneticcodes/maikoiwang/working/maikoiwang_w_expressions_0.txt";
+        String gCode = GeneticCodeManager.getAsString(filePath);
+        try{
+            Unit unit = new Unit("gCode_testUnit", "melee", gCode);
+            unit.programNode.print(0);
+        }catch(Exception e){
+
+        }
     }
     
-    // public static void main(String[] args) {
-    //     String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt");
+    @Test
+    public void invalid_expressions(){
+        String filePath = "geneticcodes/maikoiwang/working/maikoiwang_f_expressions_0.txt";
+        try{
+            FileReader fr = new FileReader(filePath);
+            Scanner s = new Scanner(fr);
+            while(s.hasNextLine()){
+                String nextLine = s.nextLine();
+                System.out.print(nextLine + "   ");
+                Unit unit = new Unit("gCode_testUnit", "melee", nextLine);
+                //unit.programNode.print(0);
+                System.out.println();
+            }
+            s.close();
+        }catch(Exception e){
+            System.out.println("invalid_expressions crashed");
+            e.printStackTrace();
+        }
+    }
 
-    //     Antibody a = new Antibody("A","melee",g); a.setPositionX(5.0); a.setPositionY(0.0);
-    //     Virus b = new Virus("B","melee",g); b.setPositionX(4.0); b.setPositionY(-1.0);
-    //     Virus c = new Virus("C", "melee",g); c.setPositionX(2.0); c.setPositionY(0.0);
-    //     Virus d = new Virus("D", "melee",g); d.setPositionX(5.0); d.setPositionY(-10.0);
-    //     Area area = new Area("Area1");
-    //     area.addAntibody(a); area.addVirus(b); area.addVirus(c); area.addVirus(d);
-    //     a.setArea(area); b.setArea(area); c.setArea(area); d.setArea(area);
-
-    //     System.out.println("Angle(a,b) = " + Unit.getAngle(a,b));
-    //     System.out.println("Angle(a,c) = " + Unit.getAngle(a,c));
-    //     System.out.println("Angle(a,d) = " + Unit.getAngle(a,d));
-    //     System.out.println("Sense = " + a.sense("nearby","left"));
-    // }
-
+    public static void main(String[] args) {
+        BehaviorEvaluatorTest betest = new BehaviorEvaluatorTest();
+        //betest.valid_expressions();
+        betest.invalid_expressions();
+    }
+    
 }

@@ -14,7 +14,10 @@ public class MoveCommandNode implements Node {
 
     @Override
     public double evaluate() {
-        unit.move(direction);
+        if(!unit.getDidActionCommand()){
+            unit.move(direction);
+            unit.setDidActionCommand(true);
+        }
         return 0;
     }
 

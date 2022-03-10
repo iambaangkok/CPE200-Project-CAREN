@@ -14,7 +14,10 @@ public class AttackCommandNode implements Node {
 
     @Override
     public double evaluate() {
-        unit.attack(direction);
+        if(!unit.getDidActionCommand()){
+            unit.attack(direction);
+            unit.setDidActionCommand(true);
+        }
         return 0;
     }
 

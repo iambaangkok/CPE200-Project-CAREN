@@ -29,6 +29,7 @@ public class Unit {
     public Node programNode;
     protected Area area;
     protected String unitClass;
+    protected boolean didActionCommand = false;
 
     public Unit(String name, String type, String geneticCode){
         variables = new HashMap<>();
@@ -377,6 +378,14 @@ public class Unit {
 
     public void setPositionY(double positionY) {
         this.positionY = positionY;
+    }
+
+    public boolean getDidActionCommand(){
+        return didActionCommand;
+    }
+
+    public void setDidActionCommand(boolean state){
+        this.didActionCommand = state;
     }
 
 }

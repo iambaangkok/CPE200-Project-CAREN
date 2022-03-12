@@ -2,11 +2,11 @@ import React from 'react';
 import './App.css';
 import Config from './Config';
 
-import ImageObject from './ImageObject';
-import ButtonObject from './ButtonObject';
-import WaveInfo from './WaveInfo';
-import TextObject from './TextObject';
-import Vector2 from './Vector2';
+import ImageObject from './classes/ImageObject';
+import ButtonObject from './classes/ButtonObject';
+import WaveInfo from './classes/WaveInfo';
+import TextObject from './classes/TextObject';
+import Vector2 from './classes/Vector2';
 
 // controllers
 import GameController from './controllers/GameController';
@@ -554,7 +554,9 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<canvas></canvas>
+			<div style={{padding:"20px"}}>
+				<canvas></canvas>
+			</div>
 		)
 	}
 }

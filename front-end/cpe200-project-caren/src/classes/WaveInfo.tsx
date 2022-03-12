@@ -1,4 +1,4 @@
-import Config from "./Config";
+import Config from "../Config";
 import ImageObject from "./ImageObject";
 import TextObject from "./TextObject";
 

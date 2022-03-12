@@ -1,4 +1,4 @@
-import Config from "./Config";
+import Config from "../Config";
 import Vector2 from "./Vector2";
 
 const DEBUG = Config.DEBUG;

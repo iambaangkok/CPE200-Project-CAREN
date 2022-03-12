@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Config from '../Config';
-import Vector2 from '../Vector2';
+import Vector2 from '../classes/Vector2';
 
 const baseURL = Config.SERVER_URL;
 

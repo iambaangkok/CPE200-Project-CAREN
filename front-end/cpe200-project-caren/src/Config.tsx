@@ -1,4 +1,4 @@
-import Vector2 from "./Vector2";
+import Vector2 from "./classes/Vector2";
 
 class Config{
     public static SERVER_URL = "http://localhost:8080";
@@ -6,6 +6,8 @@ class Config{
     public static COLOR_LIGHTBLUE = "#92E8C0";
     public static COLOR_CREAMWHITE = "#F5FFE8";
     public static COLOR_BRIGHTRED = "#E64539";
+    public static COLOR_MIDNIGHTBLACK = "#181d33";
+    public static COLOR_BONEWHITE = "#dfe0e8";
 
     public static FPS = 30;
     public static FETCH_INTERVAL_SECONDS = 1;

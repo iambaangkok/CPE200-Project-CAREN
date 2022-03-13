@@ -809,7 +809,6 @@ function drawUnits(){
 	}
 }
 
-
 function getMousePosition(canvas : HTMLCanvasElement, e : MouseEvent){
 	var canvasRect = canvas.getBoundingClientRect();
 	mousePosition = {x: e.clientX - canvasRect.left, y: e.clientY - canvasRect.top} as Vector2;
@@ -824,7 +823,7 @@ function scannerToCanvasCoordinate(coordinate : Vector2){
 function canvasToScannerCoordinate(coordinate : Vector2){
 	var canvasRect = canvas!.getBoundingClientRect();
 	//console.log("coord: " + (coordinate.x - canvasRect.left - Config.SCANNER_CENTER.x) +"," + (coordinate.y - canvasRect.top - Config.SCANNER_CENTER.y));
-	return {x: coordinate.x - canvasRect.left - Config.SCANNER_CENTER.x, y: coordinate.y - canvasRect.top - Config.SCANNER_CENTER.y} as Vector2
+	return {x: coordinate.x - Config.SCANNER_CENTER.x, y: coordinate.y  - Config.SCANNER_CENTER.y} as Vector2
 }
 
 function scannerToGameCoordinate(coordinate : Vector2){
@@ -845,8 +844,8 @@ function mouseInScannerRadius(){
 	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerMousePosition) <= Config.SCANNER_RADIUS;
 }
 
-function inScannerRadius(pos : Vector2){
-	return Vector2.distanceBetweenPoint(new Vector2(0,0), pos) <= Config.SCANNER_RADIUS;
+function inScannerRadius(scannerPos : Vector2){
+	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerPos) <= Config.SCANNER_RADIUS;
 }
 
 

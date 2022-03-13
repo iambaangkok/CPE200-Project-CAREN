@@ -8,7 +8,7 @@ import p_gCode from './images/gCodes_banner.png';
 
 const DEBUG = Config.DEBUG;
 
-if(DEBUG) console.log("header top");
+if(DEBUG) console.log("geneticcodeinput top");
 
 class GeneticCodeInput extends React.Component {
 	

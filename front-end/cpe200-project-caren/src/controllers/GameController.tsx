@@ -8,6 +8,32 @@ const DEBUG = Config.DEBUG;
 
 class GameController {
 
+  static async uploadGeneticCode(type : "melee" | "ranged" | "aoe"){
+    var textBox : Element | null;
+    var gCode : string | null | undefined;
+
+    textBox = document.querySelector(`#${type}GeneticCode`);
+    gCode = textBox?.textContent;
+
+    // var resp = await axios({
+    //   method: 'post',
+    //   url: baseURL + `/uploadGeneticCode/${type}`,
+    //   headers: {},
+    //   data: {
+    //     type: type,
+    //     geneticCode: gCode,
+    //   }
+    // });
+
+    // if(resp.data.compilationResult == "success"){
+    //   //good
+    // } else{
+    //   alert(`there are error(s) in the genetic code at token ${resp.data.errorToken}`)
+    // }
+
+    // return resp.data.compilationResult
+  }
+
   static async connectGame(clientKey : string){
     // var resp = await axios({
     //   method: 'post',

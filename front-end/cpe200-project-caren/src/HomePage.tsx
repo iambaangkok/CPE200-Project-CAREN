@@ -8,6 +8,7 @@ import Header from './Header';
 
 import p_units from './images/units_banner.png';
 import p_unitRange_diagram from './images/unitRange_diagram.png';
+import p_unitDirection_diagram from './images/unitDirection_diagram.png';
 
 /////////////////////////////////////////////
 
@@ -31,7 +32,10 @@ class HomePage extends React.Component {
 
 	render() {
 		return (
-            <div style={{backgroundColor:Config.COLOR_MIDNIGHTBLACK, width:"100%", display: "flex",flexDirection: "column", justifyContent: "center", alignItems: "center"}} >
+            <div style={{
+                backgroundColor:Config.COLOR_MIDNIGHTBLACK, width:"100%",
+                display: "flex",flexDirection: "column", justifyContent: "center", alignItems: "center" 
+                }}>
                 <Header></Header>
                 <App></App>
                 <img src={p_units} style={{paddingBottom:"60px", paddingTop:"60px"}}></img>
@@ -68,7 +72,8 @@ class HomePage extends React.Component {
                             <div>Up - 1, UpRight - 2, Right - 3, DownRight - 4</div>
                             <div>Down - 5, DownLeft - 6, Left - 7, UpLeft - 8</div>
                         </p>
-
+                        <img src={p_unitDirection_diagram} style={{paddingBottom:"100px", paddingTop:"30px"}}></img>
+                        
 
                     </div>
                 </div>
@@ -78,4 +83,6 @@ class HomePage extends React.Component {
 }
 
 export default HomePage;
+
+
 

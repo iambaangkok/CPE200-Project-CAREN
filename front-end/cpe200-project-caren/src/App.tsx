@@ -554,7 +554,10 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div style={{padding:"20px"}}>
+			<div style={{padding:"20px"}}
+				onMouseEnter={disableScroll}
+				onMouseLeave={enableScroll}
+				>
 				<canvas></canvas>
 			</div>
 		)
@@ -846,3 +849,18 @@ function inScannerRadius(pos : Vector2){
 	return Vector2.distanceBetweenPoint(new Vector2(0,0), pos) <= Config.SCANNER_RADIUS;
 }
 
+
+function disableScroll() {
+    // Get the current page scroll position
+    var scrollTop = (window as any)!.pageYOffset || document.documentElement.scrollTop;
+    var scrollLeft = (window as any)!.pageXOffset || document.documentElement.scrollLeft;
+    (window as any)!.onscroll = null;
+        // if any scroll is attempted, set this to the previous value
+        window.onscroll = function() {
+            (window as any)!.scrollTo(scrollLeft, scrollTop);
+        };
+}
+  
+function enableScroll() {
+    window.onscroll = function() {};
+}

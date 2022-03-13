@@ -8,6 +8,8 @@ class Config{
     public static COLOR_BRIGHTRED = "#E64539";
     public static COLOR_MIDNIGHTBLACK = "#181d33";
     public static COLOR_BONEWHITE = "#dfe0e8";
+    public static COLOR_MIDGRAYBLUE = "#686f99";
+    public static COLOR_MEDIUMDIMMEDBLUE = "#4c6885";
 
     public static FPS = 30;
     public static FETCH_INTERVAL_SECONDS = 1;

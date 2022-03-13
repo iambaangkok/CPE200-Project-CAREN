@@ -10,5 +10,20 @@ code {
     monospace;
 }
 
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  height: 500px;
+  min-height: 500px;
+  line-height: 30px;
+}
+
+.textarea[contenteditable]:empty::before {
+  content: "Placeholder still possible";
+  color: gray;
+}
+
 
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");

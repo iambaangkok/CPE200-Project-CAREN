@@ -7,6 +7,7 @@ import Config from './Config';
 import Header from './Header';
 import UnitDiagrams from './UnitDiagrams';
 import GrammarDiagrams from './GrammarDiagrams';
+import GeneticCodeInput from './GeneticCodeInput';
 
 ;
 
@@ -40,6 +41,7 @@ class HomePage extends React.Component {
                 <App></App>
                 <UnitDiagrams></UnitDiagrams>
                 <GrammarDiagrams></GrammarDiagrams>
+                <GeneticCodeInput></GeneticCodeInput>
             </div>
 		)
 	}

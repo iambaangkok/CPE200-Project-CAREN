@@ -821,7 +821,7 @@ function scannerToCanvasCoordinate(coordinate : Vector2){
 }
 
 function canvasToScannerCoordinate(coordinate : Vector2){
-	var canvasRect = canvas!.getBoundingClientRect();
+	// var canvasRect = canvas!.getBoundingClientRect();
 	//console.log("coord: " + (coordinate.x - canvasRect.left - Config.SCANNER_CENTER.x) +"," + (coordinate.y - canvasRect.top - Config.SCANNER_CENTER.y));
 	return {x: coordinate.x - Config.SCANNER_CENTER.x, y: coordinate.y  - Config.SCANNER_CENTER.y} as Vector2
 }

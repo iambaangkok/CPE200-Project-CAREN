@@ -205,7 +205,7 @@ public class Unit {
     }
 
     public void attackEval(String targetUnit, String direction){
-        Unit target = findClosestUnit(targetUnit);
+        Unit target = findClosestUnitDirection(targetUnit, direction);
         if(target != null){
             double range = range(this, target);
             double angle = getAngle(this, target);

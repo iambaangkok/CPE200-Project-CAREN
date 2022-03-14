@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 @Component("game")
-public class Game {
+public class Game implements Runnable{
     protected Integer state  = 1 ;
     protected Boolean spawn ;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว
     protected Integer screenWidth  = 1024 ;
@@ -167,10 +167,12 @@ public class Game {
         areas.get(area).addAllVirus(waveManager.allwave.get("Wave_"+waveManager.currentWaveCount.toString()+"Area_"+area));
     }
 
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.startGameLoop();
-    }
+       @Override
+       public void run(){
+            Game game = new Game();
+            game.startGameLoop();
+        }
+
 
     private void waitState(int time){
         try{

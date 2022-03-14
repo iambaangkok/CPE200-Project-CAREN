@@ -18,6 +18,7 @@ public class AreaTest {
     int size = 9;
     List<Virus> viruses = new ArrayList<Virus>();
     List<Antibody> antibodies = new ArrayList<Antibody>();
+    List<Unit> units = new ArrayList<Unit>();
 
     @Test
     void addVirus() {
@@ -115,17 +116,69 @@ public class AreaTest {
 
     @Test
     void alertLevel() {
+        assertEquals(area.alertLevel(),2); // red light -> area is taken
+
+        // yellow light -> antibody:virus = 1:3
+        area.addAntibody(abs_melee[1]);
+        area.addAntibody(abs_ranged[1]);
+        area.addAntibody(abs_aoe[1]);
+        for(int i = 0 ; i < 3 ; i++){
+            area.addVirus(vs_melee[i]);
+            area.addVirus(vs_ranged[i]);
+            area.addVirus(vs_aoe[i]);
+        }
+        assertEquals(area.alertLevel(), 1);
+
+        // all good -> antibody:virus = 2:3
+        area.addAntibody(abs_melee[0]);
+        area.addAntibody(abs_ranged[0]);
+        area.addAntibody(abs_aoe[0]);
+        assertEquals(area.alertLevel(), 0);
     }
 
     @Test
     void canPlace() {
+        // add
+        for(int i = 0; i < 3 ; i++){
+            viruses.add(vs_melee[i]);
+            viruses.add(vs_ranged[i]);
+            viruses.add(vs_aoe[i]);
+        }
+        area.addAllVirus(viruses);
+        for(int i = 0; i < 3 ; i++){
+            antibodies.add(abs_melee[i]);
+            abs_melee[i].setPositionX(0.0+i); abs_melee[i].setPositionY(0.0-i);
+            antibodies.add(abs_ranged[i]);
+            abs_ranged[i].setPositionX(0.0+(2*i)); abs_ranged[i].setPositionY(0.0-(2*i));
+            antibodies.add(abs_aoe[i]);
+            abs_aoe[i].setPositionX(0.0+(3*i)); abs_aoe[i].setPositionY(0.0-(3*i));
+        }
+        area.addAllAntibody(antibodies);
+        units = area.getUnits();
+
+        assertEquals(area.canPlace(0.0, 0.0), false); // can't place because abs_melee[0] is there
+        assertEquals(area.canPlace(5.5, -28.6), true); // can place, nothing there
     }
 
     @Test
     void isTaken() {
+        // alert level() = red light -> area is taken
+        assertEquals(area.isTaken(), true);
     }
 
     @Test
     void snapViruses() {
+        for(int i = 0; i < 3 ; i++){
+            viruses.add(vs_melee[i]);
+            viruses.add(vs_ranged[i]);
+            viruses.add(vs_aoe[i]);
+        }
+        area.addAllVirus(viruses);
+        assertEquals(area.getViruses(), viruses);
+        
+        // snap
+        area.snapViruses();
+        
+        assertEquals(area.getViruses().size(), 0);
     }
 }

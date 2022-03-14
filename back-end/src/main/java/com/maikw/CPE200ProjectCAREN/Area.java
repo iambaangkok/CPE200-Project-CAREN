@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Area {
@@ -13,12 +14,21 @@ public class Area {
     protected List<Antibody> antibodies;
     protected double radius = 100;
     protected String name;
+    protected List<Virus> rebornQueue;
 
     public Area(String name){
         this.units = new ArrayList<Unit>();
         this.viruses = new ArrayList<Virus>();
         this.antibodies = new ArrayList<Antibody>();
         this.name = name;
+    }
+
+    public Area(String name, List<Virus> rebornQueue){
+        this.units = new ArrayList<Unit>();
+        this.viruses = new ArrayList<Virus>();
+        this.antibodies = new ArrayList<Antibody>();
+        this.name = name;
+        this.rebornQueue = rebornQueue;
     }
 
     public void addUnit(Unit dummy){
@@ -38,6 +48,7 @@ public class Area {
     public void addAllVirus(List<Virus> dummy){
         for(Virus virus : dummy){
             this.addVirus(virus);
+            System.out.println("Set to area = " + virus.area.getName());
         }
     }
 
@@ -62,15 +73,13 @@ public class Area {
     }
 
     public void removeVirus(Virus dummy){
-        dummy.setArea(null);
         this.viruses.remove(dummy);
-        this.removeUnit(dummy);
+        dummy.setArea(null);
     }
 
     public void removeAntibody(Antibody dummy){
-        dummy.setArea(null);
         this.antibodies.remove(dummy);
-        this.removeUnit(dummy);
+//        dummy.setArea(null);
     }
 
     // 3 level 0 = green light -> all good , 1 = yellow light -> antibodies:viruses = 1:3 , 2 = red light -> area taken
@@ -85,11 +94,25 @@ public class Area {
     }
 
     public void evaluate(){
-        for(Unit unit : units){
-            unit.setDidActionCommand(false);
-            unit.evaluate();
-            System.out.println(name);
-            System.out.println(unit.getCurrentHealth());
+        Iterator<Unit> unitIterator = units.iterator();
+        while(unitIterator.hasNext()){
+            Unit unit = unitIterator.next();
+            if(unit.getCurrentHealth() > 0){
+                unit.setDidActionCommand(false);
+                unit.evaluate();
+                System.out.println(name);
+                System.out.println(unit.getCurrentHealth());
+            }else{ // if Unit is DEAD
+                if (unit.unitClass.equals("virus")){
+                    unitIterator.remove();
+                    removeVirus((Virus) unit);
+                }
+                if (unit.unitClass.equals("antibody")){
+                    unitIterator.remove();
+                    ((Antibody)unit).virusToSpawn(rebornQueue);
+                    removeAntibody((Antibody) unit);
+                }
+            }
         }
     }
 
@@ -108,6 +131,7 @@ public class Area {
     public void snapViruses() {
         units.removeAll(viruses);
         viruses.clear();
+        System.out.println("Has gone");
     }
     public boolean getAlertLevel(){
         return this.getAlertLevel();

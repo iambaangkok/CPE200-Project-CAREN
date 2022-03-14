@@ -121,7 +121,7 @@ public class Unit {
     }
 
     private void positionEval(String direction){
-        double edgeVal = 50*Math.sqrt(2);
+        Unit dummy = UnitFactory.createDummy("melee");
         switch (direction) {
             case "up" -> {
                 if(this.positionY+moveSpeed <= 100){
@@ -131,15 +131,11 @@ public class Unit {
                 }
             }
             case "upright" -> {
-                if(this.positionX+moveSpeed <= edgeVal){
-                    this.positionX += moveSpeed;
-                }else{
-                    this.positionX = edgeVal;
-                }
-                if(this.positionY+moveSpeed <= edgeVal){
-                    this.positionY += moveSpeed;
-                }else{
-                    this.positionY = edgeVal;
+                this.positionX += moveSpeed;
+                this.positionY += moveSpeed;
+                if(range(dummy, this) > 100){
+                    this.positionX -= moveSpeed;
+                    this.positionY -= moveSpeed;
                 }
             }
             case "right" -> {
@@ -150,15 +146,11 @@ public class Unit {
                 }
             }
             case "downright" -> {
-                if(this.positionX+moveSpeed <= edgeVal){
-                    this.positionX += moveSpeed;
-                }else{
-                    this.positionX = edgeVal;
-                }
-                if(this.positionY-moveSpeed >= 0-edgeVal){
-                    this.positionY -= moveSpeed;
-                }else{
-                    this.positionY = 0-edgeVal;
+                this.positionX += moveSpeed;
+                this.positionY -= moveSpeed;
+                if(range(dummy, this) > 100){
+                    this.positionX -= moveSpeed;
+                    this.positionY += moveSpeed;
                 }
             }
             case "down" -> {
@@ -169,15 +161,11 @@ public class Unit {
                 }
             }
             case "downleft" -> {
-                if(this.positionX-moveSpeed >= 0-edgeVal){
-                    this.positionX -= moveSpeed;
-                }else{
-                    this.positionX = 0-edgeVal;
-                }
-                if(this.positionY-moveSpeed >= 0-edgeVal){
-                    this.positionY -= moveSpeed;
-                }else{
-                    this.positionY = 0-edgeVal;
+                this.positionX -= moveSpeed;
+                this.positionY -= moveSpeed;
+                if(range(dummy, this) > 100){
+                    this.positionX += moveSpeed;
+                    this.positionY += moveSpeed;
                 }
             }
             case "left" -> {
@@ -188,15 +176,11 @@ public class Unit {
                 }
             }
             case "upleft" -> {
-                if(this.positionX-moveSpeed >= 0-edgeVal){
-                    this.positionX -= moveSpeed;
-                }else{
-                    this.positionX = 0-edgeVal;
-                }
-                if(this.positionY+moveSpeed <= 100){
-                    this.positionY += moveSpeed;
-                }else{
-                    this.positionY = 100;
+                this.positionX -= moveSpeed;
+                this.positionY += moveSpeed;
+                if(range(dummy, this) > 100){
+                    this.positionX += moveSpeed;
+                    this.positionY -= moveSpeed;
                 }
             }
         }

@@ -46,10 +46,20 @@ public class BehaviorEvaluatorTest {
         }
     }
 
+    @Test
+    public void sample_gc(){
+        String filePath = "back-end/geneticcodes/sampleteam/working/sampleteam_w0.txt";
+        String gCode = GeneticCodeManager.getAsString(filePath);
+        Unit unit = new Unit("gCode_testUnit", "melee", gCode);
+        unit.programNode.print(0);
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         BehaviorEvaluatorTest betest = new BehaviorEvaluatorTest();
         //betest.valid_expressions();
-        betest.invalid_expressions();
+        //betest.invalid_expressions();
+        betest.sample_gc();
     }
     
 }

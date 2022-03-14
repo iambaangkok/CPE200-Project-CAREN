@@ -10,14 +10,14 @@ public class VariableNode implements Node{
     public VariableNode(String identifier, Map<String,Double> variables){
         this.variables = variables;
         this.identifier = identifier;
-        if(!variables.keySet().contains(identifier)){
+        if(!variables.containsKey(identifier)){
             variables.put(identifier, 0.0);
         }
     }
 
     @Override
     public double evaluate() {
-        if(!variables.keySet().contains(identifier)){
+        if(!variables.containsKey(identifier)){
             variables.put(identifier, 0.0);
         }
         return variables.get(identifier);

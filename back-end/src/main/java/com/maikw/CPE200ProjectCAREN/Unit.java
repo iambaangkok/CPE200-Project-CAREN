@@ -66,6 +66,7 @@ public class Unit {
         if (sense("nearby", direction) == 0){
             positionEval(direction);
             System.out.println("Unit " + name + " moved " + direction);
+            System.out.println(positionX +" , "+ positionY +" <--------");
         }else{
             System.out.println("There is already a unit there. Unit " + name + " can't move to " + direction);
         }

@@ -307,6 +307,40 @@ public class Unit {
         return closestUnit;
     }
 
+    public Unit findClosestUnitDirection(String classUnit, String direction){
+        Unit closestUnit = null;
+        double direc = directionConverter(direction);
+        List<? extends Unit> units = null;
+        if(classUnit.equals("virus")){
+            units = this.area.getViruses();
+        }else if(classUnit.equals("antibody")){
+            units = this.area.getAntibodies();
+        }else if(classUnit.equals("all")){
+            units = this.area.getUnits();
+        }
+        double min = Integer.MAX_VALUE;
+        for (Unit u : units) {
+            double range = range(this, u);
+            double angle = getAngle(this, u);
+            if(direc != 0){
+                if (this.detectRange > range && (angle <= direc + 22.5 && angle >= direc - 22.5)) {
+                    if (range < min){
+                        min = range;
+                        closestUnit = u;
+                    }
+                }
+            }else{
+                if (this.detectRange > range && (angle >= (360-22.5) && angle <= (360)) || (angle >= 0.0 && angle <= 22.5)) {
+                    if (range < min){
+                        min = range;
+                        closestUnit = u;
+                    }
+                }
+            }
+        }
+        return closestUnit;
+    }
+
     public double getPositionX() {
         return positionX;
     }

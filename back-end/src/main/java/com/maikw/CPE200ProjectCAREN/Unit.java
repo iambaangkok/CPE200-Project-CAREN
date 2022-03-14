@@ -201,23 +201,28 @@ public class Unit {
 
     public void attackEval(String targetUnit, String direction){
         Unit target = findClosestUnit(targetUnit);
-        double range = range(this, target);
-        double angle = getAngle(this, target);
-        int directionAngle = directionConverter(direction);
-        if(range < attackRange && angle >= (directionAngle-22.5) && angle <= (directionAngle+22.5)){
-            this.attack(target);
-            if(this.type.equals("aoe")){
-                List<Unit> units = this.area.getUnits();
-                for(Unit u : units){
-                    range = range(target,u);
-                    if(range <= this.aoeRadius){
-                        if(!u.getName().equals(this.name)){
-                            attack(u);
+        if(findClosestUnit(targetUnit) != null){
+            double range = range(this, target);
+            double angle = getAngle(this, target);
+            int directionAngle = directionConverter(direction);
+            if(range < attackRange && angle >= (directionAngle-22.5) && angle <= (directionAngle+22.5)){
+                this.attack(target);
+                if(this.type.equals("aoe")){
+                    List<Unit> units = this.area.getUnits();
+                    for(Unit u : units){
+                        range = range(target,u);
+                        if(range <= this.aoeRadius){
+                            if(!u.getName().equals(this.name)){
+                                attack(u);
+                            }
                         }
                     }
                 }
             }
+        }else{
+            System.out.println("Can't attack, No Unit nearby.");
         }
+
     }
 
     private int senseEval(String classUnit){

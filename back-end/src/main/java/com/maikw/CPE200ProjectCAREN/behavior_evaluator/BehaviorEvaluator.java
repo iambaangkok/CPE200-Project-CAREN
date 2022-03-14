@@ -43,6 +43,8 @@ public class BehaviorEvaluator{
                     programNode.addStatement(parseAction());
                 }else if(s.matches(Regex.S_ELSE)){
                     break;
+                }else if(s.matches(Regex.S_SENSOR)){
+                    programNode.addStatement(parseSensor());
                 }
             }else if(s.matches(Regex.S_VARIABLE)){ /// ASSIGNMENT
                 programNode.addStatement(parseAssignment());
@@ -198,7 +200,20 @@ public class BehaviorEvaluator{
     //Power → <number> | <identifier> | ( Expression ) | SensorExpression
     public Node parsePower() throws SyntaxError, EvaluationError{
         if(DEBUG) System.out.println("parsePower " + tkz.peek());
-        if(tkz.peek(Regex.S_NUMBER)){
+        if(tkz.peek(Regex.S_SENSOR)){
+            Node sensorNode = null;
+            if(tkz.peek(Regex.S_VIRUS)){
+                tkz.consume();
+                sensorNode = factory.createNode("virus", "", unit);
+            }else if(tkz.peek(Regex.S_ANTIBODY)){
+                tkz.consume();
+                sensorNode = factory.createNode("antibody", "", unit);
+            }else if(tkz.peek(Regex.S_NEARBY)){
+                tkz.consume();
+                sensorNode = factory.createNode("nearby", parseDirection(), unit);
+            }
+            return sensorNode;
+        }else if(tkz.peek(Regex.S_NUMBER)){
             Node numberNode = factory.createNode(Double.parseDouble(tkz.peek()));
             tkz.consume(Regex.S_NUMBER);
             return numberNode;

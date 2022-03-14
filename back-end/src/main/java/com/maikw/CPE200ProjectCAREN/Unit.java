@@ -292,6 +292,10 @@ public class Unit {
 
     private int senseEval(String classUnit){
         Unit closestUnit = findClosestUnit(classUnit);
+        if(closestUnit == null){
+            System.out.println("closest unit is null");
+            return 0;
+        }
         double angle = getAngle(this, closestUnit);
         int directionAngle = directionValue(angle, "");
         double min = range(this,closestUnit);

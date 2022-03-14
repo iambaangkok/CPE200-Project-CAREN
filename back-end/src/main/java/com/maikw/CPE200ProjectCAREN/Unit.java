@@ -60,12 +60,6 @@ public class Unit {
             System.out.println("parse error: " + e.getMessage() + " " +e.getMessage().length());
             e.printStackTrace();
         }
-
-        if(this.unitClass.equals("virus")){
-            Random r = new Random();
-            this.positionX = (-100.0) + (100.0 - (-100.0)) * r.nextDouble();
-            this.positionY = (-100.0) + (100.0 - (-100.0)) * r.nextDouble();
-        }
     }
 
     public void move(String direction){

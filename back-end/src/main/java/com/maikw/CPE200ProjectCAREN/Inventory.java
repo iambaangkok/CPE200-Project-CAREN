@@ -2,9 +2,9 @@ package com.maikw.CPE200ProjectCAREN;
 
 public class Inventory {
 
-    protected Integer meleeCount;
-    protected Integer rangedCount;
-    protected Integer aoeCount;
+    protected int meleeCount;
+    protected int rangedCount;
+    protected int aoeCount;
 
     public Inventory(){
         this.meleeCount = 0;

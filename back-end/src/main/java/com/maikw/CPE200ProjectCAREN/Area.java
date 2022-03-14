@@ -90,6 +90,7 @@ public class Area {
 
     public void evaluate(){
         for(Unit unit : units){
+            unit.setDidActionCommand(false);
             unit.evaluate();
             System.out.println(name);
         }
@@ -136,7 +137,7 @@ public class Area {
     }
 
 //    public static void main(String[] args) {
-//        Area area = new Area();
+//        Area area = new Area("Area1);
 //        Antibody ab = UnitFactory.createAntibody("melee");
 //        ab.setArea(area);
 //        Virus v = UnitFactory.createVirus("melee");

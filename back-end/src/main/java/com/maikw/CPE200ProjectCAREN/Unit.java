@@ -87,11 +87,6 @@ public class Unit {
     public void takeDamage(int dmg){
         if(this.currentHealth <= dmg){
             this.currentHealth = 0;
-            if(this.unitClass.equals("virus")){
-                this.area.removeVirus((Virus) this);
-            }else if(this.unitClass.equals("antibody")){
-                this.area.removeAntibody((Antibody) this);
-            }
         }else{
             this.currentHealth -= dmg;
         }

@@ -10,12 +10,16 @@ public class WaveManager {
         protected Integer currentWaveCount  = 0 ;
         protected Integer waveCount  = 1 ;
         protected  Integer timeBetweenWave  = 20 ;
-        protected List<Virus> viruses ;
+        protected List<Virus> viruses1;
+        protected List<Virus> viruses2;
+        protected List<Virus> viruses3;
         protected Map<String,List<Virus>> allwave ;
 
 
     public WaveManager(){
-        this.viruses = new ArrayList<>();
+        this.viruses1 = new ArrayList<>();
+        this.viruses2 = new ArrayList<>();
+        this.viruses3 = new ArrayList<>();
         this.allwave = new HashMap<>();
 
     }
@@ -23,18 +27,28 @@ public class WaveManager {
     private void createUnitVirus(int area1melee, int area1ranged, int area1aoe) {
 
         for(int i = 0 ; i < area1melee;i++){
-            viruses.add(UnitFactory.createVirus( "melee"));
+            viruses1.add(UnitFactory.createVirus( "melee"));
+            viruses2.add(UnitFactory.createVirus( "melee"));
+            viruses3.add(UnitFactory.createVirus( "melee"));
         }
         for(int i = 0 ; i < area1ranged ;i++){
-            viruses.add(UnitFactory.createVirus( "ranged"));
+            viruses1.add(UnitFactory.createVirus( "ranged"));
+            viruses2.add(UnitFactory.createVirus( "ranged"));
+            viruses3.add(UnitFactory.createVirus( "ranged"));
         }
         for (int i = 0 ; i < area1aoe;i++){
-            viruses.add(UnitFactory.createVirus( "aoe"));
+            viruses1.add(UnitFactory.createVirus( "aoe"));
+            viruses2.add(UnitFactory.createVirus( "aoe"));
+            viruses3.add(UnitFactory.createVirus( "aoe"));
         }
 
-        allwave.put("Wave_"+ waveCount.toString() ,viruses);
+        allwave.put("Wave_"+ waveCount.toString() +"Area_"+0, viruses1);
+        allwave.put("Wave_"+ waveCount.toString() +"Area_"+1, viruses2);
+        allwave.put("Wave_"+ waveCount.toString() +"Area_"+2, viruses3);
         waveCount+=1;
-        this.viruses = new ArrayList<>();
+        this.viruses1 = new ArrayList<>();
+        this.viruses2 = new ArrayList<>();
+        this.viruses3 = new ArrayList<>();
     }
 
     public void genVirus() {

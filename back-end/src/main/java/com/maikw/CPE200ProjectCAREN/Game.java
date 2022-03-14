@@ -19,6 +19,7 @@ public class Game implements Runnable{
     protected WaveManager waveManager ;
     protected Shop shop ;
     protected Unit unit;
+    protected GeneticCodeManager geneticCodeManager;
     protected List<Antibody> queueAntibobyArea1 ;
     protected List<Antibody> queueAntibobyArea2 ;
     protected List<Antibody> queueAntibobyArea3 ;
@@ -47,6 +48,7 @@ public class Game implements Runnable{
         areas.add(new Area("area2", queueVirusArea2));
         areas.add(new Area("area3", queueVirusArea3));
 
+        this.geneticCodeManager = new GeneticCodeManager();
 
 
     }
@@ -205,4 +207,6 @@ public class Game implements Runnable{
     public void setState(int state){
         this.state = state;
     }
+
+    public GeneticCodeManager getGeneticCodeManager(){ return geneticCodeManager; }
 }

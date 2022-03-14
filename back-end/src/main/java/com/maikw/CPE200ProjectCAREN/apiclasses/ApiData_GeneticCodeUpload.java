@@ -1,8 +1,8 @@
 package com.maikw.CPE200ProjectCAREN.apiclasses;
 
 public class ApiData_GeneticCodeUpload extends ApiData_Base{
-    public String type;
-    public String geneticCode;
+    private String type = "";
+    private String geneticCode = "";
 
     public String getType() {
         return type;

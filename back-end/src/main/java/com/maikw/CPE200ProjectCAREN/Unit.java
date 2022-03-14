@@ -32,23 +32,23 @@ public class Unit {
         variables = new HashMap<>();
         this.name = name;
         this.type = type;
-        this.detectRange = 1000;
+        this.detectRange = 40;
         this.dangerRange = 5;
         this.aoeRadius = 0;
         switch (type) {
             case "melee" -> {
                 this.attackDamage = 20;
-                this.attackRange = 1000;
+                this.attackRange = 10;
                 this.moveSpeed = 3;
             }
             case "ranged" -> {
                 this.attackDamage = 20;
-                this.attackRange = 1000;
+                this.attackRange = 30;
                 this.moveSpeed = 2;
             }
             case "aoe" -> {
                 this.attackDamage = 15;
-                this.attackRange = 1000;
+                this.attackRange = 20;
                 this.aoeRadius = 5;
                 this.moveSpeed = 1;
             }
@@ -63,7 +63,14 @@ public class Unit {
     }
 
     public void move(String direction){
-        if (sense("nearby", direction) == 0){
+        Unit unit = findClosestUnitDirection("all",direction);
+        double range = 0;
+        if(unit != null){
+            range = range(this, unit);
+        }else{
+            range = 0;
+        }
+        if (range < this.moveSpeed){
             positionEval(direction);
             System.out.println("Unit " + name + " moved " + direction);
             System.out.println(positionX +" , "+ positionY +" <--------");
@@ -481,5 +488,4 @@ public class Unit {
     public void setDidActionCommand(boolean state){
         this.didActionCommand = state;
     }
-
 }

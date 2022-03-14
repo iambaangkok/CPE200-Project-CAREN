@@ -86,15 +86,15 @@ public class Game {
                     System.out.println(areas.get(2).viruses.size());
 
                     System.out.println("Snapppp!");
-                    areas.get(0).snapViruse();
-                    areas.get(1).snapViruse();
-                    areas.get(2).snapViruse();
+                    areas.get(0).snapViruses();
+                    areas.get(1).snapViruses();
+                    areas.get(2).snapViruses();
                 }
                 else{System.out.println("Win");}
             }
-            areas.get(0).snapViruse();
-            areas.get(1).snapViruse();
-            areas.get(2).snapViruse();
+            areas.get(0).snapViruses();
+            areas.get(1).snapViruses();
+            areas.get(2).snapViruses();
             // คำสั่งเดินของ Unit ในแต่ละ area
             areas.get(0).evaluate();
             areas.get(1).evaluate();

@@ -1,39 +1,44 @@
 package com.maikw.CPE200ProjectCAREN;
 
+import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_Base;
 import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_GeneticCodeReturnData;
 import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_GeneticCodeUpload;
 import com.maikw.CPE200ProjectCAREN.apiclasses.GameState;
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.BehaviorEvaluator;
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.SyntaxError;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/game") // http://localhost:8080/game
 public class GameController {
-    Game game = new Game();
+    GameHandler gameHandler;
+
+    @Autowired
+    GameController(@RequestBody GameHandler gameHandler){
+        this.gameHandler = gameHandler;
+    }
 
     @CrossOrigin
-    @GetMapping(path = "/state") // http://localhost:8080/game/state
-    public Game getGame (){
+    @PostMapping(path = "/state") // http://localhost:8080/game/state
+    public Game getGame (@RequestBody ApiData_Base data){
+        Game game = gameHandler.getGame(data.getId());
         return game;
     }
 
     @CrossOrigin
     @PostMapping(path = "/setState")
-    public int setGameState(@RequestBody GameState gameState){
-        game.setState(gameState.getGameState());
+    public int setGameState(@RequestBody GameState data){
+        Game game = gameHandler.getGame(data.getId());
+        game.setState(data.getGameState());
 
-        return gameState.getGameState();
+        return data.getGameState();
     }
 
     @CrossOrigin
     @PostMapping(path = "/uploadGeneticCode")
     public ApiData_GeneticCodeReturnData setGameState(@RequestBody ApiData_GeneticCodeUpload data){
-        //Game game = GameHandler.getGame(data.getPlayerId())
+        Game game = gameHandler.getGame(data.getId());
         ApiData_GeneticCodeReturnData result = new ApiData_GeneticCodeReturnData();
 
         String type = data.getType();

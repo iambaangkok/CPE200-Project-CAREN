@@ -1,6 +1,6 @@
 package com.maikw.CPE200ProjectCAREN.apiclasses;
 
-public class GameState {
+public class GameState extends ApiData_Base{
     int gameState = 3;
 
     public int getGameState() {

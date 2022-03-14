@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-@Component("game")
 public class Game implements Runnable{
     protected Integer state  = 1 ;
     protected Boolean spawn ;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว

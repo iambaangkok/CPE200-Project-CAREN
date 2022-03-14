@@ -106,6 +106,7 @@ public class Area {
                 if (unit.unitClass.equals("virus")){
                     unitIterator.remove();
                     removeVirus((Virus) unit);
+                    ((Virus) unit).creditReward();
                 }
                 if (unit.unitClass.equals("antibody")){
                     unitIterator.remove();

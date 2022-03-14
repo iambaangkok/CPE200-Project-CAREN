@@ -4,6 +4,7 @@ package com.maikw.CPE200ProjectCAREN.behavior_evaluator;
 import java.io.FileReader;
 import java.util.Scanner;
 
+import com.maikw.CPE200ProjectCAREN.Area;
 import com.maikw.CPE200ProjectCAREN.GeneticCodeManager;
 import com.maikw.CPE200ProjectCAREN.Unit;
 
@@ -48,9 +49,13 @@ public class BehaviorEvaluatorTest {
 
     @Test
     public void sample_gc(){
-        String filePath = "back-end/geneticcodes/sampleteam/working/sampleteam_w0.txt";
+        //String filePath = "geneticcodes/sampleteam/working/sampleteam_w0.txt";
+        String filePath = "geneticcodes/maikoiwang/working/maikoiwang_w1.txt";
         String gCode = GeneticCodeManager.getAsString(filePath);
         Unit unit = new Unit("gCode_testUnit", "melee", gCode);
+        Area area = new Area("");
+        area.addUnit(unit);
+        unit.setArea(area);
         unit.programNode.print(0);
         System.out.println();
     }

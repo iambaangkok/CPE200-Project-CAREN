@@ -39,7 +39,6 @@ public class Area {
         for(Virus virus : dummy){
             this.addVirus(virus);
         }
-
     }
 
     public void addAntibody(Antibody dummy){
@@ -56,7 +55,6 @@ public class Area {
         for(Antibody antibody : dummy){
             this.addAntibody(antibody);
         }
-
     }
 
     public void removeUnit(Unit dummy){

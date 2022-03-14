@@ -48,25 +48,29 @@ public class InventoryController {
     public String pickupUnit(@RequestBody String type, Area area, double positionX, double positionY){
         if(area.canPlace(positionX, positionY)){
             Antibody ab = UnitFactory.createAntibody(type);
-            ab.setArea(area);
-            area.addAntibody(ab);
-            ab.setPositionX(positionX); ab.setPositionY(positionY);
+
             switch (type) {
                 case "melee" -> {
                     if(inventory.canPickup(type)){
                         inventory.decreaseMeleeCount();
+                        area.addAntibody(ab);
+                        ab.setPositionX(positionX); ab.setPositionY(positionY);
                         return "Pick up Melee Success";
                     }
                 }
                 case "ranged" -> {
                     if(inventory.canPickup(type)){
                         inventory.decreaseRangedCount();
+                        area.addAntibody(ab);
+                        ab.setPositionX(positionX); ab.setPositionY(positionY);
                         return "Pick up Ranged Success";
                     }
                 }
                 case "aoe" -> {
                     if(inventory.canPickup(type)){
                         inventory.decreaseAoeCount();
+                        area.addAntibody(ab);
+                        ab.setPositionX(positionX); ab.setPositionY(positionY);
                         return "Pick up AOE Success";
                     }
                 }

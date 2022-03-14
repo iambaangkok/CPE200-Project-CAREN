@@ -8,8 +8,8 @@ import com.maikw.CPE200ProjectCAREN.behavior_evaluator.nodes.Node;
 
 public class Unit {
 
-    protected int positionX = 0.0;
-    protected int positionY = 0.0;
+    protected double positionX = 0.0;
+    protected double positionY = 0.0;
     protected int maxHealth = 100;
     protected int currentHealth = 100;
     protected int moveCost = 20;

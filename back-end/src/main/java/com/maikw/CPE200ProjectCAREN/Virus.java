@@ -7,8 +7,8 @@ public class Virus extends Unit{
         super(name, type, geneticCode);
         super.unitClass = "virus";
         Random r = new Random();
-        this.positionX = (-100.0) + (100.0 - (-100.0)) * r.nextDouble();
-        this.positionY = (-100.0) + (100.0 - (-100.0)) * r.nextDouble();
+        this.positionX = (-100) + (100 - (-100)) * r.nextInt();
+        this.positionY = (-100) + (100 - (-100)) * r.nextInt();
     }
 
     public int creditReward(){

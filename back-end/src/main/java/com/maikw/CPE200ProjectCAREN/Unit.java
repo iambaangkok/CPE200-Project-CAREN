@@ -8,8 +8,8 @@ import com.maikw.CPE200ProjectCAREN.behavior_evaluator.nodes.Node;
 
 public class Unit {
 
-    protected double positionX = 0.0;
-    protected double positionY = 0.0;
+    protected int positionX = 0.0;
+    protected int positionY = 0.0;
     protected int maxHealth = 100;
     protected int currentHealth = 100;
     protected int moveCost = 20;
@@ -32,23 +32,23 @@ public class Unit {
         variables = new HashMap<>();
         this.name = name;
         this.type = type;
-        this.detectRange = 40;
+        this.detectRange = 1000;
         this.dangerRange = 5;
         this.aoeRadius = 0;
         switch (type) {
             case "melee" -> {
                 this.attackDamage = 20;
-                this.attackRange = 10;
+                this.attackRange = 1000;
                 this.moveSpeed = 3;
             }
             case "ranged" -> {
                 this.attackDamage = 20;
-                this.attackRange = 30;
+                this.attackRange = 1000;
                 this.moveSpeed = 2;
             }
             case "aoe" -> {
                 this.attackDamage = 15;
-                this.attackRange = 10;
+                this.attackRange = 1000;
                 this.aoeRadius = 5;
                 this.moveSpeed = 1;
             }

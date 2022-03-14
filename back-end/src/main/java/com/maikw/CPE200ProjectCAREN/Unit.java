@@ -87,6 +87,11 @@ public class Unit {
     public void takeDamage(int dmg){
         if(this.currentHealth <= dmg){
             this.currentHealth = 0;
+            if(this.unitClass.equals("virus")){
+                this.area.removeVirus((Virus) this);
+            }else if(this.unitClass.equals("antibody")){
+                this.area.removeAntibody((Antibody) this);
+            }
         }else{
             this.currentHealth -= dmg;
         }
@@ -201,7 +206,7 @@ public class Unit {
 
     public void attackEval(String targetUnit, String direction){
         Unit target = findClosestUnit(targetUnit);
-        if(findClosestUnit(targetUnit) != null){
+        if(target != null){
             double range = range(this, target);
             double angle = getAngle(this, target);
             int directionAngle = directionConverter(direction);

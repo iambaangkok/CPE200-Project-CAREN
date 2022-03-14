@@ -73,6 +73,9 @@ public class Game {
 //                Antibody A = UnitFactory.createAntibody("melee");
 //                A.setArea(areas.get(0));
 //                areas.get(0).addAntibody(A);
+            System.out.println(inventory.meleeCount);
+            InventoryController ic = new InventoryController(this);
+            System.out.println(ic.pickupUnit("melee",areas.get(0),1.00,0.00));
 //            }
 
             if(spawn == true){waitState(2); this.spawn = false;} //timeManager.timeSate.get(1)
@@ -108,10 +111,7 @@ public class Game {
             areas.get(0).evaluate();
             areas.get(1).evaluate();
             areas.get(2).evaluate();
-            // ตี
-//            areas.get(0).evaluate();
-//            areas.get(1).evaluate();
-//            areas.get(2).evaluate();
+
 
 
         }
@@ -124,18 +124,21 @@ public class Game {
             for(Antibody antibody:queueAntibobyArea1){
                 areas.get(0).addAntibody(antibody);
             }
+            queueAntibobyArea1.clear();
             break;
         }
         while(queueAntibobyArea2.isEmpty() == false){
             for(Antibody antibody:queueAntibobyArea2){
                 areas.get(1).addAntibody(antibody);
             }
+            queueAntibobyArea2.clear();
             break;
         }
         while(queueAntibobyArea3.isEmpty() == false){
             for(Antibody antibody:queueAntibobyArea3){
                 areas.get(2).addAntibody(antibody);
             }
+            queueAntibobyArea3.clear();
             break;
         }
     }

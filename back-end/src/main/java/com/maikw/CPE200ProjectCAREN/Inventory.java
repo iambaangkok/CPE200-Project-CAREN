@@ -7,7 +7,7 @@ public class Inventory {
     protected int aoeCount;
 
     public Inventory(){
-        this.meleeCount = 0;
+        this.meleeCount = 1;
         this.rangedCount = 0;
         this.aoeCount = 0;
     }

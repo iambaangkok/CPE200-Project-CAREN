@@ -357,6 +357,8 @@ public class Unit {
             units = this.area.getAntibodies();
         }else if(classUnit.equals("all")){
             units = this.area.getUnits();
+        }else{
+            units = new ArrayList<>();
         }
         double min = Integer.MAX_VALUE;
         for (Unit u : units) {

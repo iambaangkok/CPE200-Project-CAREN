@@ -554,7 +554,14 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div style={{padding:"20px"}}
+			<div style={{
+				padding:"20px",
+				userSelect: "none",
+				WebkitUserSelect: "none",
+				MozUserSelect: "none",
+				KhtmlUserSelect: "none",
+				msUserSelect: "none",
+			}}
 				onMouseEnter={disableScroll}
 				onMouseLeave={enableScroll}
 				>

@@ -1,9 +1,6 @@
 package com.maikw.CPE200ProjectCAREN;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.BehaviorEvaluator;
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.SyntaxError;
@@ -62,6 +59,12 @@ public class Unit {
         }catch(SyntaxError e){
             System.out.println("parse error: " + e.getMessage() + " " +e.getMessage().length());
             e.printStackTrace();
+        }
+
+        if(this.unitClass.equals("virus")){
+            Random r = new Random();
+            this.positionX = (-100.0) + (100.0 - (-100.0)) * r.nextDouble();
+            this.positionY = (-100.0) + (100.0 - (-100.0)) * r.nextDouble();
         }
     }
 

@@ -89,6 +89,7 @@ public class Area {
             unit.setDidActionCommand(false);
             unit.evaluate();
             System.out.println(name);
+            System.out.println(unit.getCurrentHealth());
         }
     }
 

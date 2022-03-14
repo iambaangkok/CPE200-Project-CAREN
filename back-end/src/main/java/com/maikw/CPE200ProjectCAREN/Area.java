@@ -26,6 +26,7 @@ public class Area {
     }
 
     public void addVirus(Virus dummy){
+        dummy.setArea(this);
         this.viruses.add(dummy);
         this.addUnit(dummy);
     }
@@ -38,12 +39,12 @@ public class Area {
         for(Virus virus : dummy){
             this.viruses.add(virus);
             this.addUnit(virus);
-            virus.setArea(this);
         }
 
     }
 
     public void addAntibody(Antibody dummy){
+        dummy.setArea(this);
         this.antibodies.add(dummy);
         this.addUnit(dummy);
     }
@@ -56,7 +57,6 @@ public class Area {
         for(Antibody antibody : dummy){
             this.antibodies.add(antibody);
             this.addUnit(antibody);
-            antibody.setArea(this);
         }
 
     }
@@ -66,11 +66,13 @@ public class Area {
     }
 
     public void removeVirus(Virus dummy){
+        dummy.setArea(null);
         this.viruses.remove(dummy);
         this.removeUnit(dummy);
     }
 
     public void removeAntibody(Antibody dummy){
+        dummy.setArea(null);
         this.antibodies.remove(dummy);
         this.removeUnit(dummy);
     }
@@ -105,7 +107,7 @@ public class Area {
     }
 
 
-    public void snapViruse() {
+    public void snapViruses() {
         units.removeAll(viruses);
         viruses.clear();
     }

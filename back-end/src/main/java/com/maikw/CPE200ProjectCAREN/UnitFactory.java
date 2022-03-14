@@ -40,4 +40,23 @@ public class UnitFactory {
         count++;
         return v;
     }
+
+    public static Unit createDummy(String type){
+        String g = GeneticCodeManager.getAsString("geneticcodes/maikoiwang/working/maikoiwang_w1.txt");
+        Unit u;
+        switch (type) {
+            case "melee" -> {
+                u = new Unit("Unit_melee", type, g);
+            }
+            case "ranged" -> {
+                u = new Unit("Unit_ranged", type, g);
+            }
+            case "aoe" -> {
+                u =  new Unit("Unit_aoe", type, g);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        }
+        u.setPositionX(0); u.setPositionY(0);
+        return u;
+    }
 }

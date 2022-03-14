@@ -33,7 +33,7 @@ public class BehaviorEvaluator{
             //if(DEBUG) System.out.println(s);
             if(s.matches(Regex.S_OPERATOR) || s.matches(Regex.S_NUMBER) || s.matches(Regex.S_DIRECTION) || s.matches(Regex.S_SENSOR)){ /// invalid case
                 tkz.consume();
-                throw new SyntaxError();
+                throw new SyntaxError("invalid statement starter");
             }else if(s.matches(Regex.S_RESERVEDWORD)){ /// RESERVED WORD
                 if(s.matches(Regex.S_IF)){ // IF
                     programNode.addStatement(parseIf());
@@ -50,10 +50,10 @@ public class BehaviorEvaluator{
                 if(s.equals("(") || s.equals(")")){
                     throw new UnmatchedParenthesesError("( or ) as statement starter");   
                 }else if(s.equals("{")){
-                    if(DEBUG) System.out.println("  BRACKET {");
+                    if(DEBUG) System.out.println("  bracket {");
                     tkz.consume();
                     programNode.addStatement(parseProgram());
-                    if(tkz.peek().equals("}") == false){
+                    if(!tkz.peek().equals("}")){
                         throw new UnmatchedParenthesesError("missing }");
                     } tkz.consume();
                 }else if(s.equals("}")){
@@ -62,7 +62,7 @@ public class BehaviorEvaluator{
             }else if(s.matches("\n")){
                 tkz.consume();
             }else{
-                throw new SyntaxError(tkz.peek());
+                throw new SyntaxError("syntax error: " + s);
             }
         }
         if(DEBUG) System.out.println("RETURNED parseProgram");

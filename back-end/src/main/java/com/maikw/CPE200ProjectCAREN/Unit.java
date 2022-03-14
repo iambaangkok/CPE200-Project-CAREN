@@ -60,7 +60,8 @@ public class Unit {
         try{
             programNode = be.parseProgram();
         }catch(SyntaxError e){
-            System.out.println(e.getMessage());
+            System.out.println("parse error: " + e.getMessage() + " " +e.getMessage().length());
+            e.printStackTrace();
         }
     }
 

@@ -15,7 +15,7 @@ public class GameController {
     GameHandler gameHandler;
 
     @Autowired
-    GameController(@RequestBody GameHandler gameHandler){
+    GameController(GameHandler gameHandler){
         this.gameHandler = gameHandler;
     }
 

@@ -37,8 +37,7 @@ public class Area {
      */
     public void addAllVirus(List<Virus> dummy){
         for(Virus virus : dummy){
-            this.viruses.add(virus);
-            this.addUnit(virus);
+            this.addVirus(virus);
         }
 
     }
@@ -55,8 +54,7 @@ public class Area {
      */
     public void addAllAntibody(List<Antibody> dummy){
         for(Antibody antibody : dummy){
-            this.antibodies.add(antibody);
-            this.addUnit(antibody);
+            this.addAntibody(antibody);
         }
 
     }

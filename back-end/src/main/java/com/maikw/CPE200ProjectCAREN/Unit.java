@@ -121,6 +121,7 @@ public class Unit {
     }
 
     private void positionEval(String direction){
+        double edgeVal = 50*Math.sqrt(2);
         switch (direction) {
             case "up" -> {
                 if(this.positionY+moveSpeed <= 100){
@@ -130,15 +131,15 @@ public class Unit {
                 }
             }
             case "upright" -> {
-                if(this.positionX+moveSpeed <= 100){
+                if(this.positionX+moveSpeed <= edgeVal){
                     this.positionX += moveSpeed;
                 }else{
-                    this.positionX = 100;
+                    this.positionX = edgeVal;
                 }
-                if(this.positionY+moveSpeed <= 100){
+                if(this.positionY+moveSpeed <= edgeVal){
                     this.positionY += moveSpeed;
                 }else{
-                    this.positionY = 100;
+                    this.positionY = edgeVal;
                 }
             }
             case "right" -> {
@@ -149,15 +150,15 @@ public class Unit {
                 }
             }
             case "downright" -> {
-                if(this.positionX+moveSpeed <= 100){
+                if(this.positionX+moveSpeed <= edgeVal){
                     this.positionX += moveSpeed;
                 }else{
-                    this.positionX = 100;
+                    this.positionX = edgeVal;
                 }
-                if(this.positionY-moveSpeed >= -100){
+                if(this.positionY-moveSpeed >= 0-edgeVal){
                     this.positionY -= moveSpeed;
                 }else{
-                    this.positionY = -100;
+                    this.positionY = 0-edgeVal;
                 }
             }
             case "down" -> {
@@ -168,15 +169,15 @@ public class Unit {
                 }
             }
             case "downleft" -> {
-                if(this.positionX-moveSpeed >= -100){
+                if(this.positionX-moveSpeed >= 0-edgeVal){
                     this.positionX -= moveSpeed;
                 }else{
-                    this.positionX = -100;
+                    this.positionX = 0-edgeVal;
                 }
-                if(this.positionY-moveSpeed >= -100){
+                if(this.positionY-moveSpeed >= 0-edgeVal){
                     this.positionY -= moveSpeed;
                 }else{
-                    this.positionY = -100;
+                    this.positionY = 0-edgeVal;
                 }
             }
             case "left" -> {
@@ -187,10 +188,10 @@ public class Unit {
                 }
             }
             case "upleft" -> {
-                if(this.positionX-moveSpeed >= -100){
+                if(this.positionX-moveSpeed >= 0-edgeVal){
                     this.positionX -= moveSpeed;
                 }else{
-                    this.positionX = -100;
+                    this.positionX = 0-edgeVal;
                 }
                 if(this.positionY+moveSpeed <= 100){
                     this.positionY += moveSpeed;

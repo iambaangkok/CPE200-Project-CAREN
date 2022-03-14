@@ -13,31 +13,39 @@ public class Game {
     protected Boolean spawn ;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว
     protected Integer screenWidth  = 1024 ;
     protected Integer screenHeight = 768 ;
-    protected Double mousePositionX ;
-    protected Double mousePositionY ;
-    protected Integer activeAreaIndex ;
     protected TimeManager timeManager ;
     protected Inventory inventory ;
     protected List<Area> areas;
     protected WaveManager waveManager ;
-    protected GeneticCodeManager geneticCodeManager ;
     protected Shop shop ;
     protected Unit unit;
     protected List<Antibody> queueAntibobyArea1 ;
     protected List<Antibody> queueAntibobyArea2 ;
     protected List<Antibody> queueAntibobyArea3 ;
+    protected List<Virus> queueVirusArea1 ;
+    protected List<Virus> queueVirusArea2 ;
+    protected List<Virus> queueVirusArea3 ;
+
 
     public Game(){
         this.shop = new Shop();
         this.spawn = true ;
         this.areas = new ArrayList<Area>();
-        areas.add(new Area("area1")); areas.add(new Area("area2")); areas.add(new Area("area3"));
+
         this.timeManager = new TimeManager();
         this.inventory = new Inventory();
         this.waveManager = new WaveManager();
         this.queueAntibobyArea1 = new ArrayList<Antibody>();
         this.queueAntibobyArea2 = new ArrayList<Antibody>();
         this.queueAntibobyArea3 = new ArrayList<Antibody>();
+
+        this.queueVirusArea1 = new ArrayList<Virus>();
+        this.queueVirusArea2 = new ArrayList<Virus>();
+        this.queueVirusArea3 = new ArrayList<Virus>();
+
+        areas.add(new Area("area1", queueVirusArea1));
+        areas.add(new Area("area2", queueVirusArea2));
+        areas.add(new Area("area3", queueVirusArea3));
 
 
 
@@ -52,33 +60,49 @@ public class Game {
     }
 
     public void startGameLoop(){
-        System.out.println("Yaeggggg");
+//        System.out.println("Yaeggggg");
+//        Antibody a = UnitFactory.createAntibody("melee");
+//        Antibody b = UnitFactory.createAntibody("melee");
+//        Antibody c = UnitFactory.createAntibody("melee");
+//        a.positionX= 10.0;
+//        a.positionY = 0.0;
+//        queueAntibobyArea1.add(a);
+//        b.positionX= 10.0;
+//        b.positionY = 0.0;
+//        queueAntibobyArea2.add(b);
+//        c.positionX= 10.0;
+//        c.positionY = 0.0;
+//        queueAntibobyArea3.add(c);
+
+
 
         waveManager.genVirus();
 
         while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
                 || areas.get(2).antibodies.size() != 0 || spawn){
 
+            System.out.println(areas.get(0).antibodies.size() + " " + areas.get(1).antibodies.size() + " " +
+            areas.get(2).antibodies.size());
 
             while(timeManager.inputType.equals("pause")) {
+                waitState(1);
                 System.out.println("pause state");
             }
 
             toAddAntiboby();
+            toAddViruse();
 
-            waitState(timeManager.timeSate.get(0));
+//            System.out.println("ลงยูนิด");
 
-//            {
-//                // เป็นช่วงที่รอให้ คนเล่นวาง anti เข้ามาทำรอบเดียว
-//                Antibody A = UnitFactory.createAntibody("melee");
-//                A.setArea(areas.get(0));
-//                areas.get(0).addAntibody(A);
-            System.out.println(inventory.meleeCount);
-            InventoryController ic = new InventoryController(this);
-            System.out.println(ic.pickupUnit("melee",areas.get(0),1.00,0.00));
-//            }
+            waitState(timeManager.timeSate.get(0)); // สปีดของ loop
 
-            if(spawn == true){waitState(2); this.spawn = false;} //timeManager.timeSate.get(1)
+        // test genAnti 1 ตัว
+//            System.out.println(inventory.meleeCount);
+//            InventoryController ic = new InventoryController(this);
+//            System.out.println(ic.pickupUnit("melee",areas.get(0),0.0,0.0));
+
+
+            if(spawn == true){waitState(timeManager.timeSate.get(1)); this.spawn = false;} //timeManager.timeSate.get(1) //คือเวลาที่กำลังจะปล่อยไวรัส
             if(areas.get(0).viruses.size() == 0 && areas.get(1).viruses.size() == 0
                     && areas.get(2).viruses.size() == 0 ) {
 
@@ -86,31 +110,29 @@ public class Game {
 
                 if (waveManager.currentWaveCount <= waveManager.maxWaveCount) {
 
-                    waitState(1);    //timeManager.timeSate.get(4)
+                    waitState(timeManager.timeSate.get(4));    //timeManager.timeSate.get(4) // 15 วิ
 
                     putVirusToArea(0);
                     putVirusToArea(1);
                     putVirusToArea(2);
-                    System.out.println(waveManager.currentWaveCount);
-//                    System.out.println(waveManager.currentWaveCount);
                     System.out.println(areas.get(0).viruses.size());
                     System.out.println(areas.get(1).viruses.size());
                     System.out.println(areas.get(2).viruses.size());
-
-//                    System.out.println("Snapppp!");
-//                    areas.get(0).snapViruses();
-//                    areas.get(1).snapViruses();
-//                    areas.get(2).snapViruses();
                 }
                 else{System.out.println("Win"); break;}
             }
-//            areas.get(0).snapViruses();
-//            areas.get(1).snapViruses();
-//            areas.get(2).snapViruses();
+            areas.get(0).snapViruses();
+            areas.get(1).snapViruses();
+            areas.get(2).snapViruses();
+
             // คำสั่งเดินของ Unit ในแต่ละ area
             areas.get(0).evaluate();
             areas.get(1).evaluate();
             areas.get(2).evaluate();
+
+//            areas.get(0).snapViruses();
+//            areas.get(1).snapViruses();
+//            areas.get(2).snapViruses();
 
 
 
@@ -118,37 +140,34 @@ public class Game {
         System.out.println("Game has Over");
 
     }
-
     private void toAddAntiboby(){
-        while (queueAntibobyArea1.isEmpty() == false){
-            for(Antibody antibody:queueAntibobyArea1){
-                areas.get(0).addAntibody(antibody);
-            }
-            queueAntibobyArea1.clear();
-            break;
-        }
-        while(queueAntibobyArea2.isEmpty() == false){
-            for(Antibody antibody:queueAntibobyArea2){
-                areas.get(1).addAntibody(antibody);
-            }
-            queueAntibobyArea2.clear();
-            break;
-        }
-        while(queueAntibobyArea3.isEmpty() == false){
-            for(Antibody antibody:queueAntibobyArea3){
-                areas.get(2).addAntibody(antibody);
-            }
-            queueAntibobyArea3.clear();
-            break;
-        }
+        System.out.println("area1 preAdd - " + areas.get(0).getAntibodies());
+        areas.get(0).addAllAntibody(queueAntibobyArea1);
+        System.out.println("area1 postAdd - " + areas.get(0).getAntibodies());
+        queueAntibobyArea1.clear();
+        System.out.println("area1 postClear - " + areas.get(0).getAntibodies());
+
+        areas.get(1).addAllAntibody(queueAntibobyArea2);
+        queueAntibobyArea2.clear();
+        areas.get(2).addAllAntibody(queueAntibobyArea3);
+        queueAntibobyArea3.clear();
+
+    }
+    private void toAddViruse(){
+
+        areas.get(0).addAllVirus(queueVirusArea1);
+        queueVirusArea1.clear();
+        areas.get(1).addAllVirus(queueVirusArea2);
+        queueVirusArea2.clear();
+        areas.get(2).addAllVirus(queueVirusArea3);
+        queueVirusArea3.clear();
     }
 
     public void putVirusToArea(int area){
-        areas.get(area).addAllVirus(waveManager.allwave.get("Wave_"+waveManager.currentWaveCount.toString()));
+        areas.get(area).addAllVirus(waveManager.allwave.get("Wave_"+waveManager.currentWaveCount.toString()+"Area_"+area));
     }
 
     public static void main(String[] args) {
-
         Game game = new Game();
         game.startGameLoop();
     }
@@ -159,11 +178,11 @@ public class Game {
                 // ทำ if หรือ switch ทำการเลือกใช้ว่ามันทำอะไรอยู่
                 if(timeManager.inputType.equals("slowdown")){
                     Thread.sleep((int)(1000*timeManager.slowDownMultiplier));
-                    System.out.println("current time "+i*(int)(1000*timeManager.slowDownMultiplier)+ " second");
+                    System.out.println("current time "+(i*(int)(1000*timeManager.slowDownMultiplier))/1000.0+ " second");
                 }
                 else if(timeManager.inputType.equals("fastforward")) {
                     Thread.sleep((int)(1000*timeManager.fastForwardMuliplier));
-                    System.out.println("current time "+i*(int)(1000*timeManager.fastForwardMuliplier)+ " second");
+                    System.out.println("current time "+(i*(int)(1000*timeManager.fastForwardMuliplier))/1000.0+ " second");
                 }
                 else{
                     Thread.sleep((int)(1000));
@@ -176,14 +195,6 @@ public class Game {
             ex.printStackTrace();
         }
     }
-
-
-
-    private void upDate(){
-
-
-    }
-
 
     public Integer getState(){
         return state;

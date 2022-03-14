@@ -15,6 +15,7 @@ public class AreaTest {
     Virus[] vs_melee = {UnitFactory.createVirus("melee"),UnitFactory.createVirus("melee"),UnitFactory.createVirus("melee")};
     Virus[] vs_ranged = {UnitFactory.createVirus("ranged"),UnitFactory.createVirus("ranged"),UnitFactory.createVirus("ranged")};
     Virus[] vs_aoe = {UnitFactory.createVirus("aoe"),UnitFactory.createVirus("aoe"),UnitFactory.createVirus("aoe")};
+    int size = 9;
     List<Virus> viruses = new ArrayList<Virus>();
     List<Antibody> antibodies = new ArrayList<Antibody>();
 
@@ -28,7 +29,7 @@ public class AreaTest {
             area.addVirus(vs_aoe[i]);
             assertEquals(vs_aoe[i].getArea(),area);
         }
-        assertEquals(area.viruses.size(),9);
+        assertEquals(area.viruses.size(),size);
     }
 
     @Test
@@ -44,10 +45,26 @@ public class AreaTest {
 
     @Test
     void addAntibody() {
+        for(int i = 0 ; i < 3 ; i++){
+            area.addAntibody(abs_melee[i]);
+            assertEquals(abs_melee[i].getArea(),area);
+            area.addAntibody(abs_ranged[i]);
+            assertEquals(abs_ranged[i].getArea(),area);
+            area.addAntibody(abs_aoe[i]);
+            assertEquals(abs_aoe[i].getArea(),area);
+        }
+        assertEquals(area.antibodies.size(),size);
     }
 
     @Test
     void addAllAntibody() {
+        for(int i = 0; i < 3 ; i++){
+            antibodies.add(abs_melee[i]);
+            antibodies.add(abs_ranged[i]);
+            antibodies.add(abs_aoe[i]);
+        }
+        area.addAllAntibody(antibodies);
+        assertEquals(area.getAntibodies(),antibodies);
     }
 
     @Test

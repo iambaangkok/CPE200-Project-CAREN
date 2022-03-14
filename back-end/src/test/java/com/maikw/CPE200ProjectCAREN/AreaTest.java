@@ -40,6 +40,9 @@ public class AreaTest {
             viruses.add(vs_aoe[i]);
         }
         area.addAllVirus(viruses);
+        for(Virus vs : viruses){
+            assertEquals(vs.getArea(),area);
+        }
         assertEquals(area.getViruses(),viruses);
     }
 
@@ -64,15 +67,50 @@ public class AreaTest {
             antibodies.add(abs_aoe[i]);
         }
         area.addAllAntibody(antibodies);
+        for(Antibody ab : antibodies){
+            assertEquals(ab.getArea(),area);
+        }
         assertEquals(area.getAntibodies(),antibodies);
     }
 
     @Test
     void removeVirus() {
+        // add
+        for(int i = 0; i < 3 ; i++){
+            viruses.add(vs_melee[i]);
+            viruses.add(vs_ranged[i]);
+            viruses.add(vs_aoe[i]);
+        }
+        area.addAllVirus(viruses);
+
+        // remove
+        area.removeVirus(vs_melee[0]);
+        assertNull(vs_melee[0].getArea());
+        area.removeVirus(vs_ranged[0]);
+        assertNull(vs_ranged[0].getArea());
+        area.removeVirus(vs_aoe[0]);
+        assertNull(vs_aoe[0].getArea());
+        assertEquals(area.getViruses().size(), size-3);
     }
 
     @Test
     void removeAntibody() {
+        // add
+        for(int i = 0; i < 3 ; i++){
+            antibodies.add(abs_melee[i]);
+            antibodies.add(abs_ranged[i]);
+            antibodies.add(abs_aoe[i]);
+        }
+        area.addAllAntibody(antibodies);
+
+        // remove
+        area.removeAntibody(abs_melee[0]);
+        assertNull(abs_melee[0].getArea());
+        area.removeAntibody(abs_ranged[0]);
+        assertNull(abs_ranged[0].getArea());
+        area.removeAntibody(abs_aoe[0]);
+        assertNull(abs_aoe[0].getArea());
+        assertEquals(area.getAntibodies().size(), size-3);
     }
 
     @Test

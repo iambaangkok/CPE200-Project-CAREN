@@ -80,8 +80,9 @@ class GameController {
       data: {
         id,
         type: type,
-        areaIndex : areaIndex,
-        position : position
+        area : areaIndex,
+        positionX: position.x,
+        positionY: position.y,
       }
     });
   }
@@ -113,7 +114,7 @@ class GameController {
   static async getWave(id: string){
     var resp = await axios({
       method: 'post',
-      url: baseURL + "/wavemanager/getcurrentwave",
+      url: baseURL + "/wavemanager/getwavenumberandnumberofvirus",
       headers: {},
       data: {
         id,
@@ -131,7 +132,11 @@ class GameController {
         id,
       }
     });
-    return {type: "play", multiplier: 1};
+    var returnData = resp.data;
+    if(resp.data.type !== "pause" && resp.data.type !== "fastforward" && resp.data.type !== "slowdown"){
+      returnData.type = "play";
+    }
+    return returnData;
   }
 
   static async setSpeedMultiplier(id: string, type : string) {
@@ -162,7 +167,7 @@ class GameController {
 
     var resp = await axios({
       method: 'post',
-      url: baseURL + "/area/getarea" + (areaIndex),
+      url: baseURL + ("/area/getarea" + (areaIndex)),
       headers: {},
       data: {
         id,
@@ -194,7 +199,7 @@ class GameController {
       }
     });
 
-    return resp.data.gameState;
+    return resp.data;
   }
 
   static async setGameState(id: string, gameState: number) {

@@ -11,6 +11,8 @@ public class Config {
     public static int[] meleeCountPerWave;
     public static int[] rangedCountPerWave;
     public static int[] aoeCountPerWave;
+    public static int detectRange;
+    public static int dangerRange;
     public static int startCredit;
     public static int meleePrice;
     public static int rangedPrice;
@@ -51,6 +53,8 @@ public class Config {
             for(int i = 0 ; i < n ; i++){ // set aoeCount to every wave
                 aoeCountPerWave[i] = s.nextInt();
             }
+            detectRange = s.nextInt(); // set detectRange
+            dangerRange = s.nextInt(); // set dangerRange
             startCredit = s.nextInt(); // set startCredit
             meleePrice = s.nextInt(); // set meleePrice
             rangedPrice = s.nextInt(); // set rangedPrice

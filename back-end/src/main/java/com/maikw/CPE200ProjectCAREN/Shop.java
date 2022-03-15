@@ -75,4 +75,8 @@ public class Shop {
     public void setInventory(Inventory inventory){
         this.inventory = inventory;
     }
+
+    public void setCurrentCredit(int currentCredit) {
+        this.currentCredit = currentCredit;
+    }
 }

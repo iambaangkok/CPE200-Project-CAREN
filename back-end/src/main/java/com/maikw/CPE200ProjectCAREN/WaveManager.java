@@ -51,7 +51,7 @@ public class WaveManager {
         this.viruses3 = new ArrayList<>();
     }
 
-    public void genVirus() {
+    public void addVirus() {
 
         createUnitVirus(3,1,0);
         createUnitVirus(5,1,0);
@@ -73,5 +73,9 @@ public class WaveManager {
 
     public Integer getTimeBetweenWave() {
         return timeBetweenWave;
+    }
+
+    public void setgetCurrentWaveCount(int currentWaveCount){
+        this.currentWaveCount = currentWaveCount;
     }
 }

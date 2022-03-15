@@ -22,23 +22,22 @@ public class GameController {
     @CrossOrigin
     @PostMapping(path = "/state") // http://localhost:8080/game/state
     public Game getGame (@RequestBody ApiData_Base data){
-        Game game = gameHandler.getGame(data.getId());
+        Game game = gameHandler.getGame(data);
         return game;
     }
 
     @CrossOrigin
     @PostMapping(path = "/setState")
     public int setGameState(@RequestBody GameState data){
-        Game game = gameHandler.getGame(data.getId());
+        Game game = gameHandler.getGame(data);
         game.setState(data.getGameState());
-
         return data.getGameState();
     }
 
     @CrossOrigin
     @PostMapping(path = "/uploadGeneticCode")
     public ApiData_GeneticCodeReturnData setGameState(@RequestBody ApiData_GeneticCodeUpload data){
-        Game game = gameHandler.getGame(data.getId());
+        Game game = gameHandler.getGame(data);
         ApiData_GeneticCodeReturnData result = new ApiData_GeneticCodeReturnData();
 
         String type = data.getType();

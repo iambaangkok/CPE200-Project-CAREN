@@ -763,9 +763,8 @@ function detectClickOnAntibodies(mousePos : Vector2){
 		// + "," + (img.position.y-img.height/2)*s+ "-" + (img.position.y-img.height/2+img.height)*s )
 		
 		if(img.mouseInside(mousePosition)){ /// THIS ANTIBODY GOT CLICKED
-			 console.log("detectClickOnAntibodies() RETURN")
-			//name = anti.name;
-			name = "ggwp";
+			console.log("detectClickOnAntibodies() RETURN")
+			name = unit.name;
 		}
 	}
 		

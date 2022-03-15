@@ -65,14 +65,14 @@ public class WaveManager {
     }
 
     public Integer getCurrentWaveCount() {
-        return waveCount;
+        return currentWaveCount;
     }
 
     public Integer getTimeBetweenWave() {
         return timeBetweenWave;
     }
 
-    public void setgetCurrentWaveCount(int currentWaveCount){
+    public void setCurrentWaveCount(int currentWaveCount){
         this.currentWaveCount = currentWaveCount;
     }
 

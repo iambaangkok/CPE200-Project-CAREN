@@ -85,12 +85,10 @@ public class Game implements Runnable{
             toAddAntiboby();
             toAddViruse();
 
-            if(areas.get(0).viruses.size() == 0 && areas.get(1).viruses.size() == 0
+            if(!notSpawnedYet && areas.get(0).viruses.size() == 0 && areas.get(1).viruses.size() == 0
                     && areas.get(2).viruses.size() == 0 ) {
-
-                waveManager.currentWaveCount += 1;
-
-                if (waveManager.currentWaveCount <= waveManager.maxWaveCount) {
+                if (waveManager.currentWaveCount < waveManager.maxWaveCount) {
+                    waveManager.currentWaveCount += 1;
 
                     waitState(timeManager.timeSate.get(4));    //timeManager.timeSate.get(4) // 15 วิ
 

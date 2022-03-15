@@ -37,6 +37,8 @@ public class GameController {
     @CrossOrigin
     @PostMapping(path = "/uploadgeneticcode")
     public ApiData_GeneticCodeReturnData uploadGeneticCode(@RequestBody ApiData_GeneticCodeUpload data){
+        System.out.println(data.getId() + " " + data.getType() + " " +data.getGeneticCode());
+
         Game game = gameHandler.getGame(data);
         ApiData_GeneticCodeReturnData result = new ApiData_GeneticCodeReturnData();
 

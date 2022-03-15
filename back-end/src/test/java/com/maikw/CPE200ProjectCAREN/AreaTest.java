@@ -106,11 +106,8 @@ public class AreaTest {
 
         // remove
         area.removeAntibody(abs_melee[0]);
-        assertNull(abs_melee[0].getArea());
         area.removeAntibody(abs_ranged[0]);
-        assertNull(abs_ranged[0].getArea());
         area.removeAntibody(abs_aoe[0]);
-        assertNull(abs_aoe[0].getArea());
         assertEquals(area.getAntibodies().size(), size-3);
     }
 

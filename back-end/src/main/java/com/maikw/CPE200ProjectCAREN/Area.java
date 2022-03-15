@@ -108,7 +108,11 @@ public class Area {
                 }
                 if (unit.unitClass.equals("antibody")){
                     unitIterator.remove();
-                    ((Antibody)unit).virusToSpawn(rebornQueue);
+                    if(unit.toSpawn){
+                        ((Antibody)unit).virusToSpawn(rebornQueue);
+                    }else{
+                        unit.setArea(null);
+                    }
                     removeAntibody((Antibody) unit);
                 }
             }
@@ -132,8 +136,9 @@ public class Area {
         viruses.clear();
         System.out.println("Has gone");
     }
-    public boolean getAlertLevel(){
-        return this.getAlertLevel();
+
+    public int getAlertLevel(){
+        return this.alertLevel();
     }
 
     public List<Unit> getUnits() {

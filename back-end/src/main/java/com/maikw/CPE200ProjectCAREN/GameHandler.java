@@ -51,13 +51,14 @@ public class GameHandler {
     @PostMapping(path = "/runGame") // http://localhost:8080/gamehandler/runGame
     public void runGame(@RequestBody ApiData_Base data ){
         String id = data.getId();
-        if(map.containsKey(id)){
-            map.get(id).start();
-        }else{
+        if (!map.containsKey(id)) {
             Game game = new Game();
             gameMap.put(id, game);
-            map.put(id,new Thread(game));
+            map.put(id, new Thread(game));
+        }
+        if(!map.get(id).isAlive()){
             map.get(id).start();
+            map.get(id).setDaemon(true);
         }
     }
 

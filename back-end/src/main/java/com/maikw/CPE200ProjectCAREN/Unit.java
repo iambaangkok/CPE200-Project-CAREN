@@ -27,6 +27,7 @@ public class Unit {
     protected Area area;
     protected String unitClass;
     protected boolean didActionCommand = false;
+    protected boolean toSpawn = true;
 
     public Unit(String name, String type, String geneticCode){
         variables = new HashMap<>();
@@ -478,5 +479,13 @@ public class Unit {
 
     public void setDidActionCommand(boolean state){
         this.didActionCommand = state;
+    }
+
+    public boolean isToSpawn() {
+        return toSpawn;
+    }
+
+    public void setToSpawn(boolean toSpawn) {
+        this.toSpawn = toSpawn;
     }
 }

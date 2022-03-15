@@ -103,11 +103,19 @@ public class UnitTest {
     }
 
     @Test
-    void range() {
+    void range() { // formula is Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2))
+        // position of virus is always random so if we use method range() to find range it must equal this formula
+        Virus a = UnitFactory.createVirus("melee");
+        Virus b = UnitFactory.createVirus("ranged");
+        Virus c = UnitFactory.createVirus("aoe");
+        assertEquals(Unit.range(a, b), Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2)));
+        assertEquals(Unit.range(a, c), Math.sqrt(Math.pow((a.positionX - c.positionX),2) + Math.pow((a.positionY - c.positionY),2)));
+        assertEquals(Unit.range(b, c), Math.sqrt(Math.pow((b.positionX - c.positionX),2) + Math.pow((b.positionY - c.positionY),2)));
     }
 
     @Test
-    void getAngle() {
+    void positionEval(){
+
     }
 
     @Test

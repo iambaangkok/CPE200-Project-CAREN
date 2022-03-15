@@ -94,10 +94,12 @@ public class Unit {
     }
 
     public void takeDamage(int dmg){
-        if(!isAlive()){
-            this.currentHealth = 0;
-        }else{
-            this.currentHealth -= dmg;
+        if(dmg >= 0){
+            if(!isAlive()){
+                this.currentHealth = 0;
+            }else{
+                this.currentHealth -= dmg;
+            }
         }
     }
 

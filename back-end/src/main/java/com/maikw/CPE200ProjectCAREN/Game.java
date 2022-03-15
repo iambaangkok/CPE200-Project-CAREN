@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game implements Runnable{
+    protected Shop shop ;
     protected Integer state  = 1 ;
     protected Boolean spawn ;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว
-    protected TimeManager timeManager ;
-    protected Inventory inventory ;
     protected List<Area> areas;
+    protected Inventory inventory ;
     protected WaveManager waveManager ;
-    protected Shop shop ;
+    protected TimeManager timeManager ;
     protected GeneticCodeManager geneticCodeManager;
     protected List<Antibody> queueAntibobyArea1 ;
     protected List<Antibody> queueAntibobyArea2 ;
@@ -28,23 +28,20 @@ public class Game implements Runnable{
         this.shop = new Shop();
         this.spawn = true ;
         this.areas = new ArrayList<Area>();
-        this.timeManager = new TimeManager();
         this.inventory = new Inventory();
         this.waveManager = new WaveManager();
+        this.timeManager = new TimeManager();
         this.queueAntibobyArea1 = new ArrayList<Antibody>();
         this.queueAntibobyArea2 = new ArrayList<Antibody>();
         this.queueAntibobyArea3 = new ArrayList<Antibody>();
-
         this.queueVirusArea1 = new ArrayList<Virus>();
         this.queueVirusArea2 = new ArrayList<Virus>();
         this.queueVirusArea3 = new ArrayList<Virus>();
-
         areas.add(new Area("area1", queueVirusArea1));
         areas.add(new Area("area2", queueVirusArea2));
         areas.add(new Area("area3", queueVirusArea3));
-
         this.geneticCodeManager = new GeneticCodeManager();
-        
+
         shop.setInventory(inventory);
     }
 
@@ -65,11 +62,6 @@ public class Game implements Runnable{
                 System.out.println("pause state");
             }
 
-            toAddAntiboby();
-            toAddViruse();
-
-
-
             waitState(timeManager.timeSate.get(0)); // สปีดของ loop
 
         // test genAnti 1 ตัว
@@ -78,7 +70,23 @@ public class Game implements Runnable{
 //            System.out.println(ic.pickupUnit("melee",areas.get(0),0.0,0.0));
 
 
-            if(spawn == true){waitState(timeManager.timeSate.get(1)); this.spawn = false;} //timeManager.timeSate.get(1) //คือเวลาที่กำลังจะปล่อยไวรัส
+//            if(spawn == true){waitState(timeManager.timeSate.get(1)); this.spawn = false;} //timeManager.timeSate.get(1) //คือเวลาที่กำลังจะปล่อยไวรัส
+
+            while (areas.get(0).antibodies.size() == 0 || areas.get(1).antibodies.size() == 0
+                    || areas.get(2).antibodies.size() == 0){
+                System.out.println("You shold tack uint ");
+                waitState(10);
+
+                if(spawn == true){
+                    waitState(timeManager.timeSate.get(1));
+                    this.spawn = false;
+                } //timeManager.timeSate.get(1) //คือเวลาที่กำลังจะปล่อยไวรัส
+                toAddAntiboby();
+                toAddViruse();
+            }
+            toAddAntiboby();
+            toAddViruse();
+
             if(areas.get(0).viruses.size() == 0 && areas.get(1).viruses.size() == 0
                     && areas.get(2).viruses.size() == 0 ) {
 

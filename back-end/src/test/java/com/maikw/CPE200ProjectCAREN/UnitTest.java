@@ -34,6 +34,13 @@ public class UnitTest {
 
     @Test
     void attackDirection() {
+        Antibody ab_melee = abs_melee[1];
+        Antibody ab_ranged = abs_ranged[1];
+        Antibody ab_aoe = abs_aoe[1];
+        Virus v_melee = vs_melee[1];
+        Virus v_ranged = vs_ranged[1];
+        Virus v_aoe = vs_aoe[1];
+
         // melee attack -> attack range = 10, dmg = 20
 
 
@@ -85,6 +92,10 @@ public class UnitTest {
         assertEquals(unit.getCurrentHealth(), unit.getMaxHealth() - 1); // check health (99)
         unit.takeDamage(50);
         assertEquals(unit.getCurrentHealth(), unit.getMaxHealth() - 51); // check helath (49)
+        unit.takeDamage(-999); // don't receive damage
+        assertEquals(unit.getCurrentHealth(), unit.getMaxHealth() - 51); // check helath (49)
+        unit.takeDamage(100); // unit is dead
+        assertFalse(unit.isAlive());
     }
 
     @Test
@@ -105,6 +116,14 @@ public class UnitTest {
 
     @Test
     void directionConverter() {
+        assertEquals(Unit.directionConverter("up"), 90);
+        assertEquals(Unit.directionConverter("upright"), 45);
+        assertEquals(Unit.directionConverter("right"), 0);
+        assertEquals(Unit.directionConverter("downright"), 315);
+        assertEquals(Unit.directionConverter("down"), 270);
+        assertEquals(Unit.directionConverter("downleft"), 225);
+        assertEquals(Unit.directionConverter("left"), 180);
+        assertEquals(Unit.directionConverter("upleft"), 135);
     }
 
     @Test
@@ -117,9 +136,14 @@ public class UnitTest {
 
     @Test
     void findClosestUnitDirection() {
+
     }
 
     @Test
     void isAlive() {
+        Unit unit = UnitFactory.createDummy("melee");
+        assertTrue(unit.isAlive()); // unit is alive
+        unit.takeDamage(150);
+        assertFalse(unit.isAlive()); // unit is dead
     }
 }

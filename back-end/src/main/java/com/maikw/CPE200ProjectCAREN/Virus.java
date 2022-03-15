@@ -8,6 +8,8 @@ public class Virus extends Unit{
     public Virus(String name, String type, String geneticCode) {
         super(name, type, geneticCode);
         this.unitClass = "virus";
+        this.maxHealth = Config.virusHealth;
+        this.currentHealth = maxHealth;
 
         switch (type) {
             case "melee" -> {
@@ -45,5 +47,5 @@ public class Virus extends Unit{
     public int creditReward(){
         return Config.creditReward;
     }
-    
+
 }

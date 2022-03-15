@@ -67,7 +67,8 @@ else if (dir - 3) then move down
 else if (dir - 2) then move downright
 else if (dir - 1) then move right
 else if (dir) then move upright
-else move up`;
+else move up
+}`;
 
 
 }

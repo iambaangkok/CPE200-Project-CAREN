@@ -92,7 +92,7 @@ public class InventoryController {
 
         assert area != null;
         if(area.canPlace(positionX, positionY)){
-            Antibody ab = UnitFactory.createAntibody(type);
+            Antibody ab = UnitFactory.createAntibody(type, game.getGeneticCodeManager());
 
             switch (type) {
                 case "melee" -> {

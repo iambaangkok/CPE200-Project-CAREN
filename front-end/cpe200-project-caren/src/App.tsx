@@ -370,13 +370,14 @@ class App extends React.Component {
 			"",
 			"",
 			"• You must protect your organs: brain, heart, and lungs",
-			"• Don’t let the amount of ANTIBODY reach zero or you lose the organ",
-			"• Each lost organ increase the VIRUS amount by x1.5",
+			"• Don’t let the amount of ANTIBODY reach zero or you lose the game",
 			"• Buy ANTIBODY with ANTIBODY CREDITS earned from killing VIRUS",
 			"• ANTIBODY turns into VIRUS when it dies",
 			"• Program how your ANTIBODY behaves below",
-			"   (or don’t, you can use our default programs)",
-			"• Survive the 5 VIRUS WAVES to win!"
+			"   (or don’t. you can use our default programs!)",
+			"• Survive all the VIRUS WAVES to win!",
+			"• Read more about units and programming down below!",
+			"• Add atleast 1 ANTIBODY to each area and the first wave will start!"
 			],
 			18, "'Press Start 2P'", 112, 398, Config.COLOR_CREAMWHITE, "start", "top", 2)
 		t_clickAnywhereToStart = new TextObject(["CLICK ANYWHERE TO START"], 24, "'Press Start 2P'", 112, 904)

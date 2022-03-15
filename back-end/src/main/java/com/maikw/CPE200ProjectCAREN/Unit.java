@@ -120,17 +120,17 @@ public class Unit {
         Unit dummy = UnitFactory.createDummy("melee");
         switch (direction) {
             case "up" -> {
-                this.positionY -= moveSpeed;
+                this.positionY += moveSpeed;
                 if(range(dummy, this) > 100){
-                    this.positionY += moveSpeed;
+                    this.positionY -= moveSpeed;
                 }
             }
             case "upright" -> {
                 this.positionX += moveSpeed;
-                this.positionY -= moveSpeed;
+                this.positionY += moveSpeed;
                 if(range(dummy, this) > 100){
                     this.positionX -= moveSpeed;
-                    this.positionY += moveSpeed;
+                    this.positionY -= moveSpeed;
                 }
             }
             case "right" -> {
@@ -141,24 +141,24 @@ public class Unit {
             }
             case "downright" -> {
                 this.positionX += moveSpeed;
-                this.positionY += moveSpeed;
+                this.positionY -= moveSpeed;
                 if(range(dummy, this) > 100){
                     this.positionX -= moveSpeed;
-                    this.positionY -= moveSpeed;
+                    this.positionY += moveSpeed;
                 }
             }
             case "down" -> {
-                this.positionY += moveSpeed;
+                this.positionY -= moveSpeed;
                 if(range(dummy, this) > 100){
-                    this.positionY -= moveSpeed;
+                    this.positionY += moveSpeed;
                 }
             }
             case "downleft" -> {
                 this.positionX -= moveSpeed;
-                this.positionY += moveSpeed;
+                this.positionY -= moveSpeed;
                 if(range(dummy, this) > 100){
                     this.positionX += moveSpeed;
-                    this.positionY -= moveSpeed;
+                    this.positionY += moveSpeed;
                 }
             }
             case "left" -> {
@@ -169,10 +169,10 @@ public class Unit {
             }
             case "upleft" -> {
                 this.positionX -= moveSpeed;
-                this.positionY -= moveSpeed;
+                this.positionY += moveSpeed;
                 if(range(dummy, this) > 100){
                     this.positionX += moveSpeed;
-                    this.positionY += moveSpeed;
+                    this.positionY -= moveSpeed;
                 }
             }
         }

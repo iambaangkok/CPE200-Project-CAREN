@@ -54,9 +54,8 @@ class GeneticCodeInput extends React.Component {
                                     color:Config.COLOR_MIDNIGHTBLACK,
                                     padding:"10px",
                                     overflowY: "scroll",
-                            }}>
-                                {Config.DEFAULTGENETICCODE_MELEE}
-                            </textarea>
+                            }}  defaultValue={Config.DEFAULTGENETICCODE_MELEE}
+                            ></textarea>
                         </div> <br></br>
                         ANTIBODY - RANGED Genetic Code <br></br>
                         <input type="button" value={"Save"}
@@ -73,9 +72,9 @@ class GeneticCodeInput extends React.Component {
                                     color:Config.COLOR_MIDNIGHTBLACK,
                                     padding:"10px",
                                     overflowY: "scroll",
-                            }}>
-                                {Config.DEFAULTGENETICCODE_MELEE}
-                            </textarea>
+                            }}  defaultValue={Config.DEFAULTGENETICCODE_MELEE}
+                            ></textarea>
+
                         </div> <br></br>
                         ANTIBODY - AOE Genetic Code <br></br>
                         <input type="button" value={"Save"}
@@ -92,9 +91,9 @@ class GeneticCodeInput extends React.Component {
                                     color:Config.COLOR_MIDNIGHTBLACK,
                                     padding:"10px",
                                     overflowY: "scroll",
-                            }}>
-                                {Config.DEFAULTGENETICCODE_MELEE}
-                            </textarea>
+                            }}  defaultValue={Config.DEFAULTGENETICCODE_MELEE}
+                            ></textarea>
+
                         </div>
                     </div>
                 </div>

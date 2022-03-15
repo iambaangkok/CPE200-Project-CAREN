@@ -75,11 +75,11 @@ class ImageObject{
     }
 
     protected createImage(imagePath : string){
-        console.log(imagePath)
+        if(DEBUG) console.log(imagePath)
 
         const image = new Image();
         image.onload = function(){
-            console.log(image)
+            if(DEBUG) console.log(image)
         }
         image.src = imagePath;
         return image;

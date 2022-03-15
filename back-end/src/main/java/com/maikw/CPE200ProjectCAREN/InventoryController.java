@@ -17,7 +17,7 @@ public class InventoryController {
     }
 
     @CrossOrigin
-    @PostMapping
+    @PostMapping(path = "/getinventory")
     public Inventory getInventory(@RequestBody ApiData_Base data){
         Inventory inventory = gameHandler.getGame(data).getInventory();
         return inventory;

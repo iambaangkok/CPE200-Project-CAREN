@@ -1,16 +1,25 @@
 package com.maikw.CPE200ProjectCAREN;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_Wave;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/waveManager") // http://localhost:8080/waveManager
-public class WaveManagerController {
+public class WaveManagerController  {
+    GameHandler gameHandler;
 
-    WaveManager waveManager = new WaveManager();
+    public WaveManagerController(GameHandler gameHandler){
+        this.gameHandler = gameHandler ;
 
+    }
+
+    @PostMapping(path = "/getcurrentwave") //http://localhost:8080/waveManager/getcurrentwave
+    public int getCurrentWave(@RequestBody ApiData_Wave data){
+        Game game  = gameHandler.getGame(data);
+        WaveManager waveManager = game.getWaveManager();
+       return  waveManager.getCurrentWaveCount();
+
+    }
 
 }

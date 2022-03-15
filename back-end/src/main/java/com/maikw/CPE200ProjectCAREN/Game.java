@@ -49,28 +49,7 @@ public class Game implements Runnable{
 
     }
 
-
-    public List<Integer> getScreen(){
-        List<Integer> s = new ArrayList<Integer>();
-        s.add(screenWidth);
-        s.add(screenHeight);
-        return  s;
-    }
-
     public void startGameLoop(){
-//        System.out.println("Yaeggggg");
-//        Antibody a = UnitFactory.createAntibody("melee");
-//        Antibody b = UnitFactory.createAntibody("melee");
-//        Antibody c = UnitFactory.createAntibody("melee");
-//        a.positionX= 10.0;
-//        a.positionY = 0.0;
-//        queueAntibobyArea1.add(a);
-//        b.positionX= 10.0;
-//        b.positionY = 0.0;
-//        queueAntibobyArea2.add(b);
-//        c.positionX= 10.0;
-//        c.positionY = 0.0;
-//        queueAntibobyArea3.add(c);
 
 
 
@@ -90,7 +69,7 @@ public class Game implements Runnable{
             toAddAntiboby();
             toAddViruse();
 
-//            System.out.println("ลงยูนิด");
+
 
             waitState(timeManager.timeSate.get(0)); // สปีดของ loop
 
@@ -119,20 +98,12 @@ public class Game implements Runnable{
                 }
                 else{System.out.println("Win"); break;}
             }
-            areas.get(0).snapViruses();
-            areas.get(1).snapViruses();
-            areas.get(2).snapViruses();
+
 
             // คำสั่งเดินของ Unit ในแต่ละ area
             areas.get(0).evaluate();
             areas.get(1).evaluate();
             areas.get(2).evaluate();
-
-//            areas.get(0).snapViruses();
-//            areas.get(1).snapViruses();
-//            areas.get(2).snapViruses();
-
-
 
         }
         System.out.println("Game has Over");

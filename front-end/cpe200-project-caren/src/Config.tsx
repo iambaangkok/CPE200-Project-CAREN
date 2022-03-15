@@ -12,7 +12,7 @@ class Config{
     public static COLOR_MEDIUMDIMMEDBLUE = "#4c6885";
 
     public static FPS = 30;
-    public static FETCH_INTERVAL_SECONDS = 1;
+    public static FETCH_INTERVAL_SECONDS = 0.1;
 
     public static SCREEN_WIDTH = 1920;
     public static SCREEN_HEIGHT = 1080;

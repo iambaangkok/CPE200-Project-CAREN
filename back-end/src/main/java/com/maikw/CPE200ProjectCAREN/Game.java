@@ -7,7 +7,7 @@ public class Game implements Runnable{
     public String id;
     protected Shop shop ;
     protected Integer state  = 1 ;
-    protected Boolean spawn ;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว
+    protected Boolean notSpawnedYet;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว
     protected List<Area> areas;
     protected Inventory inventory ;
     protected WaveManager waveManager ;
@@ -27,7 +27,7 @@ public class Game implements Runnable{
 
     public Game(){
         this.shop = new Shop();
-        this.spawn = true ;
+        this.notSpawnedYet = true ;
         this.areas = new ArrayList<Area>();
         this.inventory = new Inventory();
         this.waveManager = new WaveManager();
@@ -53,7 +53,7 @@ public class Game implements Runnable{
         waveManager.addVirus();
 
         while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
-                || areas.get(2).antibodies.size() != 0 || spawn){
+                || areas.get(2).antibodies.size() != 0 || notSpawnedYet){
             System.out.println("Game ID = " + id);
             System.out.println(areas.get(0).antibodies.size() + " " + areas.get(1).antibodies.size() + " " +
             areas.get(2).antibodies.size());
@@ -73,20 +73,14 @@ public class Game implements Runnable{
 
 //            if(spawn == true){waitState(timeManager.timeSate.get(1)); this.spawn = false;} //timeManager.timeSate.get(1) //คือเวลาที่กำลังจะปล่อยไวรัส
 
-            while (areas.get(0).antibodies.size() == 0 || areas.get(1).antibodies.size() == 0
-                    || areas.get(2).antibodies.size() == 0){
-                System.out.println("Game ID = " + id);
-
-                System.out.println("You shold tack uint ");
+            while (notSpawnedYet && ( areas.get(0).antibodies.size() == 0 || areas.get(1).antibodies.size() == 0 || areas.get(2).antibodies.size() == 0 )){
+                System.out.println("You must place at least 1 unit in each area.");
                 waitState(1);
 
-                if(spawn == true){
-                    waitState(timeManager.timeSate.get(1));
-                    this.spawn = false;
-                } //timeManager.timeSate.get(1) //คือเวลาที่กำลังจะปล่อยไวรัส
                 toAddAntiboby();
                 toAddViruse();
             }
+            notSpawnedYet = false;
             toAddAntiboby();
             toAddViruse();
 
@@ -217,8 +211,8 @@ public class Game implements Runnable{
 
     public GeneticCodeManager getGeneticCodeManager(){ return geneticCodeManager; }
 
-    public Boolean getSpawn() {
-        return spawn;
+    public Boolean getNotSpawnedYet() {
+        return notSpawnedYet;
     }
 
     public TimeManager getTimeManager() {

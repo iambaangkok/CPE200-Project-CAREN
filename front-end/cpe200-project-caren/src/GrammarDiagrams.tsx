@@ -41,7 +41,7 @@ class GrammarDiagrams extends React.Component {
                         border:"5px",borderStyle:"", borderColor: Config.COLOR_BONEWHITE,borderRadius:"10px",
                     }}>
                         Grammar
-                        <p style={{
+                        <div style={{
                             backgroundColor: Config.COLOR_BONEWHITE,
                             fontFamily:"arial",
                             fontSize: "16px",
@@ -83,10 +83,10 @@ class GrammarDiagrams extends React.Component {
                             The following strings are reserved words and cannot be used as identifiers: <span style={{fontFamily:"monospace"}}>antibody, down, downleft, downright,<br/>
                             else, if, left, move, nearby, right, shoot, then, up, upleft, upright, virus, while</span>
 
-                        </p>
+                        </div>
 
                         Evaluation Order
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -96,10 +96,10 @@ class GrammarDiagrams extends React.Component {
                             <div>(collectively called hosts) are evaluated</div>
                             <div>in the order they enter your body.</div>
                             
-                        </p>
+                        </div>
 
                         Variables (Identifiers)
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -108,10 +108,10 @@ class GrammarDiagrams extends React.Component {
                             <div>All variables have initial value of 0.</div>
                             <div>Except "random" variable which always returns</div>
                             <div>a random integer between 0 and 99 (inclusive)</div>
-                        </p>
+                        </div>
 
                         Boolean Evaluation
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -123,10 +123,10 @@ class GrammarDiagrams extends React.Component {
                             <div>and negative values and zero are considered false.</div>
                             <div>_________</div>
                             <div>Also, while loop has a 100 loop count limit</div>
-                        </p>
+                        </div>
 
                         Furthur Studies
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -142,7 +142,7 @@ class GrammarDiagrams extends React.Component {
                             >
                                 This Documentation
                             </a>
-                        </p>
+                        </div>
 
                     </div>
                 </div>

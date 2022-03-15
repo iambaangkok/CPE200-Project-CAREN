@@ -3,7 +3,7 @@ package com.maikw.CPE200ProjectCAREN.apiclasses;
 import com.maikw.CPE200ProjectCAREN.Unit;
 
 public class ApiData_Unit extends ApiData_Base{
-    String name;
+    private String name;
 
     public String getUnitName() {
         return name;

@@ -1,10 +1,10 @@
 package com.maikw.CPE200ProjectCAREN.apiclasses;
 
 public class ApiData_AreaAndPosition extends ApiData_Base{
-    int area; // Area Number
-    String type;
-    double positionX;
-    double positionY;
+    private int area; // Area Number
+    private String type;
+    private double positionX;
+    private double positionY;
 
     public int getArea() { // Area Number
         return area;

@@ -1,7 +1,7 @@
 package com.maikw.CPE200ProjectCAREN.apiclasses;
 
 public class ApiData_BuyUnit extends ApiData_Base{
-    String type = "";
+    private String type = "";
 
     public String getType() {
         return type;

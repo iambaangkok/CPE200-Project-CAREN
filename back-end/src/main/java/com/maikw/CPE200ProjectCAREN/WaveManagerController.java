@@ -2,6 +2,7 @@ package com.maikw.CPE200ProjectCAREN;
 
 
 import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_Wave;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -9,11 +10,12 @@ import org.springframework.web.bind.annotation.*;
 public class WaveManagerController  {
     GameHandler gameHandler;
 
+    @Autowired
     public WaveManagerController(GameHandler gameHandler){
         this.gameHandler = gameHandler ;
 
     }
-
+    @CrossOrigin
     @PostMapping(path = "/getcurrentwave") //http://localhost:8080/waveManager/getcurrentwave
     public int getCurrentWave(@RequestBody ApiData_Wave data){
         Game game  = gameHandler.getGame(data);

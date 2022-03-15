@@ -3,16 +3,16 @@ package com.maikw.CPE200ProjectCAREN.apiclasses;
 import com.maikw.CPE200ProjectCAREN.Area;
 
 public class ApiData_AreaAndPosition extends ApiData_Base{
-    Area area;
+    int area; // Area Number
     String type;
     double PositionX;
     double PositionY;
 
-    public Area getArea() {
+    public int getArea() { // Area Number
         return area;
     }
 
-    public void setArea(Area area) {
+    public void setArea(int area) { // Area Number
         this.area = area;
     }
 

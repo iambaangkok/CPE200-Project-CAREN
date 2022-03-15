@@ -69,12 +69,22 @@ public class InventoryController {
     @CrossOrigin
     @PostMapping(path = "/pickupunit")
     public String pickupUnit(@RequestBody ApiData_AreaAndPosition data){
-        Area area = data.getArea();
+        int areaNumber = data.getArea();
         String type = data.getType();
         double positionX = data.getPositionX();
         double positionY = data.getPositionY();
-        Inventory inventory = gameHandler.getGame(data).getInventory();
+        Game game = gameHandler.getGame(data);
+        Inventory inventory = game.getInventory();
+        Area area = null;
+        if(areaNumber == 1){
+            area = game.getAreas().get(0);
+        }else if(areaNumber == 2){
+            area = game.getAreas().get(1);
+        }else if(areaNumber == 3){
+            area = game.getAreas().get(2);
+        }
 
+        assert area != null;
         if(area.canPlace(positionX, positionY)){
             Antibody ab = UnitFactory.createAntibody(type);
 

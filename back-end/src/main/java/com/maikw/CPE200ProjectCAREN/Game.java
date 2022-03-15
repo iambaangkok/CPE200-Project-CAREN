@@ -172,6 +172,7 @@ public class Game implements Runnable{
 
        @Override
        public void run(){
+            Config.readFile("");
             startGameLoop();
         }
 
@@ -189,7 +190,7 @@ public class Game implements Runnable{
                     System.out.println("current time "+(i*(int)(1000*timeManager.fastForwardMuliplier))/1000.0+ " second");
                 }
                 else{
-                    Thread.sleep((int)(1000));
+                    Thread.sleep((int)(1000*0.5));
                     System.out.println("current time "+i+ " second");
                 }
 

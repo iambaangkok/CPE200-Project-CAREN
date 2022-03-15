@@ -19,12 +19,15 @@ public class Game implements Runnable{
     protected List<Virus> queueVirusArea2 ;
     protected List<Virus> queueVirusArea3 ;
 
+    protected String startGameLoopS;
+    protected String startGameLoopM;
+    protected String startGameLoopF;
+
 
     public Game(){
         this.shop = new Shop();
         this.spawn = true ;
         this.areas = new ArrayList<Area>();
-
         this.timeManager = new TimeManager();
         this.inventory = new Inventory();
         this.waveManager = new WaveManager();
@@ -41,8 +44,8 @@ public class Game implements Runnable{
         areas.add(new Area("area3", queueVirusArea3));
 
         this.geneticCodeManager = new GeneticCodeManager();
-
-
+        
+        shop.setInventory(inventory);
     }
 
     public void startGameLoop(){
@@ -167,6 +170,7 @@ public class Game implements Runnable{
        public void run(){
             Game game = new Game();
             game.startGameLoop();
+
         }
 
 

@@ -441,6 +441,10 @@ public class Unit {
         return currentHealth;
     }
 
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = currentHealth;
+    }
+
     public int getMoveCost() {
         return moveCost;
     }

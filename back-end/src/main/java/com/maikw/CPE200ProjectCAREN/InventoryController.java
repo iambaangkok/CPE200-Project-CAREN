@@ -45,7 +45,10 @@ public class InventoryController {
                 }
             }
         }
-
+        if (unit.getUnitClass().equals("antibody")) {
+            unit.setToSpawn(false);
+            unit.setCurrentHealth(0);
+        }
         switch (unit.getType()) {
             case "melee" -> {
                 inventory.increaseMeleeCount();
@@ -60,11 +63,7 @@ public class InventoryController {
                 return "Store AOE Success";
             }
         }
-        if (unit.getUnitClass().equals("Antibody")) {
-            unit.setToSpawn(false);
-            Area area = unit.getArea();
-            area.removeAntibody((Antibody) unit);
-        }
+
         return "Unsuccessful something went wrong.";
     }
 

@@ -34,6 +34,13 @@ public class UnitTest {
 
     @Test
     void attackDirection() {
+        Antibody ab_melee = abs_melee[1];
+        Antibody ab_ranged = abs_ranged[1];
+        Antibody ab_aoe = abs_aoe[1];
+        Virus v_melee = vs_melee[1];
+        Virus v_ranged = vs_ranged[1];
+        Virus v_aoe = vs_aoe[1];
+
         // melee attack -> attack range = 10, dmg = 20
 
 
@@ -85,6 +92,10 @@ public class UnitTest {
         assertEquals(unit.getCurrentHealth(), unit.getMaxHealth() - 1); // check health (99)
         unit.takeDamage(50);
         assertEquals(unit.getCurrentHealth(), unit.getMaxHealth() - 51); // check helath (49)
+        unit.takeDamage(-999); // don't receive damage
+        assertEquals(unit.getCurrentHealth(), unit.getMaxHealth() - 51); // check helath (49)
+        unit.takeDamage(100); // unit is dead
+        assertFalse(unit.isAlive());
     }
 
     @Test
@@ -92,19 +103,63 @@ public class UnitTest {
     }
 
     @Test
-    void range() {
-    }
-
-    @Test
-    void getAngle() {
+    void range() { // formula is Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2))
+        // position of virus is always random so if we use method range() to find range it must equal this formula
+        Virus a = UnitFactory.createVirus("melee");
+        Virus b = UnitFactory.createVirus("ranged");
+        Virus c = UnitFactory.createVirus("aoe");
+        assertEquals(Unit.range(a, b), Math.sqrt(Math.pow((a.positionX - b.positionX),2) + Math.pow((a.positionY - b.positionY),2)));
+        assertEquals(Unit.range(a, c), Math.sqrt(Math.pow((a.positionX - c.positionX),2) + Math.pow((a.positionY - c.positionY),2)));
+        assertEquals(Unit.range(b, c), Math.sqrt(Math.pow((b.positionX - c.positionX),2) + Math.pow((b.positionY - c.positionY),2)));
     }
 
     @Test
     void directionValue() {
+        assertEquals(Unit.directionValue(85.346309,"up"), 1);
+        assertEquals(Unit.directionValue(90,"up"), 1);
+        assertEquals(Unit.directionValue(112.4999997,"up"), 1);
+
+        assertEquals(Unit.directionValue(25.23857903,"upright"), 2);
+        assertEquals(Unit.directionValue(45,"upright"), 2);
+        assertEquals(Unit.directionValue(67.49389239,"upright"), 2);
+
+        assertEquals(Unit.directionValue(360, "right"), 3);
+        assertEquals(Unit.directionValue(0, "right"), 3);
+        assertEquals(Unit.directionValue(22.436070, "right"), 3);
+        assertEquals(Unit.directionValue(359.304596, "right"), 3);
+
+        assertEquals(Unit.directionValue(292.5435623456,"downright"), 4);
+        assertEquals(Unit.directionValue(315,"downright"), 4);
+        assertEquals(Unit.directionValue(335.23500897,"downright"), 4);
+
+        assertEquals(Unit.directionValue(247.523412, "down"), 5);
+        assertEquals(Unit.directionValue(270, "down"), 5);
+        assertEquals(Unit.directionValue(292.23456028, "down"), 5);
+
+        assertEquals(Unit.directionValue(202.5134532, "downleft"), 6);
+        assertEquals(Unit.directionValue(225, "downleft"), 6);
+        assertEquals(Unit.directionValue(247.5, "downleft"), 6);
+
+        assertEquals(Unit.directionValue(159.4902, "left"), 7);
+        assertEquals(Unit.directionValue(180, "left"), 7);
+        assertEquals(Unit.directionValue(200.1354235, "left"), 7);
+
+        assertEquals(Unit.directionValue(112.5456 , "upleft"), 8);
+        assertEquals(Unit.directionValue(135, "upleft"), 8);
+        assertEquals(Unit.directionValue(150.2435, "upleft"), 8);
+
     }
 
     @Test
     void directionConverter() {
+        assertEquals(Unit.directionConverter("up"), 90);
+        assertEquals(Unit.directionConverter("upright"), 45);
+        assertEquals(Unit.directionConverter("right"), 0);
+        assertEquals(Unit.directionConverter("downright"), 315);
+        assertEquals(Unit.directionConverter("down"), 270);
+        assertEquals(Unit.directionConverter("downleft"), 225);
+        assertEquals(Unit.directionConverter("left"), 180);
+        assertEquals(Unit.directionConverter("upleft"), 135);
     }
 
     @Test
@@ -117,9 +172,14 @@ public class UnitTest {
 
     @Test
     void findClosestUnitDirection() {
+
     }
 
     @Test
     void isAlive() {
+        Unit unit = UnitFactory.createDummy("melee");
+        assertTrue(unit.isAlive()); // unit is alive
+        unit.takeDamage(150);
+        assertFalse(unit.isAlive()); // unit is dead
     }
 }

@@ -27,6 +27,7 @@ public class Game implements Runnable{
 
 
     public Game(){
+        Config.readFile("config/config_0.txt");
         this.shop = new Shop();
         this.notSpawnedYet = true ;
         this.areas = new ArrayList<Area>();
@@ -48,9 +49,7 @@ public class Game implements Runnable{
     }
 
     public void startGameLoop(){
-
-
-
+        waitState(5);
         waveManager.addVirus();
 
         while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
@@ -172,9 +171,6 @@ public class Game implements Runnable{
 
        @Override
        public void run(){
-
-           Config.readFile("config/config_0.txt");
-
             startGameLoop();
         }
 

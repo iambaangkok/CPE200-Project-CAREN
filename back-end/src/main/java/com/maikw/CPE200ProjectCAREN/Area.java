@@ -79,7 +79,6 @@ public class Area {
 
     public void removeAntibody(Antibody dummy){
         this.antibodies.remove(dummy);
-//        dummy.setArea(null);
     }
 
     // 3 level 0 = green light -> all good , 1 = yellow light -> antibodies:viruses = 1:3 , 2 = red light -> area taken
@@ -97,7 +96,7 @@ public class Area {
         Iterator<Unit> unitIterator = units.iterator();
         while(unitIterator.hasNext()){
             Unit unit = unitIterator.next();
-            if(unit.getCurrentHealth() > 0){
+            if(unit.isAlive()){
                 unit.setDidActionCommand(false);
                 unit.evaluate();
                 System.out.println(name);

@@ -93,7 +93,7 @@ public class Unit {
     }
 
     public void takeDamage(int dmg){
-        if(this.currentHealth <= dmg){
+        if(isAlive()){
             this.currentHealth = 0;
         }else{
             this.currentHealth -= dmg;
@@ -404,7 +404,7 @@ public class Unit {
     }
 
     public boolean isAlive(){
-        return currentHealth <= 0;
+        return currentHealth > 0;
     }
 
     public Map<String, Double> getVariables(){

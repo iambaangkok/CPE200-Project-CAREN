@@ -10,7 +10,7 @@ public class Shop {
 
     public Shop() {
         this.maxCredit = 9999;
-        this.currentCredit = 500;
+        this.currentCredit = 3500;
         this.meleePrice = 100;
         this.rangedPrice = 200;
         this.aoePrice = 250;

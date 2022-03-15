@@ -42,7 +42,7 @@ class UnitDiagrams extends React.Component {
                         border:"5px",borderStyle:"", borderColor: Config.COLOR_BONEWHITE,borderRadius:"10px",
                     }}>
                         Unit Types
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -56,10 +56,10 @@ class UnitDiagrams extends React.Component {
                             <br/>
                             <div>- AOE: low move speed, medium attack range,<br/> low health,also damages units near the unit that<br/> AOE shot at.</div>
                             
-                        </p>
+                        </div>
 
                         Genetic Code
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -74,10 +74,10 @@ class UnitDiagrams extends React.Component {
                             <div><span style={{color:Config.COLOR_BRIGHTRED}}>VIRUS</span> have a pre-determined GENETIC CODE but for</div>
                             <div><span style={{color:Config.COLOR_LIGHTBLUE}}>ANTIBODY</span>, you may write your own GENETIC CODE in </div>
                             <div>the next section.</div>
-                        </p>
+                        </div>
                         
                         ActionCommands
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -87,10 +87,10 @@ class UnitDiagrams extends React.Component {
                             <div>- <span style={{color:Config.COLOR_LIGHTBLUE}}>Move</span> in a direction </div>
                             <div>- <span style={{color:Config.COLOR_LIGHTBLUE}}>Shoot</span> in a direction </div>
                             <div>- <span style={{color:Config.COLOR_LIGHTBLUE}}>Stay</span> still (if none of the 2 above is executed) </div>
-                        </p>
+                        </div>
 
                         Shooting
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -101,10 +101,10 @@ class UnitDiagrams extends React.Component {
                             <div>regardless of whether that unit is friendly or not.</div>
                             <div>_________</div>
                             <div>In short, there is FRIENDLY FIRE.</div>
-                        </p>
+                        </div>
 
                         Moving
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -115,10 +115,10 @@ class UnitDiagrams extends React.Component {
                             <div>it moves there.</div>
                             <div>_________</div>
                             <div>In short, units can go OVER each other.</div>
-                        </p>
+                        </div>
 
                         Sensing
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -136,10 +136,10 @@ class UnitDiagrams extends React.Component {
                             <div>- nearest UNIT in a direction</div>
                             <div>Digit1 is the range.</div>
                             <div>Digit2 is the type: 1 for <span style={{color:Config.COLOR_BRIGHTRED}}>VIRUS</span>, 2 for <span style={{color:Config.COLOR_LIGHTBLUE}}>ANTIBODY</span>.</div>
-                        </p>
+                        </div>
 
                         Range 
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px"
@@ -148,11 +148,11 @@ class UnitDiagrams extends React.Component {
                             <div>Each range is represented by a number.</div>
                             <div>_________</div>
                             <div>Close - 1, Attack - 2, Detect - 3</div>
-                        </p>
+                        </div>
                         <img src={p_unitRange_diagram} style={{paddingBottom:"100px", paddingTop:"30px"}} alt=""></img>
 
                         Direction
-                        <p style={{
+                        <div style={{
                             fontSize: "24px",
                             color: Config.COLOR_BONEWHITE,
                             paddingLeft: "70px",
@@ -162,7 +162,7 @@ class UnitDiagrams extends React.Component {
                             <div>_________</div>
                             <div>Up - 1, UpRight - 2, Right - 3, DownRight - 4</div>
                             <div>Down - 5, DownLeft - 6, Left - 7, UpLeft - 8</div>
-                        </p>
+                        </div>
                         <img src={p_unitDirection_diagram} style={{paddingBottom:"100px", paddingTop:"30px"}} alt=""></img>
                     </div>
                 </div>

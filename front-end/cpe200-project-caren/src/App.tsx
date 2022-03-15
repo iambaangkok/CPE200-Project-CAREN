@@ -154,11 +154,12 @@ var t_clickAnywhereToStart : TextObject;
 /// FETCHABLE FIELDS
 var gameState : number = 1; // 1 = pregame, 2 = game
 var activeAreaIndex : number = 1; // 0 = none, 1 = area1, 2 = area2, 3 = area3
-var areas : {units : any[], viruses : any[], antibodies : any[], name : string, taken : boolean, alertLevel : 0 | 1 | 2}[] 
+var areas : {units : any[], viruses : any[], antibodies : any[],radius: number, name : string, taken : boolean, alertLevel : 0 | 1 | 2, }[] 
 = [	{
 		units: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}, {position : new Vector2(0,0), type: "aoe"}],
 		viruses: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}],
 		antibodies: [{position : new Vector2(0,0), type: "aoe"}],
+		radius: 100,
 		name: "gg",
 		taken: false,
 		alertLevel : 0
@@ -185,13 +186,13 @@ var currentWave : {
   };
 
 var inventory : {
-	melee : number,
-	ranged : number,	
-	aoe : number,
+	meleeCount : number,
+	rangedCount : number,	
+	aoeCount : number,
 } = {
-	melee : 0,
-	ranged : 0,
-	aoe : 0
+	meleeCount : 0,
+	rangedCount : 0,
+	aoeCount : 0
 };
 
 /// FIELDS
@@ -217,16 +218,16 @@ class App extends React.Component {
 	async componentDidMount() {
 		if(DEBUG) console.log("MOUNTED");
 		gameId = localStorage.getItem(Config.LOCALSTORAGE_KEY_GAMEID);
-		if(gameId === null){
+		if(gameId === null || gameId === undefined){
 			gameId = "";
 		}
 		GameController.checkId(gameId).then(data => {
 			console.log(data)
-			if(data != null){
+			if(data !== null){
 				gameId = data;
-				localStorage.setItem(Config.LOCALSTORAGE_KEY_GAMEID, gameId!);
+				localStorage.setItem(Config.LOCALSTORAGE_KEY_GAMEID, data!);
 				console.log("runGame");
-				GameController.runGame(gameId!);
+				GameController.runGame(data!);
 			}
 		});
 
@@ -344,9 +345,9 @@ class App extends React.Component {
 		i_invenIcon_ranged = new ImageObject(p_unitIcon_ranged_blank_blue, 1467, 516);
 		i_invenIcon_aoe = new ImageObject(p_unitIcon_aoe_blank_blue, 1472, 629);
 
-		t_inven_melee = new TextObject(['x' + inventory.melee.toString()], 20, "'Press Start 2P'", 1468, 438, Config.COLOR_LIGHTBLUE, "center");
-		t_inven_ranged = new TextObject(['x' + inventory.ranged.toString()], 20, "'Press Start 2P'", 1486, 561, Config.COLOR_LIGHTBLUE, "center");
-		t_inven_aoe = new TextObject(['x' + inventory.aoe.toString()], 20, "'Press Start 2P'", 1488, 676, Config.COLOR_LIGHTBLUE, "center");
+		t_inven_melee = new TextObject(['x' + inventory.meleeCount.toString()], 20, "'Press Start 2P'", 1468, 438, Config.COLOR_LIGHTBLUE, "center");
+		t_inven_ranged = new TextObject(['x' + inventory.rangedCount.toString()], 20, "'Press Start 2P'", 1486, 561, Config.COLOR_LIGHTBLUE, "center");
+		t_inven_aoe = new TextObject(['x' + inventory.aoeCount.toString()], 20, "'Press Start 2P'", 1488, 676, Config.COLOR_LIGHTBLUE, "center");
 
 
 		i_unitIcon_melee_blue = new ImageObject(p_unitIcon_melee_filled_blue, 0, 0); i_unitIcon_melee_blue.setAlign("center"); i_unitIcon_melee_blue.setBaseLine("middle");
@@ -452,9 +453,9 @@ class App extends React.Component {
 			b_buy_ranged.setDisabled(!(money >= buyRangedCost));
 			b_buy_aoe.setDisabled(!(money >= buyAoeCost));
 
-			t_inven_melee.setText(['x' + inventory.melee.toString()]);
-			t_inven_ranged.setText(['x' + inventory.ranged.toString()]);
-			t_inven_aoe.setText(['x' + inventory.aoe.toString()]);
+			t_inven_melee.setText(['x' + inventory.meleeCount.toString()]);
+			t_inven_ranged.setText(['x' + inventory.rangedCount.toString()]);
+			t_inven_aoe.setText(['x' + inventory.aoeCount.toString()]);
 
 			i_alertLight_top.setState(areas[0].alertLevel);
 			i_alertLight_middle.setState(areas[1].alertLevel);
@@ -662,18 +663,18 @@ function onMouseDown(e : MouseEvent){
 						if(DEBUG) console.log("CLICKED ON ANTI!!!!!!")
 						GameController.pickUpUnit(gameId!,detect);
 					}
-					else if(b_invenButton_top.isClicked() && inventory.melee > 0){
+					else if(b_invenButton_top.isClicked() && inventory.meleeCount > 0){
 						if(DEBUG) console.log("PLACE MELEE")
 						GameController.placeUnit(gameId!,"melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
-						inventory.melee -= 1;
-					}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
+						inventory.meleeCount -= 1;
+					}else if(b_invenButton_middle.isClicked() && inventory.rangedCount > 0){
 						if(DEBUG) console.log("PLACE RANGED")
 						GameController.placeUnit(gameId!,"ranged", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
-						inventory.ranged -= 1;
-					}else if(b_invenButton_bottom.isClicked() && inventory.aoe > 0){
+						inventory.rangedCount -= 1;
+					}else if(b_invenButton_bottom.isClicked() && inventory.aoeCount > 0){
 						if(DEBUG) console.log("PLACE AOE")
 						GameController.placeUnit(gameId!,"aoe", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
-						inventory.aoe -= 1;
+						inventory.aoeCount -= 1;
 					}
 				}
 			}
@@ -864,7 +865,7 @@ function mouseInScannerRadius(){
 }
 
 function inScannerRadius(scannerPos : Vector2){
-	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerPos) <= Config.SCANNER_RADIUS;
+	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerPos) <= Config.SCANNER_RADIUS+200;
 }
 
 

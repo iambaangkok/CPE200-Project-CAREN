@@ -13,17 +13,17 @@ import com.maikw.CPE200ProjectCAREN.behavior_evaluator.nodes.Node;
 @JsonIgnoreProperties(value = { "programNode", "variables", "area" })
 public class Unit {
 
-    protected double positionX = 0.0;
-    protected double positionY = 0.0;
+    protected double positionX;
+    protected double positionY;
     protected int maxHealth = 100;
     protected int currentHealth = 100;
     protected int moveCost = 20;
     protected int moveSpeed;
     protected int attackDamage;
-    protected double detectRange;
-    protected double attackRange;
-    protected double aoeRadius;
-    protected double dangerRange;
+    protected int detectRange;
+    protected int attackRange;
+    protected int aoeRadius;
+    protected int dangerRange;
     protected int lifeSteal = 10;
     protected String type;
     protected String name;
@@ -41,24 +41,6 @@ public class Unit {
         this.detectRange = 100;
         this.dangerRange = 5;
         this.aoeRadius = 0;
-        switch (type) {
-            case "melee" -> {
-                this.attackDamage = 20;
-                this.attackRange = 10;
-                this.moveSpeed = 3;
-            }
-            case "ranged" -> {
-                this.attackDamage = 20;
-                this.attackRange = 30;
-                this.moveSpeed = 2;
-            }
-            case "aoe" -> {
-                this.attackDamage = 15;
-                this.attackRange = 20;
-                this.aoeRadius = 5;
-                this.moveSpeed = 1;
-            }
-        }
         BehaviorEvaluator be = new BehaviorEvaluator(geneticCode,this);
         try{
             programNode = be.parseProgram();

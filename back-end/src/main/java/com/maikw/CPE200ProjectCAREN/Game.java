@@ -107,31 +107,37 @@ public class Game implements Runnable{
             // loop check if virus dead in area1
             for(Virus vs : areas.get(0).getViruses()){
                 if(!vs.isAlive()){
+                    System.out.println("Name : " + vs.getName() + " is dead");
                     if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
                         this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
                     }else{
                         this.shop.setCurrentCredit(this.shop.getMaxCredit());
                     }
+                    System.out.println("Current Credit : " + this.shop.getCurrentCredit());
                 }
             }
             // loop check if virus dead in area2
             for(Virus vs : areas.get(1).getViruses()){
                 if(!vs.isAlive()){
+                    System.out.println("Name : " + vs.getName() + " is dead");
                     if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
                         this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
                     }else{
                         this.shop.setCurrentCredit(this.shop.getMaxCredit());
                     }
+                    System.out.println("Current Credit : " + this.shop.getCurrentCredit());
                 }
             }
             // loop check if virus dead in area3
             for(Virus vs : areas.get(2).getViruses()){
                 if(!vs.isAlive()){
+                    System.out.println("Name : " + vs.getName() + " is dead");
                     if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
                         this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
                     }else{
                         this.shop.setCurrentCredit(this.shop.getMaxCredit());
                     }
+                    System.out.println("Current Credit : " + this.shop.getCurrentCredit());
                 }
             }
 

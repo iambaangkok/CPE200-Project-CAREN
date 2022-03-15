@@ -3,13 +3,13 @@ package com.maikw.CPE200ProjectCAREN.apiclasses;
 import com.maikw.CPE200ProjectCAREN.Unit;
 
 public class ApiData_Unit extends ApiData_Base{
-    Unit unit = null;
+    String name;
 
-    public Unit getUnit() {
-        return unit;
+    public String getUnitName() {
+        return name;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setUnit(String name) {
+        this.name = name;
     }
 }

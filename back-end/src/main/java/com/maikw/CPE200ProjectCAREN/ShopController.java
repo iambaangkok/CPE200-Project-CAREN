@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/shop") // http://localhost:8080/shop
 public class ShopController {
-    GameHandler gameHandler;
+    private final GameHandler gameHandler;
 
     @Autowired
     public ShopController(GameHandler gameHandler){

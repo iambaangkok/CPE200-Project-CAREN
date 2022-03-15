@@ -37,12 +37,10 @@ public class GameHandler {
             }else{
                 Random random = new Random(10000);
                 id = Integer.toString(random.nextInt());
-                if(map.containsKey(id)){
+                while (map.containsKey(id)){
                     id = Integer.toString(random.nextInt());
-                    return id ;
-                }else{
-                    return id ;
                 }
+                return id ;
             }
         }
         return id;

@@ -25,18 +25,23 @@ public class UnitFactory {
     }
 
     public static Antibody createAntibody(String type, GeneticCodeManager gm){
+        String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt");
+
         Antibody ab;
         switch (type) {
             case "melee" -> {
-                String g = gm.getAntibodyMelee();
+                if(gm.getAntibodyMelee().length() > 0)
+                    g = gm.getAntibodyMelee();
                 ab = new Antibody("antibody_melee" + count, type, g);
             }
             case "ranged" -> {
-                String g = gm.getAntibodyRanged();
+                if(gm.getAntibodyRanged().length() > 0)
+                    g = gm.getAntibodyRanged();
                 ab = new Antibody("antibody_ranged" + count, type, g);
             }
             case "aoe" -> {
-                String g = gm.getAntibodyAOE();
+                if(gm.getAntibodyAOE().length() > 0)
+                    g = gm.getAntibodyAOE();
                 ab =  new Antibody("antibody_aoe" + count, type, g);
             }
             default -> throw new IllegalStateException("Unexpected value: " + type);

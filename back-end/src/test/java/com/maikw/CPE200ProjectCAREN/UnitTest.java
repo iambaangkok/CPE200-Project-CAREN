@@ -115,38 +115,47 @@ public class UnitTest {
 
     @Test
     void directionValue() {
-        assertEquals(Unit.directionValue(85.346309,"up"), 1);
-        assertEquals(Unit.directionValue(90,"up"), 1);
-        assertEquals(Unit.directionValue(112.4999997,"up"), 1);
+        assertEquals(Unit.directionValue(85.346309,""), 1);
+        assertEquals(Unit.directionValue(90,""), 1);
+        assertEquals(Unit.directionValue(112.4999997,""), 1);
 
-        assertEquals(Unit.directionValue(25.23857903,"upright"), 2);
-        assertEquals(Unit.directionValue(45,"upright"), 2);
-        assertEquals(Unit.directionValue(67.49389239,"upright"), 2);
+        assertEquals(Unit.directionValue(25.23857903,""), 2);
+        assertEquals(Unit.directionValue(45,""), 2);
+        assertEquals(Unit.directionValue(67.49389239,""), 2);
 
-        assertEquals(Unit.directionValue(360, "right"), 3);
+        assertEquals(Unit.directionValue(360, ""), 3);
+        assertEquals(Unit.directionValue(0, ""), 3);
+        assertEquals(Unit.directionValue(22.436070, ""), 3);
+        assertEquals(Unit.directionValue(359.304596, ""), 3);
+
+        assertEquals(Unit.directionValue(292.5435623456,""), 4);
+        assertEquals(Unit.directionValue(315,""), 4);
+        assertEquals(Unit.directionValue(335.23500897,""), 4);
+
+        assertEquals(Unit.directionValue(247.623412, ""), 5);
+        assertEquals(Unit.directionValue(270, ""), 5);
+        assertEquals(Unit.directionValue(292.23456028, ""), 5);
+
+        assertEquals(Unit.directionValue(202.6134532, ""), 6);
+        assertEquals(Unit.directionValue(225, ""), 6);
+        assertEquals(Unit.directionValue(247.49586, ""), 6);
+
+        assertEquals(Unit.directionValue(159.4902, ""), 7);
+        assertEquals(Unit.directionValue(180, ""), 7);
+        assertEquals(Unit.directionValue(200.1354235, ""), 7);
+
+        assertEquals(Unit.directionValue(112.5456 , ""), 8);
+        assertEquals(Unit.directionValue(135, ""), 8);
+        assertEquals(Unit.directionValue(150.2435, ""), 8);
+
+        assertEquals(Unit.directionValue(0, "up"), 1);
+        assertEquals(Unit.directionValue(0, "upright"), 2);
         assertEquals(Unit.directionValue(0, "right"), 3);
-        assertEquals(Unit.directionValue(22.436070, "right"), 3);
-        assertEquals(Unit.directionValue(359.304596, "right"), 3);
-
-        assertEquals(Unit.directionValue(292.5435623456,"downright"), 4);
-        assertEquals(Unit.directionValue(315,"downright"), 4);
-        assertEquals(Unit.directionValue(335.23500897,"downright"), 4);
-
-        assertEquals(Unit.directionValue(247.523412, "down"), 5);
-        assertEquals(Unit.directionValue(270, "down"), 5);
-        assertEquals(Unit.directionValue(292.23456028, "down"), 5);
-
-        assertEquals(Unit.directionValue(202.5134532, "downleft"), 6);
-        assertEquals(Unit.directionValue(225, "downleft"), 6);
-        assertEquals(Unit.directionValue(247.5, "downleft"), 6);
-
-        assertEquals(Unit.directionValue(159.4902, "left"), 7);
-        assertEquals(Unit.directionValue(180, "left"), 7);
-        assertEquals(Unit.directionValue(200.1354235, "left"), 7);
-
-        assertEquals(Unit.directionValue(112.5456 , "upleft"), 8);
-        assertEquals(Unit.directionValue(135, "upleft"), 8);
-        assertEquals(Unit.directionValue(150.2435, "upleft"), 8);
+        assertEquals(Unit.directionValue(0, "downright"), 4);
+        assertEquals(Unit.directionValue(0, "down"), 5);
+        assertEquals(Unit.directionValue(0, "downleft"), 6);
+        assertEquals(Unit.directionValue(0, "left"), 7);
+        assertEquals(Unit.directionValue(0, "upleft"), 8);
 
     }
 

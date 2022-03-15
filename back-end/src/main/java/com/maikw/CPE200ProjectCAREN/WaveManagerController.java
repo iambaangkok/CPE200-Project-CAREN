@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/waveManager") // http://localhost:8080/waveManager
+@RequestMapping(path = "/wavemanager") // http://localhost:8080/waveManager
 public class WaveManagerController {
     GameHandler gameHandler;
 

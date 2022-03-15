@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/TimeManager") // http://localhost:8080/TimeManager
+@RequestMapping(path = "/timemanager") // http://localhost:8080/TimeManager
 
 public class TimeController{
      TimeManager timeManager = new TimeManager();

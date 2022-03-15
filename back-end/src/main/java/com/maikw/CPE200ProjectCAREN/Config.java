@@ -27,16 +27,51 @@ public class Config {
     public static int lifeSteal;
     public static int creditReward;
     public static int meleeAttackRange;
-    public static int ragnedAttackRange;
+    public static int rangedAttackRange;
     public static int aoeAttackRange;
     public static int meleeMoveSpeed;
-    public static int ragnedMoveSpeed;
+    public static int rangedMoveSpeed;
     public static int aoeMoveSpeed;
 
     public static void readFile(String path){
         try (FileReader fr = new FileReader(path);
              Scanner s = new Scanner(fr)) {
+            radius = s.nextInt(); // set radius
             int n = s.nextInt();
+            maxWave = n; // set maxWave
+            meleeCountPerWave = new int[n]; // set meleeCountPerWave
+            for(int i = 0 ; i < n ; i++){ // set meleeCount to every wave
+                meleeCountPerWave[i] = s.nextInt();
+            }
+            rangedCountPerWave = new int[n]; // set rangedCountPerWave
+            for(int i = 0 ; i < n ; i++){ // set rangedCount to every wave
+                rangedCountPerWave[i] = s.nextInt();
+            }
+            aoeCountPerWave = new int[n]; // set aoeCountPerWave
+            for(int i = 0 ; i < n ; i++){ // set aoeCount to every wave
+                aoeCountPerWave[i] = s.nextInt();
+            }
+            startCredit = s.nextInt(); // set startCredit
+            meleePrice = s.nextInt(); // set meleePrice
+            rangedPrice = s.nextInt(); // set rangedPrice
+            aoePrice = s.nextInt(); // set aoePrice
+            moveCost = s.nextInt(); // set moveCost
+            antibodyHealth = s.nextInt(); // set antibodyHealth
+            virusHealth = s.nextInt(); // set virusHealth
+            antibodyMeleeDamage = s.nextInt(); // set antibodyMeleeDamage
+            antibodyRangedDamage = s.nextInt(); // set antibodyRangedDamage
+            antibodyAoeDamage = s.nextInt(); // set antibodyAoeDamage
+            virusMeleeDamage = s.nextInt(); // set virusMeleeDamage
+            virusRangedDamage = s.nextInt(); // set virusRangedDamage
+            virusAoeDamage = s.nextInt(); // set virusAoeDamage
+            lifeSteal = s.nextInt(); // set lifeSteal
+            creditReward = s.nextInt(); // set creditReward
+            meleeAttackRange = s.nextInt(); // set meleeAttackRange
+            rangedAttackRange = s.nextInt(); // set rangedAttackRange
+            aoeAttackRange = s.nextInt(); // set aoeAttackRange
+            meleeMoveSpeed = s.nextInt(); // set meleeMoveSpeed
+            rangedMoveSpeed = s.nextInt(); // set rangedMoveSpeed
+            aoeMoveSpeed = s.nextInt(); // set aoeMoveSpeed
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();

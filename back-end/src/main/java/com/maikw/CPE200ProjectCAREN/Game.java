@@ -10,14 +10,11 @@ import java.util.Queue;
 public class Game implements Runnable{
     protected Integer state  = 1 ;
     protected Boolean spawn ;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว
-    protected Integer screenWidth  = 1024 ;
-    protected Integer screenHeight = 768 ;
     protected TimeManager timeManager ;
     protected Inventory inventory ;
     protected List<Area> areas;
     protected WaveManager waveManager ;
     protected Shop shop ;
-    protected Unit unit;
     protected GeneticCodeManager geneticCodeManager;
     protected List<Antibody> queueAntibobyArea1 ;
     protected List<Antibody> queueAntibobyArea2 ;
@@ -208,4 +205,52 @@ public class Game implements Runnable{
     }
 
     public GeneticCodeManager getGeneticCodeManager(){ return geneticCodeManager; }
+
+    public Boolean getSpawn() {
+        return spawn;
+    }
+
+    public TimeManager getTimeManager() {
+        return timeManager;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public List<Area> getAreas() {
+        return areas;
+    }
+
+    public WaveManager getWaveManager() {
+        return waveManager;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public List<Antibody> getQueueAntibobyArea1() {
+        return queueAntibobyArea1;
+    }
+
+    public List<Antibody> getQueueAntibobyArea2() {
+        return queueAntibobyArea2;
+    }
+
+    public List<Antibody> getQueueAntibobyArea3() {
+        return queueAntibobyArea3;
+    }
+
+    public List<Virus> getQueueVirusArea1() {
+        return queueVirusArea1;
+    }
+
+    public List<Virus> getQueueVirusArea2() {
+        return queueVirusArea2;
+    }
+
+    public List<Virus> getQueueVirusArea3() {
+        return queueVirusArea3;
+    }
 }

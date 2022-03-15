@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/game") // http://localhost:8080/game
 public class GameController {
-    GameHandler gameHandler;
+    private final GameHandler gameHandler;
 
     @Autowired
     GameController(GameHandler gameHandler){

@@ -8,11 +8,14 @@ const DEBUG = Config.DEBUG;
 class GameController {
 
   static async uploadGeneticCode(id : string, type : "melee" | "ranged" | "aoe"){
-    var textBox : Element | null;
-    var gCode : string | null | undefined;
+    var textBox : HTMLTextAreaElement | null;
+    var geneticCode : string | null | undefined;
 
-    textBox = document.querySelector(`#${type}GeneticCode`);
-    gCode = textBox?.textContent;
+    textBox = document.getElementById(`${type}GeneticCode`) as HTMLTextAreaElement;
+    geneticCode = textBox?.value;
+
+    console.log(textBox)
+    console.log(textBox.value)
 
     var resp = await axios({
       method: 'post',
@@ -21,16 +24,21 @@ class GameController {
       data: {
         id: id,
         type: type,
-        geneticCode: gCode,
+        geneticCode: geneticCode,
       }
     });
+
+    console.log("post response");
 
     if(resp.data.compiledResult === "success"){
       alert(`saved succesfully`)
     } else{
       alert(`there are error(s) in the genetic code at token ${resp.data.errorToken}`)
     }
-    return resp.data.compiledResult;
+
+    resp.data.geneticCode = geneticCode;
+
+    return resp.data;
   }
 
   static async checkId(id : string){

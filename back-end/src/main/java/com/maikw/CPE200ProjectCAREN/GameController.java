@@ -38,8 +38,9 @@ public class GameController {
     @PostMapping(path = "/uploadgeneticcode")
     public ApiData_GeneticCodeReturnData uploadGeneticCode(@RequestBody ApiData_GeneticCodeUpload data){
         System.out.println(data.getId() + " " + data.getType() + " " +data.getGeneticCode());
-
-        Game game = gameHandler.getGame(data);
+        ApiData_Base data2 = new ApiData_Base();
+        data2.setId(data.getId());
+        Game game = gameHandler.getGame(data2);
         ApiData_GeneticCodeReturnData result = new ApiData_GeneticCodeReturnData();
 
         String type = data.getType();

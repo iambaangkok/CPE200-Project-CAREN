@@ -1,10 +1,15 @@
 import React from 'react';
 import './App.css';
 import Config from './Config';
+import GameController from './controllers/GameController';
 
 import p_gCode from './images/gCodes_banner.png';
 
 /////////////////////////////////////////////
+
+var meleeGCode : string = Config.DEFAULTGENETICCODE_MELEE;
+var rangedGCode : string = Config.DEFAULTGENETICCODE_MELEE;
+var aoeGCode : string = Config.DEFAULTGENETICCODE_MELEE;
 
 const DEBUG = Config.DEBUG;
 
@@ -40,7 +45,11 @@ class GeneticCodeInput extends React.Component {
                         border:"5px",borderStyle:"", borderColor: Config.COLOR_BONEWHITE,borderRadius:"10px",
                     }}>
                         ANTIBODY - MELEE Genetic Code <br></br>
-                        <input type="button" value={"Save"}
+                        <input type="button" value={"Save"} 
+                            onClick={() => {GameController.uploadGeneticCode(localStorage.getItem(Config.LOCALSTORAGE_KEY_GAMEID)!, "melee").then(
+                                data => {meleeGCode = data.geneticCode;}
+                            );
+                        }}
                             style={{
                                 fontSize:"20px", fontFamily:"monospace",
                                 color:Config.COLOR_MIDNIGHTBLACK,
@@ -49,16 +58,26 @@ class GeneticCodeInput extends React.Component {
                             }}></input>
                         <div>
                             <textarea id="meleeGeneticCode" className="textarea"
+                                onChange={() => {
+                                    var ta = document.getElementById("meleeGeneticCode") as HTMLTextAreaElement;
+                                    if(ta?.value){
+                                        meleeGCode = ta?.value;
+                                    }
+                                }}
                                 style={{
                                     fontSize:"16px", fontFamily:"monospace",
                                     color:Config.COLOR_MIDNIGHTBLACK,
                                     padding:"10px",
                                     overflowY: "scroll",
-                            }}  defaultValue={Config.DEFAULTGENETICCODE_MELEE}
+                            }}  defaultValue={meleeGCode}
                             ></textarea>
                         </div> <br></br>
                         ANTIBODY - RANGED Genetic Code <br></br>
                         <input type="button" value={"Save"}
+                            onClick={() => {GameController.uploadGeneticCode(localStorage.getItem(Config.LOCALSTORAGE_KEY_GAMEID)!, "ranged").then(
+                                data => {rangedGCode = data.geneticCode;}
+                            );
+                        }}
                             style={{
                                 fontSize:"20px", fontFamily:"monospace",
                                 color:Config.COLOR_MIDNIGHTBLACK,
@@ -67,17 +86,28 @@ class GeneticCodeInput extends React.Component {
                             }}></input>
                         <div>
                             <textarea id="rangedGeneticCode" className="textarea"
+                                onChange={() => {
+                                    var ta = document.getElementById("rangedGeneticCode") as HTMLTextAreaElement;
+                                    if(ta?.value){
+                                        meleeGCode = ta?.value;
+                                    }
+                                }}
                                 style={{
                                     fontSize:"16px", fontFamily:"monospace",
                                     color:Config.COLOR_MIDNIGHTBLACK,
                                     padding:"10px",
                                     overflowY: "scroll",
-                            }}  defaultValue={Config.DEFAULTGENETICCODE_MELEE}
+                            }}  defaultValue={rangedGCode}
                             ></textarea>
 
                         </div> <br></br>
                         ANTIBODY - AOE Genetic Code <br></br>
                         <input type="button" value={"Save"}
+                            onClick={() => {
+                                GameController.uploadGeneticCode(localStorage.getItem(Config.LOCALSTORAGE_KEY_GAMEID)!, "aoe").then(
+                                    data => {aoeGCode = data.geneticCode;}
+                                );
+                            }}
                             style={{
                                 fontSize:"20px", fontFamily:"monospace",
                                 color:Config.COLOR_MIDNIGHTBLACK,
@@ -86,14 +116,19 @@ class GeneticCodeInput extends React.Component {
                             }}></input>
                         <div>
                             <textarea id="aoeGeneticCode"className="textarea"
+                                onChange={() => {
+                                    var ta = document.getElementById("aoeGeneticCode") as HTMLTextAreaElement;
+                                    if(ta?.value){
+                                        meleeGCode = ta?.value;
+                                    }
+                                }}
                                 style={{
                                     fontSize:"16px", fontFamily:"monospace",
                                     color:Config.COLOR_MIDNIGHTBLACK,
                                     padding:"10px",
                                     overflowY: "scroll",
-                            }}  defaultValue={Config.DEFAULTGENETICCODE_MELEE}
+                            }}  defaultValue={aoeGCode}
                             ></textarea>
-
                         </div>
                     </div>
                 </div>

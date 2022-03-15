@@ -1,6 +1,7 @@
 package com.maikw.CPE200ProjectCAREN;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Game implements Runnable{
@@ -105,41 +106,24 @@ public class Game implements Runnable{
 
 
             // loop check if virus dead in area1
-            for(Virus vs : areas.get(0).getViruses()){
-                if(!vs.isAlive()){
-                    System.out.println("Name : " + vs.getName() + " is dead");
-                    if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
-                        this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
-                    }else{
-                        this.shop.setCurrentCredit(this.shop.getMaxCredit());
+            for(int i = 0 ; i < 3; ++i){
+                Iterator<Virus> vsIterator = areas.get(i).getViruses().iterator();
+                while(vsIterator.hasNext()){
+                    Virus vs = vsIterator.next();
+                    if(!vs.isAlive()){
+                        System.out.println("Name : " + vs.getName() + " is dead");
+                        if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
+                            this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
+                        }else{
+                            this.shop.setCurrentCredit(this.shop.getMaxCredit());
+                        }
+                        System.out.println("Current Credit : " + this.shop.getCurrentCredit());
+                        vsIterator.remove();
+                        areas.get(i).removeVirus(vs);
                     }
-                    System.out.println("Current Credit : " + this.shop.getCurrentCredit());
                 }
             }
-            // loop check if virus dead in area2
-            for(Virus vs : areas.get(1).getViruses()){
-                if(!vs.isAlive()){
-                    System.out.println("Name : " + vs.getName() + " is dead");
-                    if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
-                        this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
-                    }else{
-                        this.shop.setCurrentCredit(this.shop.getMaxCredit());
-                    }
-                    System.out.println("Current Credit : " + this.shop.getCurrentCredit());
-                }
-            }
-            // loop check if virus dead in area3
-            for(Virus vs : areas.get(2).getViruses()){
-                if(!vs.isAlive()){
-                    System.out.println("Name : " + vs.getName() + " is dead");
-                    if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
-                        this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
-                    }else{
-                        this.shop.setCurrentCredit(this.shop.getMaxCredit());
-                    }
-                    System.out.println("Current Credit : " + this.shop.getCurrentCredit());
-                }
-            }
+
 
             // คำสั่งเดินของ Unit ในแต่ละ area
             areas.get(0).evaluate();

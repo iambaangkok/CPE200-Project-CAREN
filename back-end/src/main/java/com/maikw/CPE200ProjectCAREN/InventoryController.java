@@ -30,7 +30,7 @@ public class InventoryController {
         Area area1 = gameHandler.getGame(data).getAreas().get(0);
         Area area2 = gameHandler.getGame(data).getAreas().get(1);
         Area area3 = gameHandler.getGame(data).getAreas().get(2);
-        String name = data.getUnitName();
+        String name = data.getName();
         Unit unit = null;
         for(Unit u : area1.getUnits()){
             if(u.getName().equals(name)) unit = u;

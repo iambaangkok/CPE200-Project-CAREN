@@ -50,6 +50,9 @@ public class WaveManagerController {
         result.setArea1(area1);
         result.setArea2(area2);
         result.setArea3(area3);
+
+        result.setWaveNumber(game.getWaveManager().getCurrentWaveCount());
+
         return result;
     }
 

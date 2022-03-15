@@ -60,8 +60,10 @@ public class InventoryController {
                 return "Store AOE Success";
             }
         }
-        switch (unit.getUnitClass()){
-            case "Antibody" -> unit.setToSpawn(false);
+        if (unit.getUnitClass().equals("Antibody")) {
+            unit.setToSpawn(false);
+            Area area = unit.getArea();
+            area.removeAntibody((Antibody) unit);
         }
         return "Unsuccessful something went wrong.";
     }

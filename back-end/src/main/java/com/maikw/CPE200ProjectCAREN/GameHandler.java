@@ -30,25 +30,25 @@ public class GameHandler {
     @PostMapping(path = "/checkid") // http://localhost:8080/gamehandler/checkid
     public String checkId(@RequestBody ApiData_Base data){
         String id = data.getId();
-        for(String ID : map.keySet()){
-            if(id.equals(ID)){
-                System.out.println("You have id na");
-                break;
-            }else{
-                Random random = new Random(10000);
+
+        if(map.containsKey(id)){
+            System.out.println("This id [" + id + "] already exist.");
+        }else{
+            Random random = new Random(10000);
+            id = Integer.toString(random.nextInt());
+            System.out.println("id = " + id);
+            while (map.containsKey(id)){
+                System.out.println("id = " + id);
                 id = Integer.toString(random.nextInt());
-                while (map.containsKey(id)){
-                    id = Integer.toString(random.nextInt());
-                }
-                return id ;
             }
+            return id ;
         }
         return id;
     }
 
 
     @CrossOrigin
-    @PostMapping(path = "/runGame") // http://localhost:8080/gamehandler/runGame
+    @PostMapping(path = "/rungame") // http://localhost:8080/gamehandler/runGame
     public void runGame(@RequestBody ApiData_Base data ){
         String id = data.getId();
         if (!map.containsKey(id)) {
@@ -56,9 +56,23 @@ public class GameHandler {
             gameMap.put(id, game);
             map.put(id, new Thread(game));
         }
-        if(!map.get(id).isAlive()){
-            map.get(id).start();
+        Thread.State tState = map.get(id).getState();
+        System.out.println("thread state : " + tState);
+        if(tState.equals(Thread.State.NEW)){
+            System.out.println("thread NEW, running new thread");
             map.get(id).setDaemon(true);
+            map.get(id).start();
+        }else if(tState.equals(Thread.State.TERMINATED)){
+            System.out.println("thread terminated, creating new thread");
+            map.remove(id);
+            gameMap.remove(id);
+
+            Game game = new Game();
+            gameMap.put(id, game);
+            map.put(id, new Thread(game));
+
+            map.get(id).setDaemon(true);
+            map.get(id).start();
         }
     }
 

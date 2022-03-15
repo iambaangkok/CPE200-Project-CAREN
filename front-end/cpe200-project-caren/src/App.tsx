@@ -166,6 +166,7 @@ var areas : {units : any[], viruses : any[], antibodies : any[], name : string, 
 ]; // area datas
 var scannerRadius : number = 100; 
 
+var shop;
 var money : number = 0;
 var buyMeleeCost : number = 0;
 var buyRangedCost : number = 0;
@@ -200,11 +201,10 @@ var scannerMousePosition : Vector2;
 var gameTime = 0;
 var frameTime = 1000/Config.FPS;
 
-var clientKey : string | null;
-
 var zoomPosition : Vector2 = {x:0,y:0} as Vector2;
 var zoomScale : number = 1;
 
+var gameId : string | null = "";
 
 
 const DEBUG = Config.DEBUG;
@@ -214,19 +214,27 @@ if(DEBUG) console.log("top");
 class App extends React.Component {
 	interval: NodeJS.Timer | undefined;
 	
-	componentDidMount() {
+	async componentDidMount() {
 		if(DEBUG) console.log("MOUNTED");
-		clientKey = localStorage.getItem(Config.LOCALSTORAGE_KEY);
-		if(clientKey === null){
-			clientKey = "no_local_storage";
-			GameController.connectGame(clientKey).then(data => {clientKey = data});
+		gameId = localStorage.getItem(Config.LOCALSTORAGE_KEY_GAMEID);
+		if(gameId === null){
+			gameId = "";
 		}
+		GameController.checkId(gameId).then(data => {
+			console.log(data)
+			if(data != null){
+				gameId = data;
+				localStorage.setItem(Config.LOCALSTORAGE_KEY_GAMEID, gameId!);
+				console.log("runGame");
+				GameController.runGame(gameId!);
+			}
+		});
 
 		this.interval = setInterval(() => this.setState({ time: Date.now() }), frameTime);
 		
 		this.initAll();
-		this.fetchInit();
-		this.fetchAll();
+		await this.fetchInit();
+		await this.fetchAll();
 		this.updateAll();
 	}
 
@@ -373,12 +381,13 @@ class App extends React.Component {
 		t_clickAnywhereToStart = new TextObject(["CLICK ANYWHERE TO START"], 24, "'Press Start 2P'", 112, 904)
 	}
 
-	fetchInit(){
+	async fetchInit(){
 		if(DEBUG) console.log("FETCHINIT")
-		GameController.getUnitCost().then(data => {
-			buyMeleeCost = data.melee;
-			buyRangedCost = data.ranged;
-			buyAoeCost = data.aoe;
+		await GameController.getShop(gameId!).then(data => {
+			shop = data;
+			buyMeleeCost = data.meleePrice;
+			buyRangedCost = data.rangedPrice;
+			buyAoeCost = data.aoePrice;
 
 			t_buy_melee_cost = new TextObject([buyMeleeCost.toString()], 20, "'Press Start 2P'", 1801, 248, Config.COLOR_LIGHTBLUE, "start");
 			t_buy_ranged_cost = new TextObject([buyRangedCost.toString()], 20, "'Press Start 2P'", 1801, 372, Config.COLOR_LIGHTBLUE, "start");
@@ -388,12 +397,15 @@ class App extends React.Component {
 
 	fetchAll(){
 		if(DEBUG) console.log("FETCHALL")
-		GameController.getGameState().then(data => gameState = data);
+		GameController.getGameState(gameId!).then(data => gameState = data);
 
-		GameController.getMoney().then(data => money = data);
+		GameController.getShop(gameId!).then(data => {
+			shop = data;
+			money = shop.currentCredit;
+		});
 
 		if(gameState === 2)
-		GameController.getWave().then(data => {
+		GameController.getWave(gameId!).then(data => {
 			currentWave = data;
 			waveInfo_brain.setAllField(currentWave.area1);
 			waveInfo_heart.setAllField(currentWave.area2);
@@ -401,7 +413,7 @@ class App extends React.Component {
 			t_wave_text.setText(["WAVE " + currentWave.waveNumber.toString() + "/" + Config.MAX_WAVE.toString()]);
 		});
 
-		GameController.getSpeedMultiplier().then(data => {
+		GameController.getSpeedMultiplier(gameId!).then(data => {
 			b_time_pause.setClicked(data.type === "pause");
 			b_time_play.setClicked(data.type === "play");
 			b_time_fastforward.setClicked(data.type === "fastforward");
@@ -409,13 +421,13 @@ class App extends React.Component {
 		});
 
 		for(let i = 0 ; i < 3; ++i){
-			GameController.getArea(i+1).then(data => {
+			GameController.getArea(gameId!,i+1).then(data => {
 				areas[i] = data;
 				if(DEBUG) console.log(areas[i]);
 			});
 		}
 
-		GameController.getInventory().then(data => {
+		GameController.getInventory(gameId!).then(data => {
 			inventory = data;
 		});
 		
@@ -613,7 +625,7 @@ function onMouseDown(e : MouseEvent){
 		if(i_dim_black.mouseInside(mousePosition)){
 			gameState = 2;
 			// call game state change api
-			GameController.setGameState(gameState);
+			GameController.setGameState(gameId!,gameState);
 		}
 	}
 	if(gameState === 2){
@@ -648,19 +660,19 @@ function onMouseDown(e : MouseEvent){
 					var detect = detectClickOnAntibodies(mousePosition);
 					if(detect !== null){ // if clicked on antibody
 						if(DEBUG) console.log("CLICKED ON ANTI!!!!!!")
-						GameController.pickUpUnit(detect);
+						GameController.pickUpUnit(gameId!,detect);
 					}
 					else if(b_invenButton_top.isClicked() && inventory.melee > 0){
 						if(DEBUG) console.log("PLACE MELEE")
-						GameController.placeUnit("melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						GameController.placeUnit(gameId!,"melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.melee -= 1;
 					}else if(b_invenButton_middle.isClicked() && inventory.ranged > 0){
 						if(DEBUG) console.log("PLACE RANGED")
-						GameController.placeUnit("ranged", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						GameController.placeUnit(gameId!,"ranged", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.ranged -= 1;
 					}else if(b_invenButton_bottom.isClicked() && inventory.aoe > 0){
 						if(DEBUG) console.log("PLACE AOE")
-						GameController.placeUnit("aoe", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						GameController.placeUnit(gameId!,"aoe", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
 						inventory.aoe -= 1;
 					}
 				}
@@ -683,35 +695,35 @@ function onMouseDown(e : MouseEvent){
 		// shop
 		if(b_buy_melee.mouseInside(mousePosition) && money >= buyMeleeCost){
 			b_buy_melee.setClicked(true);
-			GameController.buyUnit("melee");
+			GameController.buyUnit(gameId!,"melee");
 		}else{
 			b_buy_melee.setClicked(false);
 		}
 		if(b_buy_ranged.mouseInside(mousePosition) && money >= buyRangedCost){
 			b_buy_ranged.setClicked(true);
-			GameController.buyUnit("ranged");
+			GameController.buyUnit(gameId!,"ranged");
 		}else{
 			b_buy_ranged.setClicked(false);
 		}
 		if(b_buy_aoe.mouseInside(mousePosition) && money >= buyAoeCost){
 			b_buy_aoe.setClicked(true);
-			GameController.buyUnit("aoe");
+			GameController.buyUnit(gameId!,"aoe");
 		}else{
 			b_buy_aoe.setClicked(false);
 		}
 
 		// time
 		if(b_time_pause.mouseInside(mousePosition)){
-			GameController.setSpeedMultiplier("pause");
+			GameController.setSpeedMultiplier(gameId!,"pause");
 		}
 		if(b_time_play.mouseInside(mousePosition)){
-			GameController.setSpeedMultiplier("play");
+			GameController.setSpeedMultiplier(gameId!,"play");
 		}
 		if(b_time_fastforward.mouseInside(mousePosition)){
-			GameController.setSpeedMultiplier("fastforward");
+			GameController.setSpeedMultiplier(gameId!,"fastforward");
 		}
 		if(b_time_slowdown.mouseInside(mousePosition)){
-			GameController.setSpeedMultiplier("slowdown");
+			GameController.setSpeedMultiplier(gameId!,"slowdown");
 		}
 		b_time_pause.setClicked(b_time_pause.mouseInside(mousePosition));
 		b_time_play.setClicked(b_time_play.mouseInside(mousePosition));

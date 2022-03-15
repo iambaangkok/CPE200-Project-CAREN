@@ -1,6 +1,5 @@
 import axios from 'axios'
 import Config from '../Config';
-import Vector2 from '../classes/Vector2';
 
 const baseURL = Config.SERVER_URL;
 
@@ -8,177 +7,207 @@ const DEBUG = Config.DEBUG;
 
 class GameController {
 
-  static async uploadGeneticCode(type : "melee" | "ranged" | "aoe"){
+  static async uploadGeneticCode(id : string, type : "melee" | "ranged" | "aoe"){
     var textBox : Element | null;
     var gCode : string | null | undefined;
 
     textBox = document.querySelector(`#${type}GeneticCode`);
     gCode = textBox?.textContent;
 
-    // var resp = await axios({
-    //   method: 'post',
-    //   url: baseURL + `/uploadGeneticCode/${type}`,
-    //   headers: {},
-    //   data: {
-    //     type: type,
-    //     geneticCode: gCode,
-    //   }
-    // });
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + `/game/uploadgeneticcode`,
+      headers: {},
+      data: {
+        id: id,
+        type: type,
+        geneticCode: gCode,
+      }
+    });
 
-    // if(resp.data.compilationResult == "success"){
-    //   //good
-    // } else{
-    //   alert(`there are error(s) in the genetic code at token ${resp.data.errorToken}`)
-    // }
-
-    // return resp.data.compilationResult
+    if(resp.data.compiledResult === "success"){
+      alert(`saved succesfully`)
+    } else{
+      alert(`there are error(s) in the genetic code at token ${resp.data.errorToken}`)
+    }
+    return resp.data.compiledResult;
   }
 
-  static async connectGame(clientKey : string){
-    // var resp = await axios({
-    //   method: 'post',
-    //   url: baseURL + "/inventory/placeunit",
-    //   headers: {},
-    //   data: {
-    //     clientKey,
-    //   }
-    // });
+  static async checkId(id : string){
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/gamehandler/checkid",
+      headers: {},
+      data: {
+        id: id,
+      }
+    });
 
-    // // if have backend have key, good! return the one that was sent.
-    // // if backend have no key, generate a new one and return it.
+    // if have backend have key, good! return the one that was sent.
+    // if backend have no key, generate a new one and return it.
 
-    // return resp.data;
-    return "dummykey"
+    return resp.data;
   }
 
-  static async pickUpUnit(name : string){
-    // await axios({
-    //   method: 'post',
-    //   url: baseURL + "/inventory/pickupunit",
-    //   headers: {},
-    //   data: {
-    //     name,
-    //   }
-    // });
+  static async runGame(id : string){
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/gamehandler/rungame",
+      headers: {},
+      data: {
+        id: id,
+      }
+    });
   }
 
-  static async placeUnit(type : string, areaIndex : number, position : {x : number, y : number}){
-    // await axios({
-    //   method: 'post',
-    //   url: baseURL + "/inventory/placeunit",
-    //   headers: {},
-    //   data: {
-    //     type: type,
-    //     areaIndex : areaIndex,
-    //     position : position
-    //   }
-    // });
+  static async pickUpUnit(id: string, name : string){
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/inventory/storeunit",
+      headers: {},
+      data: {
+        id,
+        name,
+      }
+    });
   }
 
-  static async getInventory(){
-    // const url = baseURL + "/inventory";
-    // var resp = await axios.get(url);
-
-    // return resp.data;
-    return {
-      melee: 2,
-      ranged: 1,
-      aoe: 1
-    };
+  static async placeUnit(id: string, type : string, areaIndex : number, position : {x : number, y : number}){
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/inventory/pickupunit",
+      headers: {},
+      data: {
+        id,
+        type: type,
+        areaIndex : areaIndex,
+        position : position
+      }
+    });
   }
 
-  static async getUnitCost(){
-    // const url = baseURL + "/unitCost";
-    // var resp = await axios.get(url);
-
-    // return resp.data;
-    return {melee: 100, ranged: 150, aoe: 250};
+  static async getInventory(id: string){
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/inventory/getinventory",
+      headers: {},
+      data: {
+        id,
+      }
+    });
+    return resp.data;
   }
 
-  static async getMoney(){
-    // const url = baseURL + "/money";
-    // var resp = await axios.get(url);
-
-    // return resp.data;
-    return 1200;
+  static async getShop(id: string){
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/shop/getshop",
+      headers: {},
+      data: {
+        id,
+      }
+    });
+    return resp.data;
   }
 
-  static async getWave(){
-    // const url = baseURL + "/wave";
-    // var resp = await axios.get(url);
-
-    // return resp.data;
-    return {
-      waveNumber: 1, 
-      area1: {total: 6, melee: 5, ranged: 1, aoe: 0},
-      area2: {total: 1, melee: 1, ranged: 0, aoe: 0},
-      area3: {total: 1, melee: 1, ranged: 0, aoe: 0}
-    };
+  static async getWave(id: string){
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/wavemanager/getcurrentwave",
+      headers: {},
+      data: {
+        id,
+      }
+    });
+    return resp.data
   }
 
-  static async getSpeedMultiplier(){
-    // const url = baseURL + "/wave";
-    // var resp = await axios.get(url);
-
-    // return resp.data;
+  static async getSpeedMultiplier(id: string){
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/timemanager/getspeedmultiplier",
+      headers: {},
+      data: {
+        id,
+      }
+    });
     return {type: "play", multiplier: 1};
   }
 
-  static async setSpeedMultiplier(type : string) {
-    // await axios({
-    //   method: 'post',
-    //   url: baseURL + "/time/speedmultiplier/set",
-    //   headers: {},
-    //   data: {
-    //     type: type,
-    //   }
-    // });
-  }
-
-  static async buyUnit(type: string) {
-    // await axios({
-    //   method: 'post',
-    //   url: baseURL + "/shop/buyUnit",
-    //   headers: {},
-    //   data: {
-    //     type: type,
-    //   }
-    // });
-  }
-
-  static async getArea(areaIndex : number){
-    const url = baseURL + "/area/getarea" + (areaIndex);
-    if(true){//areaIndex === 1){
-      return {
-        units: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}, {position : new Vector2(0,0), type: "aoe"}],
-        viruses: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}],
-        antibodies: [{position : new Vector2(0,0), type: "aoe"}],
-        name: "gg",
-        taken: false,
-    		alertLevel : 0
-      };
-    }
-
-    var area = await axios.get(url);
-    return area.data;
-  }
-
-  static async getGameState() {
-    var gameState = await axios.get(baseURL + "/game/state");
-    if(DEBUG) console.log(gameState);
-
-    return gameState.data.state;
-  }
-
-  static async setGameState(gameState: number) {
-    await axios({
+  static async setSpeedMultiplier(id: string, type : string) {
+    var resp = await axios({
       method: 'post',
-      url: baseURL + "/game/setState",//baseUrl + 'applications/' + appName + '/dataexport/plantypes' + plan,
+      url: baseURL + "/timemanager/setspeedmultiplier",
       headers: {},
       data: {
+        id,
+        type
+      }
+    });
+  }
+
+  static async buyUnit(id: string, type: string) {
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/shop/buyunit",
+      headers: {},
+      data: {
+        id,
+        type
+      }
+    });
+  }
+
+  static async getArea(id: string, areaIndex : number){
+
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/area/getarea" + (areaIndex),
+      headers: {},
+      data: {
+        id,
+      }
+    });
+
+    // if(areaIndex === 1){
+    //   return {
+    //     units: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}, {position : new Vector2(0,0), type: "aoe"}],
+    //     viruses: [{position : new Vector2(20,0), type: "melee"}, {position : new Vector2(40,0), type: "ranged"}],
+    //     antibodies: [{position : new Vector2(0,0), type: "aoe"}],
+    //     name: "gg",
+    //     radius: 100,
+    //     taken: false,
+    //     alertLevel: 1,
+    //   };
+    // }
+
+    return resp.data;
+  }
+
+  static async getGameState(id: string) {
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/game/state",
+      headers: {},
+      data: {
+        id,
+      }
+    });
+
+    return resp.data.gameState;
+  }
+
+  static async setGameState(id: string, gameState: number) {
+    var resp = await axios({
+      method: 'post',
+      url: baseURL + "/game/setstate",//baseUrl + 'applications/' + appName + '/dataexport/plantypes' + plan,
+      headers: {},
+      data: {
+        id,
         gameState: gameState, // This is the body part
       }
     });
+    return resp.data;
   }
 }
 

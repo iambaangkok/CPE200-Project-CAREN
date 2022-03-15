@@ -94,7 +94,7 @@ public class Unit {
     }
 
     public void takeDamage(int dmg){
-        if(isAlive()){
+        if(!isAlive()){
             this.currentHealth = 0;
         }else{
             this.currentHealth -= dmg;

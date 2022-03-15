@@ -28,9 +28,11 @@ class Config{
 
     public static MAX_WAVE = 5;
 
-    public static LOCALSTORAGE_KEY = "caren.client.game.key";
+    public static LOCALSTORAGE_KEY_GAMEID = "caren.client.game.key";
 
     public static DEBUG = false;
+
+    
 
     public static DEFAULTGENETICCODE_MELEE = 
 `t = t + 1

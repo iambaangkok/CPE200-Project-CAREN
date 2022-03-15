@@ -27,7 +27,7 @@ public class GameController {
     }
 
     @CrossOrigin
-    @PostMapping(path = "/setState")
+    @PostMapping(path = "/setstate")
     public int setGameState(@RequestBody GameState data){
         Game game = gameHandler.getGame(data);
         game.setState(data.getGameState());
@@ -35,7 +35,7 @@ public class GameController {
     }
 
     @CrossOrigin
-    @PostMapping(path = "/uploadGeneticCode")
+    @PostMapping(path = "/uploadgeneticcode")
     public ApiData_GeneticCodeReturnData uploadGeneticCode(@RequestBody ApiData_GeneticCodeUpload data){
         Game game = gameHandler.getGame(data);
         ApiData_GeneticCodeReturnData result = new ApiData_GeneticCodeReturnData();

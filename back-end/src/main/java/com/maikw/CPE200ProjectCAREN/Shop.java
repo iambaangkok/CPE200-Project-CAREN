@@ -34,7 +34,7 @@ public class Shop {
         }
     }
 
-    public void buyAOE(){
+    public void buyAoe(){
         if(canBuy("aoe")){
             inventory.increaseAoeCount();
             currentCredit -= aoePrice;
@@ -70,6 +70,10 @@ public class Shop {
 
     public int getAoePrice() {
         return aoePrice;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public void setInventory(Inventory inventory){

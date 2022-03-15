@@ -10,6 +10,9 @@ public class TimeManager {
     protected Double fastForwardMuliplier ;
 //    protected String pause;
     protected String inputType;
+
+
+
     protected List<Integer> timeSate ;
 
 
@@ -49,10 +52,18 @@ public class TimeManager {
 //    }
 
 
-    public String getInput(){
+    public String getInputType(){
         return inputType;
     }
     public void setInputType(String inputType){
         this.inputType = inputType;
+    }
+
+    public Double getSlowDownMultiplier() {
+        return slowDownMultiplier;
+    }
+
+    public Double getFastForwardMuliplier() {
+        return fastForwardMuliplier;
     }
 }

@@ -2,6 +2,7 @@ package com.maikw.CPE200ProjectCAREN;
 
 public class Shop {
     protected int maxCredit;
+    protected int minCredit;
     protected int currentCredit;
     protected int meleePrice;
     protected int rangedPrice;
@@ -10,6 +11,7 @@ public class Shop {
 
     public Shop() {
         this.maxCredit = 9999;
+        this.minCredit = 0;
         this.currentCredit = 3500;
         this.meleePrice = 100;
         this.rangedPrice = 200;
@@ -70,6 +72,10 @@ public class Shop {
 
     public int getAoePrice() {
         return aoePrice;
+    }
+
+    public int getMinCredit() {
+        return minCredit;
     }
 
     public Inventory getInventory() {

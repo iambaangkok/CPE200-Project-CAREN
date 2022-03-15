@@ -83,7 +83,7 @@ public class Unit {
         currentHealth += lifeSteal;
         System.out.println("I stole your health --> " + lifeSteal + " HP");
     }
-    
+
     public void takeDamage(int dmg){
         if(dmg >= 0){
             if(!isAlive()){

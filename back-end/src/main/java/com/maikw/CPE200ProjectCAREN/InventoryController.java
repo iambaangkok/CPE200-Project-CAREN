@@ -48,9 +48,11 @@ public class InventoryController {
             }
         }
         if (unit.getUnitClass().equals("antibody")) {
-            shop.setCurrentCredit(shop.getCurrentCredit() - unit.moveCost);
-            unit.setToSpawn(false);
-            unit.setCurrentHealth(0);
+            if(unit.getCurrentHealth() - unit.moveCost > game.getShop().getMinCredit()){
+                shop.setCurrentCredit(shop.getCurrentCredit() - unit.moveCost);
+                unit.setToSpawn(false);
+                unit.setCurrentHealth(0);
+            }
         }
         switch (unit.getType()) {
             case "melee" -> {

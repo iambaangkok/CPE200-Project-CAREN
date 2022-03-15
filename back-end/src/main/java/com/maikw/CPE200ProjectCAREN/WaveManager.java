@@ -55,7 +55,12 @@ public class WaveManager {
     }
 
     public void addVirus() {
-        createUnitVirus(unitmelee,unitranged,unitaoe);
+//        createUnitVirus(unitmelee,unitranged,unitaoe);
+        createUnitVirus(3,1,0);
+        createUnitVirus(5,1,0);
+        createUnitVirus(10,3,1);
+        createUnitVirus(10,5,3);
+        createUnitVirus(50,50,50);
     }
 
 

@@ -2,9 +2,7 @@ package com.maikw.CPE200ProjectCAREN;
 
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_Vector2;
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.BehaviorEvaluator;
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.SyntaxError;
@@ -76,18 +74,16 @@ public class Unit {
     }
 
     public void attack(Unit target){
-
         target.takeDamage(attackDamage);
-        bloodsteal();
+        bloodSteal();
         System.out.println("Unit " + target.name + "received damage current hp = " + target.currentHealth);
     }
 
-    private void bloodsteal() {
-        currentHealth += (int)attackDamage/2;
-        System.out.println("I bloodsteal you --> "+(int)attackDamage/2);
+    private void bloodSteal() {
+        currentHealth += lifeSteal;
+        System.out.println("I stole your health --> " + lifeSteal + " HP");
     }
-
-
+    
     public void takeDamage(int dmg){
         if(dmg >= 0){
             if(!isAlive()){

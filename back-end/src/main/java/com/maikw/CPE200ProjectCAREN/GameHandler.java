@@ -28,7 +28,8 @@ public class GameHandler {
     //api
     @CrossOrigin
     @PostMapping(path = "/checkid") // http://localhost:8080/gamehandler/checkid
-    public String checkId(String id){
+    public String checkId(@RequestBody ApiData_Base data){
+        String id = data.getId();
         for(String ID : map.keySet()){
             if(id.equals(ID)){
                 System.out.println("You have id na");
@@ -49,7 +50,8 @@ public class GameHandler {
 
     @CrossOrigin
     @PostMapping(path = "/runGame") // http://localhost:8080/gamehandler/runGame
-    public void runGame(String id ){
+    public void runGame(@RequestBody ApiData_Base data ){
+        String id = data.getId();
         if(map.containsKey(id)){
             map.get(id).start();
         }else{
@@ -64,7 +66,7 @@ public class GameHandler {
     @PostMapping(path = "/getGame") // http://localhost:8080/gamehandler/getGame
     public Game getGame(@RequestBody ApiData_Base  data){
         if(!map.containsKey(data.getId())){
-            runGame(data.getId());
+            runGame(data);
         }
         return gameMap.get(data.getId());
     }

@@ -138,7 +138,7 @@ public class Area {
     }
 
     public int getAlertLevel(){
-        return this.getAlertLevel();
+        return this.alertLevel();
     }
 
     public List<Unit> getUnits() {

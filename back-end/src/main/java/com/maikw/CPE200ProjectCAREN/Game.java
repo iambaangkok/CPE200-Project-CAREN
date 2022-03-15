@@ -172,7 +172,9 @@ public class Game implements Runnable{
 
        @Override
        public void run(){
-            Config.readFile("");
+
+           Config.readFile("config/config_0.txt");
+
             startGameLoop();
         }
 

@@ -14,6 +14,9 @@ public class WaveManager {
         protected List<Virus> viruses2;
         protected List<Virus> viruses3;
         protected Map<String,List<Virus>> allwave ;
+        protected Integer unitmelee;
+        protected Integer unitranged;
+        protected Integer unitaoe;
 
 
     public WaveManager(){
@@ -52,13 +55,7 @@ public class WaveManager {
     }
 
     public void addVirus() {
-
-        createUnitVirus(3,1,0);
-        createUnitVirus(5,1,0);
-        createUnitVirus(10,3,1);
-        createUnitVirus(10,5,3);
-        createUnitVirus(50,50,50);
-
+        createUnitVirus(unitmelee,unitranged,unitaoe);
     }
 
 
@@ -78,4 +75,21 @@ public class WaveManager {
     public void setgetCurrentWaveCount(int currentWaveCount){
         this.currentWaveCount = currentWaveCount;
     }
+
+    public void setUnitmelee(Integer unitmelee) {
+        this.unitmelee = unitmelee;
+    }
+
+    public void setUnitranged(Integer unitranged) {
+        this.unitranged = unitranged;
+    }
+
+    public void setUnitaoe(Integer unitaoe) {
+        this.unitaoe = unitaoe;
+    }
+
+    public void setMaxWaveCount(Integer maxWaveCount) {
+        this.maxWaveCount = maxWaveCount;
+    }
+
 }

@@ -76,9 +76,17 @@ public class Unit {
     }
 
     public void attack(Unit target){
+
         target.takeDamage(attackDamage);
+        bloodsteal();
         System.out.println("Unit " + target.name + "received damage current hp = " + target.currentHealth);
     }
+
+    private void bloodsteal() {
+        currentHealth += (int)attackDamage/2;
+        System.out.println("I bloodsteal you --> "+(int)attackDamage/2);
+    }
+
 
     public void takeDamage(int dmg){
         if(dmg >= 0){

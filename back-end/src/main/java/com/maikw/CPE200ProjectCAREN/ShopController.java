@@ -36,7 +36,7 @@ public class ShopController {
                 return "Buy Ranged Success";
             }
             case "aoe" -> {
-                shop.buyAOE();
+                shop.buyAoe();
                 return "Buy AOE Success";
             }
         }

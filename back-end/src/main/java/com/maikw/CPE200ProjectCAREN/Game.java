@@ -1,11 +1,7 @@
 package com.maikw.CPE200ProjectCAREN;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class Game implements Runnable{
     protected Integer state  = 1 ;
@@ -53,7 +49,7 @@ public class Game implements Runnable{
 
 
 
-        waveManager.genVirus();
+        waveManager.addVirus();
 
         while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
                 || areas.get(2).antibodies.size() != 0 || spawn){

@@ -15,13 +15,11 @@ import java.util.Random;
 @RequestMapping(path = "/gamehandler") // http://localhost:8080/gamehandler
 public class GameHandler {
 
-    protected String id ;
     protected Map<String,Thread> map ;
     protected Map<String, Game> gameMap;
 
     @Autowired
-    public GameHandler(String id){
-        this.id = id ;
+    public GameHandler(){
         map = new HashMap<>();
         gameMap = new HashMap<>();
     }
@@ -38,6 +36,10 @@ public class GameHandler {
             }else{
                 Random random = new Random();
                 id = Integer.toString(random.nextInt());
+                if(map.containsKey(id)){
+                    id = Integer.toString(random.nextInt());
+                    return id ;
+                }
                 return id ;
             }
         }

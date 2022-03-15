@@ -136,7 +136,7 @@ public class Area {
         viruses.clear();
         System.out.println("Has gone");
     }
-    
+
     public int getAlertLevel(){
         return this.getAlertLevel();
     }

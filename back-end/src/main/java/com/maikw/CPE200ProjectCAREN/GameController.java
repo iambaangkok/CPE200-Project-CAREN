@@ -21,9 +21,9 @@ public class GameController {
 
     @CrossOrigin
     @PostMapping(path = "/state") // http://localhost:8080/game/state
-    public Game getGame (@RequestBody ApiData_Base data){
+    public int getGameState (@RequestBody ApiData_Base data){
         Game game = gameHandler.getGame(data);
-        return game;
+        return game.getState();
     }
 
     @CrossOrigin
@@ -36,7 +36,7 @@ public class GameController {
 
     @CrossOrigin
     @PostMapping(path = "/uploadGeneticCode")
-    public ApiData_GeneticCodeReturnData setGameState(@RequestBody ApiData_GeneticCodeUpload data){
+    public ApiData_GeneticCodeReturnData uploadGeneticCode(@RequestBody ApiData_GeneticCodeUpload data){
         Game game = gameHandler.getGame(data);
         ApiData_GeneticCodeReturnData result = new ApiData_GeneticCodeReturnData();
 

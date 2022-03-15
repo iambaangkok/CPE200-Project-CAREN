@@ -30,18 +30,18 @@ public class GameHandler {
     @PostMapping(path = "/checkid") // http://localhost:8080/gamehandler/checkid
     public String checkId(@RequestBody ApiData_Base data){
         String id = data.getId();
-        for(String ID : map.keySet()){
-            if(id.equals(ID)){
-                System.out.println("You have id na");
-                break;
-            }else{
-                Random random = new Random(10000);
+
+        if(map.containsKey(id)){
+            System.out.println("This id [" + id + "] already exist.");
+        }else{
+            Random random = new Random(10000);
+            id = Integer.toString(random.nextInt());
+            System.out.println("id = " + id);
+            while (map.containsKey(id)){
+                System.out.println("id = " + id);
                 id = Integer.toString(random.nextInt());
-                while (map.containsKey(id)){
-                    id = Integer.toString(random.nextInt());
-                }
-                return id ;
             }
+            return id ;
         }
         return id;
     }
@@ -56,9 +56,10 @@ public class GameHandler {
             gameMap.put(id, game);
             map.put(id, new Thread(game));
         }
+        System.out.println("thread state : " + map.get(id).getState());
         if(!map.get(id).isAlive()){
-            map.get(id).start();
             map.get(id).setDaemon(true);
+            map.get(id).start();
         }
     }
 

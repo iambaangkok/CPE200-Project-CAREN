@@ -13,16 +13,16 @@ public class Unit {
 
     protected double positionX;
     protected double positionY;
-    protected int maxHealth = 100;
-    protected int currentHealth = 100;
-    protected int moveCost = 20;
+    protected int maxHealth;
+    protected int currentHealth;
+    protected int moveCost;
     protected int moveSpeed;
     protected int attackDamage;
     protected int detectRange;
     protected int attackRange;
     protected int aoeRadius;
     protected int dangerRange;
-    protected int lifeSteal = 10;
+    protected int lifeSteal;
     protected String type;
     protected String name;
     protected Map<String, Double> variables;
@@ -36,8 +36,10 @@ public class Unit {
         variables = new HashMap<>();
         this.name = name;
         this.type = type;
-        this.detectRange = 100;
-        this.dangerRange = 5;
+        this.moveCost = Config.moveCost;
+        this.detectRange = Config.detectRange;
+        this.dangerRange = Config.dangerRange;
+        this.lifeSteal = Config.lifeSteal;
         this.aoeRadius = 0;
         BehaviorEvaluator be = new BehaviorEvaluator(geneticCode,this);
         try{

@@ -8,23 +8,25 @@ public class Antibody extends Unit{
     public Antibody(String name, String type, String geneticCode) {
         super(name, type, geneticCode);
         this.unitClass = "antibody";
+        this.maxHealth = Config.antibodyHealth;
+        this.currentHealth = maxHealth;
 
         switch (type) {
             case "melee" -> {
-                this.attackDamage = 30;
-                this.attackRange = 10;
-                this.moveSpeed = 3;
+                this.attackDamage = Config.antibodyMeleeDamage;
+                this.attackRange = Config.meleeAttackRange;
+                this.moveSpeed = Config.meleeMoveSpeed;
             }
             case "ranged" -> {
-                this.attackDamage = 30;
-                this.attackRange = 30;
-                this.moveSpeed = 2;
+                this.attackDamage = Config.antibodyRangedDamage;
+                this.attackRange = Config.rangedAttackRange;
+                this.moveSpeed = Config.rangedMoveSpeed;
             }
             case "aoe" -> {
-                this.attackDamage = 25;
-                this.attackRange = 20;
+                this.attackDamage = Config.antibodyAoeDamage;
+                this.attackRange = Config.aoeAttackRange;
                 this.aoeRadius = 5;
-                this.moveSpeed = 1;
+                this.moveSpeed = Config.aoeMoveSpeed;
             }
         }
     }
@@ -32,7 +34,6 @@ public class Antibody extends Unit{
     public void virusToSpawn(List<Virus> q){
         Virus reborn = UnitFactory.createVirus(this.getType());
         this.area.removeAntibody(this);
-//        this.area.addVirus(reborn);
         q.add(reborn);
         reborn.setPositionX(this.getPositionX());
         reborn.setPositionY(this.getPositionY());

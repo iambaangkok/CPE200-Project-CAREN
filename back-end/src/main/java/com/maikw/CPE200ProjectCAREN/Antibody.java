@@ -1,7 +1,9 @@
 package com.maikw.CPE200ProjectCAREN;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+@JsonIgnoreProperties(value = { "programNode", "variables", "area" })
 public class Antibody extends Unit{
     public Antibody(String name, String type, String geneticCode) {
         super(name, type, geneticCode);

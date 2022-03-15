@@ -2,6 +2,7 @@ package com.maikw.CPE200ProjectCAREN;
 
 
 import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_Base;
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class GameHandler {
         if(map.containsKey(id)){
             System.out.println("This id [" + id + "] already exist.");
         }else{
-            Random random = new Random(10000);
+            Random random = new Random(Time.now());
             id = Integer.toString(random.nextInt());
             System.out.println("id = " + id);
             while (map.containsKey(id)){

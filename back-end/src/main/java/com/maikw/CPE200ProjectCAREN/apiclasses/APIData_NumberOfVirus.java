@@ -2,18 +2,18 @@ package com.maikw.CPE200ProjectCAREN.apiclasses;
 
 public class APIData_NumberOfVirus   {
 
-    public int wavenumbre ;
+    public int waveNumber;
     public APIData_Area area1;
     public APIData_Area area2;
     public APIData_Area area3;
 
 
-    public int getWavenumbre() {
-        return wavenumbre;
+    public int getWaveNumber() {
+        return waveNumber;
     }
 
-    public void setWavenumbre(int wavenumbre) {
-        this.wavenumbre = wavenumbre;
+    public void setWaveNumber(int waveNumber) {
+        this.waveNumber = waveNumber;
     }
 
     public APIData_Area getArea1() {

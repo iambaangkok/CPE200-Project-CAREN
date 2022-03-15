@@ -1,12 +1,10 @@
 package com.maikw.CPE200ProjectCAREN.apiclasses;
 
-import com.maikw.CPE200ProjectCAREN.Area;
-
 public class ApiData_AreaAndPosition extends ApiData_Base{
     int area; // Area Number
     String type;
-    double PositionX;
-    double PositionY;
+    double positionX;
+    double positionY;
 
     public int getArea() { // Area Number
         return area;
@@ -25,18 +23,18 @@ public class ApiData_AreaAndPosition extends ApiData_Base{
     }
 
     public double getPositionX() {
-        return PositionX;
+        return positionX;
     }
 
     public void setPositionX(double positionX) {
-        PositionX = positionX;
+        this.positionX = positionX;
     }
 
     public double getPositionY() {
-        return PositionY;
+        return positionY;
     }
 
     public void setPositionY(double positionY) {
-        PositionY = positionY;
+        this.positionY = positionY;
     }
 }

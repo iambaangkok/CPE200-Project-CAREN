@@ -2,10 +2,15 @@ package com.maikw.CPE200ProjectCAREN;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_Vector2;
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.BehaviorEvaluator;
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.SyntaxError;
 import com.maikw.CPE200ProjectCAREN.behavior_evaluator.nodes.Node;
 
+@JsonIgnoreProperties(value = { "programNode", "variables", "area" })
 public class Unit {
 
     protected double positionX = 0.0;
@@ -394,9 +399,14 @@ public class Unit {
         return closestUnit;
     }
 
-    public double getPositionX() {
-        return positionX;
+    public ApiData_Vector2 getPosition(){
+        ApiData_Vector2 returnData = new ApiData_Vector2();
+        returnData.setX(getPositionX());
+        returnData.setY(getPositionY());
+        return returnData;
     }
+
+    public double getPositionX() { return positionX; }
 
     public double getPositionY() {
         return positionY;

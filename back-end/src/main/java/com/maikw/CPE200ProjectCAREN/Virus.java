@@ -1,7 +1,9 @@
 package com.maikw.CPE200ProjectCAREN;
 
-import java.util.Random;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Random;
+@JsonIgnoreProperties(value = { "programNode", "variables", "area" })
 public class Virus extends Unit{
     public Virus(String name, String type, String geneticCode) {
         super(name, type, geneticCode);

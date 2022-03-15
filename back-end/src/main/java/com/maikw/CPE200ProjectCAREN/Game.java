@@ -123,6 +123,37 @@ public class Game implements Runnable{
             areas.get(1).snapViruses();
             areas.get(2).snapViruses();
 
+            // loop check if virus dead in area1
+            for(Virus vs : areas.get(0).getViruses()){
+                if(!vs.isAlive()){
+                    if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
+                        this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
+                    }else{
+                        this.shop.setCurrentCredit(this.shop.getMaxCredit());
+                    }
+                }
+            }
+            // loop check if virus dead in area2
+            for(Virus vs : areas.get(1).getViruses()){
+                if(!vs.isAlive()){
+                    if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
+                        this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
+                    }else{
+                        this.shop.setCurrentCredit(this.shop.getMaxCredit());
+                    }
+                }
+            }
+            // loop check if virus dead in area3
+            for(Virus vs : areas.get(2).getViruses()){
+                if(!vs.isAlive()){
+                    if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
+                        this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
+                    }else{
+                        this.shop.setCurrentCredit(this.shop.getMaxCredit());
+                    }
+                }
+            }
+
             // คำสั่งเดินของ Unit ในแต่ละ area
             areas.get(0).evaluate();
             areas.get(1).evaluate();

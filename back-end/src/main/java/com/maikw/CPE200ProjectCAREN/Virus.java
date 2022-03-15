@@ -7,24 +7,24 @@ import java.util.Random;
 public class Virus extends Unit{
     public Virus(String name, String type, String geneticCode) {
         super(name, type, geneticCode);
-        super.unitClass = "virus";
+        this.unitClass = "virus";
 
         switch (type) {
             case "melee" -> {
-                this.attackDamage = 20;
-                this.attackRange = 10;
-                this.moveSpeed = 3;
+                this.attackDamage = Config.virusMeleeDamage;
+                this.attackRange = Config.meleeAttackRange;
+                this.moveSpeed = Config.meleeMoveSpeed;
             }
             case "ranged" -> {
-                this.attackDamage = 20;
-                this.attackRange = 30;
-                this.moveSpeed = 2;
+                this.attackDamage = Config.virusRangedDamage;
+                this.attackRange = Config.rangedAttackRange;
+                this.moveSpeed = Config.rangedMoveSpeed;
             }
             case "aoe" -> {
-                this.attackDamage = 15;
-                this.attackRange = 20;
+                this.attackDamage = Config.virusAoeDamage;
+                this.attackRange = Config.aoeAttackRange;
                 this.aoeRadius = 5;
-                this.moveSpeed = 1;
+                this.moveSpeed = Config.aoeMoveSpeed;
             }
         }
 
@@ -40,11 +40,10 @@ public class Virus extends Unit{
             this.positionX = (double) (Math.round(valX*10.0)/10.0);
             this.positionY = (double) (Math.round(valY*10.0)/10.0);
         }
-
     }
 
     public int creditReward(){
-        return 75;
+        return Config.creditReward;
     }
     
 }

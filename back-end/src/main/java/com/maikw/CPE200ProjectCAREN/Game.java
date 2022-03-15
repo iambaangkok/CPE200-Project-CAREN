@@ -62,6 +62,17 @@ public class Game implements Runnable{
             while(timeManager.inputType.equals("pause")) {
                 waitState(1);
                 System.out.println("pause state");
+                for(int i = 0 ; i < 3; ++i){
+                    Iterator<Antibody> abIterator = areas.get(i).getAntibodies().iterator();
+                    while(abIterator.hasNext()){
+                        Antibody ab = abIterator.next();
+                        if(!ab.isAlive() && !ab.toSpawn){
+                            System.out.println("Name : " + ab.getName() + " was picked up");
+                            abIterator.remove();
+                            areas.get(i).removeAntibody(ab);
+                        }
+                    }
+                }
             }
 
             waitState(timeManager.timeSate.get(0)); // สปีดของ loop
@@ -103,7 +114,7 @@ public class Game implements Runnable{
             }
 
 
-            // loop check if virus dead in area1
+            // loop check if virus dead in area
             for(int i = 0 ; i < 3; ++i){
                 Iterator<Virus> vsIterator = areas.get(i).getViruses().iterator();
                 while(vsIterator.hasNext()){

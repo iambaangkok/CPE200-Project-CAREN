@@ -70,6 +70,7 @@ class GameController {
         name,
       }
     });
+    console.log(resp.data);
   }
 
   static async placeUnit(id: string, type : string, areaIndex : number, position : {x : number, y : number}){

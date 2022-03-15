@@ -26,11 +26,13 @@ public class InventoryController {
     @CrossOrigin
     @PostMapping(path = "/storeunit")
     public String storeUnit(@RequestBody ApiData_Unit data){
-        Inventory inventory = gameHandler.getGame(data).getInventory();
+        Game game = gameHandler.getGame(data);
+        Inventory inventory = game.getInventory();
+        Shop shop = game.getShop();
         Area area1 = gameHandler.getGame(data).getAreas().get(0);
         Area area2 = gameHandler.getGame(data).getAreas().get(1);
         Area area3 = gameHandler.getGame(data).getAreas().get(2);
-        String name = data.getUnitName();
+        String name = data.getName();
         Unit unit = null;
         for(Unit u : area1.getUnits()){
             if(u.getName().equals(name)) unit = u;
@@ -45,7 +47,11 @@ public class InventoryController {
                 }
             }
         }
-
+        if (unit.getUnitClass().equals("antibody")) {
+            shop.setCurrentCredit(shop.getCurrentCredit() - unit.moveCost);
+            unit.setToSpawn(false);
+            unit.setCurrentHealth(0);
+        }
         switch (unit.getType()) {
             case "melee" -> {
                 inventory.increaseMeleeCount();
@@ -60,9 +66,7 @@ public class InventoryController {
                 return "Store AOE Success";
             }
         }
-        switch (unit.getUnitClass()){
-            case "Antibody" -> unit.setToSpawn(false);
-        }
+
         return "Unsuccessful something went wrong.";
     }
 

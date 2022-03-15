@@ -140,10 +140,9 @@ public class Unit {
         Unit dummy = UnitFactory.createDummy("melee");
         switch (direction) {
             case "up" -> {
-                if(this.positionY+moveSpeed <= 100){
-                    this.positionY += moveSpeed;
-                }else{
-                    this.positionY = 100;
+                this.positionY += moveSpeed;
+                if(range(dummy, this) > 100){
+                    this.positionY -= moveSpeed;
                 }
             }
             case "upright" -> {
@@ -155,10 +154,9 @@ public class Unit {
                 }
             }
             case "right" -> {
-                if(this.positionX+moveSpeed <= 100){
-                    this.positionX += moveSpeed;
-                }else{
-                    this.positionX = 100;
+                this.positionX += moveSpeed;
+                if(range(dummy, this) > 100){
+                    this.positionX -= moveSpeed;
                 }
             }
             case "downright" -> {
@@ -170,10 +168,9 @@ public class Unit {
                 }
             }
             case "down" -> {
-                if(this.positionY-moveSpeed >= -100){
-                    this.positionY -= moveSpeed;
-                }else{
-                    this.positionY = -100;
+                this.positionY -= moveSpeed;
+                if(range(dummy, this) > 100){
+                    this.positionY += moveSpeed;
                 }
             }
             case "downleft" -> {
@@ -185,10 +182,9 @@ public class Unit {
                 }
             }
             case "left" -> {
-                if(this.positionX-moveSpeed >= -100){
-                    this.positionX -= moveSpeed;
-                }else{
-                    this.positionX = -100;
+                this.positionX -= moveSpeed;
+                if(range(dummy, this) > 100){
+                    this.positionX += moveSpeed;
                 }
             }
             case "upleft" -> {
@@ -451,6 +447,10 @@ public class Unit {
 
     public int getCurrentHealth() {
         return currentHealth;
+    }
+
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = currentHealth;
     }
 
     public int getMoveCost() {

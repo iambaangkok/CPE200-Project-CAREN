@@ -102,10 +102,6 @@ public class Area {
                 System.out.println(name);
                 System.out.println(unit.getCurrentHealth());
             }else{ // if Unit is DEAD
-                if (unit.unitClass.equals("virus")){
-                    unitIterator.remove();
-                    removeVirus((Virus) unit);
-                }
                 if (unit.unitClass.equals("antibody")){
                     unitIterator.remove();
                     if(unit.toSpawn){

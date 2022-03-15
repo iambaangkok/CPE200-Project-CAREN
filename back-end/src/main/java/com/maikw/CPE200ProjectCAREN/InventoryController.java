@@ -1,27 +1,34 @@
 package com.maikw.CPE200ProjectCAREN;
 
+import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_AreaAndPosition;
+import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_Base;
+import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_Unit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/inventory")
 public class InventoryController {
-    private final Inventory inventory;
+    private final GameHandler gameHandler;
 
     @Autowired
-    public InventoryController(Game game) {
-        this.inventory = game.inventory;
+    public InventoryController(GameHandler gameHandler) {
+        this.gameHandler = gameHandler;
     }
 
     @CrossOrigin
-    @GetMapping
-    public Inventory getInventory(){
+    @PostMapping
+    public Inventory getInventory(@RequestBody ApiData_Base data){
+        Inventory inventory = gameHandler.getGame(data).getInventory();
         return inventory;
     }
 
     @CrossOrigin
     @PostMapping(path = "/storeunit")
-    public String storeUnit(@RequestBody Unit unit){
+    public String storeUnit(@RequestBody ApiData_Unit data){
+        Inventory inventory = gameHandler.getGame(data).getInventory();
+        Unit unit = data.getUnit();
+
         switch (unit.getType()) {
             case "melee" -> {
                 inventory.increaseMeleeCount();
@@ -37,15 +44,21 @@ public class InventoryController {
             }
         }
         switch (unit.getUnitClass()){
-            case "Antibody" -> unit.area.removeAntibody((Antibody) unit);
-            case "Virus" -> unit.area.removeVirus((Virus) unit);
+            case "Antibody" -> unit.getArea().removeAntibody((Antibody) unit);
+            case "Virus" -> unit.getArea().removeVirus((Virus) unit);
         }
         return "Unsuccessful something went wrong.";
     }
 
     @CrossOrigin
     @PostMapping(path = "/pickupunit")
-    public String pickupUnit(@RequestBody String type, Area area, double positionX, double positionY){
+    public String pickupUnit(@RequestBody ApiData_AreaAndPosition data){
+        Area area = data.getArea();
+        String type = data.getType();
+        double positionX = data.getPositionX();
+        double positionY = data.getPositionY();
+        Inventory inventory = gameHandler.getGame(data).getInventory();
+
         if(area.canPlace(positionX, positionY)){
             Antibody ab = UnitFactory.createAntibody(type);
 

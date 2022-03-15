@@ -38,7 +38,7 @@ public class Unit {
         variables = new HashMap<>();
         this.name = name;
         this.type = type;
-        this.detectRange = 40;
+        this.detectRange = 100;
         this.dangerRange = 5;
         this.aoeRadius = 0;
         switch (type) {

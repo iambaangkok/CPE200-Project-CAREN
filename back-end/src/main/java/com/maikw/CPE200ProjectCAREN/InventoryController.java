@@ -27,7 +27,24 @@ public class InventoryController {
     @PostMapping(path = "/storeunit")
     public String storeUnit(@RequestBody ApiData_Unit data){
         Inventory inventory = gameHandler.getGame(data).getInventory();
-        Unit unit = data.getUnit();
+        Area area1 = gameHandler.getGame(data).getAreas().get(0);
+        Area area2 = gameHandler.getGame(data).getAreas().get(1);
+        Area area3 = gameHandler.getGame(data).getAreas().get(2);
+        String name = data.getUnitName();
+        Unit unit = null;
+        for(Unit u : area1.getUnits()){
+            if(u.getName().equals(name)) unit = u;
+        }
+        if(unit == null) {
+            for (Unit u : area2.getUnits()) {
+                if (u.getName().equals(name)) unit = u;
+            }
+            if(unit == null){
+                for(Unit u : area3.getUnits()){
+                    if(u.getName().equals(name)) unit = u;
+                }
+            }
+        }
 
         switch (unit.getType()) {
             case "melee" -> {
@@ -44,8 +61,7 @@ public class InventoryController {
             }
         }
         switch (unit.getUnitClass()){
-            case "Antibody" -> unit.getArea().removeAntibody((Antibody) unit);
-            case "Virus" -> unit.getArea().removeVirus((Virus) unit);
+            case "Antibody" -> unit.setToSpawn(false);
         }
         return "Unsuccessful something went wrong.";
     }
@@ -68,6 +84,7 @@ public class InventoryController {
                         inventory.decreaseMeleeCount();
                         area.addAntibody(ab);
                         ab.setPositionX(positionX); ab.setPositionY(positionY);
+                        ab.setToSpawn(true);
                         return "Pick up Melee Success";
                     }
                 }
@@ -76,6 +93,7 @@ public class InventoryController {
                         inventory.decreaseRangedCount();
                         area.addAntibody(ab);
                         ab.setPositionX(positionX); ab.setPositionY(positionY);
+                        ab.setToSpawn(true);
                         return "Pick up Ranged Success";
                     }
                 }
@@ -84,6 +102,7 @@ public class InventoryController {
                         inventory.decreaseAoeCount();
                         area.addAntibody(ab);
                         ab.setPositionX(positionX); ab.setPositionY(positionY);
+                        ab.setToSpawn(true);
                         return "Pick up AOE Success";
                     }
                 }

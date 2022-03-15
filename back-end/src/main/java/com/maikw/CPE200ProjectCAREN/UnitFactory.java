@@ -26,7 +26,7 @@ public class UnitFactory {
 
     public static Virus createVirus(String type){
 //        String g = GeneticCodeManager.getAsString("geneticcodes/maikoiwang/working/maikoiwang_w1.txt");
-        String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt");
+        String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w1.txt");
         Virus v;
         switch (type) {
             case "melee" -> {

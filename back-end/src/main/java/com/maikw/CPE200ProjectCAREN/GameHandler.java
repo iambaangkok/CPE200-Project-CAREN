@@ -35,7 +35,7 @@ public class GameHandler {
         if(map.containsKey(id)){
             System.out.println("This id [" + id + "] already exist.");
         }else{
-            Random random = new Random(Time.now());
+            Random random = new Random(System.currentTimeMillis());
             id = Integer.toString(random.nextInt());
             System.out.println("id = " + id);
             while (map.containsKey(id)){
@@ -52,10 +52,14 @@ public class GameHandler {
     @PostMapping(path = "/rungame") // http://localhost:8080/gamehandler/runGame
     public void runGame(@RequestBody ApiData_Base data ){
         String id = data.getId();
+        System.out.println("ID = " + id);
         if (!map.containsKey(id)) {
             Game game = new Game();
+            game.setId(id);
             gameMap.put(id, game);
             map.put(id, new Thread(game));
+            game.setId(id);
+            System.out.println("postset1 id = " + game.id);
         }
         Thread.State tState = map.get(id).getState();
         System.out.println("thread state : " + tState);
@@ -69,11 +73,14 @@ public class GameHandler {
             gameMap.remove(id);
 
             Game game = new Game();
+            game.setId(id);
             gameMap.put(id, game);
             map.put(id, new Thread(game));
 
             map.get(id).setDaemon(true);
             map.get(id).start();
+            game.setId(id);
+            System.out.println("postset2 id = " + game.id);
         }
     }
 

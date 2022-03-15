@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game implements Runnable{
+    public String id;
     protected Shop shop ;
     protected Integer state  = 1 ;
     protected Boolean spawn ;   // เป็นตัวกำหนดว่ายังไม่ได้เริ่มวางตัว
@@ -53,7 +54,7 @@ public class Game implements Runnable{
 
         while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
                 || areas.get(2).antibodies.size() != 0 || spawn){
-
+            System.out.println("Game ID = " + id);
             System.out.println(areas.get(0).antibodies.size() + " " + areas.get(1).antibodies.size() + " " +
             areas.get(2).antibodies.size());
 
@@ -74,8 +75,10 @@ public class Game implements Runnable{
 
             while (areas.get(0).antibodies.size() == 0 || areas.get(1).antibodies.size() == 0
                     || areas.get(2).antibodies.size() == 0){
+                System.out.println("Game ID = " + id);
+
                 System.out.println("You shold tack uint ");
-                waitState(10);
+                waitState(1);
 
                 if(spawn == true){
                     waitState(timeManager.timeSate.get(1));
@@ -176,9 +179,7 @@ public class Game implements Runnable{
 
        @Override
        public void run(){
-            Game game = new Game();
-            game.startGameLoop();
-
+            startGameLoop();
         }
 
 
@@ -262,5 +263,9 @@ public class Game implements Runnable{
 
     public List<Virus> getQueueVirusArea3() {
         return queueVirusArea3;
+    }
+
+    public void setId(String id) {this.id = id;
+        System.out.println("this.id = " + this.id + "  id = " + id);
     }
 }

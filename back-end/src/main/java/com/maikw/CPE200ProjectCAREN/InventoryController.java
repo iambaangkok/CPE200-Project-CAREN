@@ -92,7 +92,19 @@ public class InventoryController {
                 case "melee" -> {
                     if(inventory.canPickup(type)){
                         inventory.decreaseMeleeCount();
-                        area.addAntibody(ab);
+                        if(areaNumber == 1){
+//                            System.out.println("q1");
+                            game.getQueueAntibobyArea1().add(ab);
+//                            System.out.println(game.getQueueAntibobyArea1());
+//                            System.out.println(game.getAreas().get(0).getAntibodies());
+//                            game.getAreas().get(0).addAllAntibody(game.getQueueAntibobyArea1());
+//                            System.out.println(game.getQueueAntibobyArea1());
+//                            System.out.println(game.getAreas().get(0).getAntibodies());
+                        }else if(areaNumber == 2){
+                            game.getQueueAntibobyArea2().add(ab);
+                        }else if(areaNumber == 3){
+                            game.getQueueAntibobyArea3().add(ab);
+                        }
                         ab.setPositionX(positionX); ab.setPositionY(positionY);
                         ab.setToSpawn(true);
                         return "Pick up Melee Success";
@@ -101,7 +113,13 @@ public class InventoryController {
                 case "ranged" -> {
                     if(inventory.canPickup(type)){
                         inventory.decreaseRangedCount();
-                        area.addAntibody(ab);
+                        if(areaNumber == 1){
+                            game.getQueueAntibobyArea1().add(ab);
+                        }else if(areaNumber == 2){
+                            game.getQueueAntibobyArea2().add(ab);
+                        }else if(areaNumber == 3){
+                            game.getQueueAntibobyArea3().add(ab);
+                        }
                         ab.setPositionX(positionX); ab.setPositionY(positionY);
                         ab.setToSpawn(true);
                         return "Pick up Ranged Success";
@@ -110,7 +128,13 @@ public class InventoryController {
                 case "aoe" -> {
                     if(inventory.canPickup(type)){
                         inventory.decreaseAoeCount();
-                        area.addAntibody(ab);
+                        if(areaNumber == 1){
+                            game.getQueueAntibobyArea1().add(ab);
+                        }else if(areaNumber == 2){
+                            game.getQueueAntibobyArea2().add(ab);
+                        }else if(areaNumber == 3){
+                            game.getQueueAntibobyArea3().add(ab);
+                        }
                         ab.setPositionX(positionX); ab.setPositionY(positionY);
                         ab.setToSpawn(true);
                         return "Pick up AOE Success";

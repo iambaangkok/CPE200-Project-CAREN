@@ -24,6 +24,27 @@ public class UnitFactory {
         return ab;
     }
 
+    public static Antibody createAntibody(String type, GeneticCodeManager gm){
+        Antibody ab;
+        switch (type) {
+            case "melee" -> {
+                String g = gm.getAntibodyMelee();
+                ab = new Antibody("antibody_melee" + count, type, g);
+            }
+            case "ranged" -> {
+                String g = gm.getAntibodyRanged();
+                ab = new Antibody("antibody_ranged" + count, type, g);
+            }
+            case "aoe" -> {
+                String g = gm.getAntibodyAOE();
+                ab =  new Antibody("antibody_aoe" + count, type, g);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        }
+        count++;
+        return ab;
+    }
+
     public static Virus createVirus(String type){
 //        String g = GeneticCodeManager.getAsString("geneticcodes/maikoiwang/working/maikoiwang_w1.txt");
         String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w1.txt");

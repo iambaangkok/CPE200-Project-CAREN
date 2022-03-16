@@ -150,6 +150,9 @@ var t_caren : TextObject;
 var t_howToPlay : TextObject;
 var t_clickAnywhereToStart : TextObject;
 
+// post game-over
+var t_youlose : TextObject;
+
 
 /// FETCHABLE FIELDS
 var gameState : number = 1; // 1 = pregame, 2 = game
@@ -381,6 +384,10 @@ class App extends React.Component {
 			],
 			18, "'Press Start 2P'", 112, 398, Config.COLOR_CREAMWHITE, "start", "top", 2)
 		t_clickAnywhereToStart = new TextObject(["CLICK ANYWHERE TO START"], 24, "'Press Start 2P'", 112, 904)
+
+		// post game-over
+		t_youlose = new TextObject(["YOU LOSE"], 36, "'Press Start 2P'", 820, 500);
+
 	}
 
 	async fetchInit(){
@@ -566,6 +573,13 @@ class App extends React.Component {
 			t_caren.draw();
 			t_howToPlay.draw();
 			t_clickAnywhereToStart.draw();
+		}
+
+		// post game-over
+		if(gameState === 2){
+			if(areas[0].taken && areas[1].taken && areas[2].taken && currentWave.waveNumber > 0){
+				t_youlose.draw();
+			}
 		}
 		
 	}

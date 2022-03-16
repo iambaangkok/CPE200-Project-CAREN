@@ -88,7 +88,7 @@ public class Game implements Runnable{
                 if (waveManager.currentWaveCount < waveManager.maxWaveCount) {
                     waveManager.currentWaveCount += 1;
 
-                    for (int i = 0 ; i < timeManager.timeSate(4);i++) {
+                    for (int i = 0 ; i < timeManager.timeSate.get(4);i++) {
                         waitState(1);
                         toAddAntiboby();
                         pickUpAntiUnit();

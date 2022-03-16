@@ -48,27 +48,26 @@ public class InventoryController {
             }
         }
         if (unit.getUnitClass().equals("antibody")) {
-            if(shop.getCurrentCredit() - unit.moveCost > shop.getMinCredit()){
+            if(shop.getCurrentCredit() - unit.moveCost >= shop.getMinCredit()){
                 shop.setCurrentCredit(shop.getCurrentCredit() - unit.moveCost);
                 unit.setToSpawn(false);
                 unit.setCurrentHealth(0);
+                switch (unit.getType()) {
+                    case "melee" -> {
+                        inventory.increaseMeleeCount();
+                        return "Store Melee Success";
+                    }
+                    case "ranged" -> {
+                        inventory.increaseRangedCount();
+                        return "Store Ranged Success";
+                    }
+                    case "aoe" -> {
+                        inventory.increaseAoeCount();
+                        return "Store AOE Success";
+                    }
+                }
             }
         }
-        switch (unit.getType()) {
-            case "melee" -> {
-                inventory.increaseMeleeCount();
-                return "Store Melee Success";
-            }
-            case "ranged" -> {
-                inventory.increaseRangedCount();
-                return "Store Ranged Success";
-            }
-            case "aoe" -> {
-                inventory.increaseAoeCount();
-                return "Store AOE Success";
-            }
-        }
-
         return "Unsuccessful something went wrong.";
     }
 

@@ -64,7 +64,6 @@ public class UnitTest {
 
 
 
-
         // aoe move speed -> 1
 
         // up
@@ -84,6 +83,23 @@ public class UnitTest {
         // upleft
 
 
+        // can't move
+
+        // up
+
+        // upright
+
+        // right
+
+        // downright
+
+        // down
+
+        // downleft
+
+        // left
+
+        // upleft
 
 
     }
@@ -166,6 +182,22 @@ public class UnitTest {
 
     @Test
     void sense() {
+        Config.readFile("config/config_0.txt");
+        Antibody ab_melee = UnitFactory.createAntibody("melee"); ab_melee.setPositionX(0); ab_melee.setPositionY(1); ab_melee.setArea(area);
+        Antibody ab_ranged = UnitFactory.createAntibody("ranged"); ab_ranged.setPositionX(-20); ab_ranged.setPositionY(-20); ab_ranged.setArea(area);
+        Antibody ab_aoe = UnitFactory.createAntibody("aoe"); ab_aoe.setPositionX(0); ab_aoe.setPositionY(10); ab_aoe.setArea(area);
+        Virus v_melee = UnitFactory.createVirus("melee"); v_melee.setPositionX(5); v_melee.setPositionY(10); v_melee.setArea(area);
+        Virus v_ranged = UnitFactory.createVirus("ranged"); v_ranged.setPositionX(-3); v_ranged.setPositionY(1); v_ranged.setArea(area);
+        Virus v_aoe = UnitFactory.createVirus("aoe"); v_aoe.setPositionX(-20); v_aoe.setPositionY(-25); v_aoe.setArea(area);
+        area.addAntibody(ab_melee); area.addAntibody(ab_ranged); area.addAntibody(ab_aoe);
+        area.addVirus(v_melee); area.addVirus(v_ranged); area.addVirus(v_aoe);
+
+        assertEquals(ab_melee.sense("virus",""), 17);
+        assertEquals(ab_ranged.sense("virus",""), 15);
+        assertEquals(ab_aoe.sense("virus",""), 13);
+        assertEquals(v_melee.sense("antibody",""), 17);
+        assertEquals(v_ranged.sense("antibody",""), 13);
+        assertEquals(v_aoe.sense("antibody",""), 11);
     }
 
     @Test
@@ -235,10 +267,6 @@ public class UnitTest {
         assertEquals(Unit.directionConverter("downleft"), 225);
         assertEquals(Unit.directionConverter("left"), 180);
         assertEquals(Unit.directionConverter("upleft"), 135);
-    }
-
-    @Test
-    void attackEval() {
     }
 
     @Test

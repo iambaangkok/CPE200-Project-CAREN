@@ -21,7 +21,7 @@ startCredit 3500
 meleePrice 100
 rangedPrice 200
 aoePrice 250
-moveCost 20
+moveCost 0
 antibodyMeleeHealth 200
 antibodyRangedHealth 100
 antibodyAoeHealth 75

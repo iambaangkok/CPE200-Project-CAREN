@@ -29,7 +29,7 @@ public class Game implements Runnable{
 
 
     public Game(){
-        Config.readFile("config/config_0.txt");
+        Config.readFile("config/config_1.txt");
         this.shop = new Shop();
         this.notSpawnedYet = true ;
         this.areas = new ArrayList<Area>();

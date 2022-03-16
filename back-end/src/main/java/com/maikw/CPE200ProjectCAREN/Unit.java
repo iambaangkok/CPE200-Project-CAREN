@@ -58,7 +58,7 @@ public class Unit {
         }else{
             range = Double.MAX_VALUE;
         }
-        if (range > this.moveSpeed){
+        if (range > this.dangerRange){
             positionEval(direction);
             System.out.println("Unit " + name + " moved " + direction);
             System.out.println(positionX +" , "+ positionY +" <--------");

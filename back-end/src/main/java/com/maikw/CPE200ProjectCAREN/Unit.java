@@ -66,7 +66,7 @@ public class Unit {
                 System.out.println(positionX + " , " + positionY + " <--------");
             }
         }else{
-            if(DEBUG) System.out.println("There is already a unit there. Unit " + name + " can't move to " + direction);
+            if(DEBUG) System.out.println("There is " + unit.getName() + " there. Unit " + name + " can't move to " + direction);
         }
     }
 
@@ -85,7 +85,11 @@ public class Unit {
     }
 
     private void bloodSteal() {
-        currentHealth += lifeSteal;
+        if(currentHealth + lifeSteal <= maxHealth){
+            currentHealth += lifeSteal;
+        }else{
+            currentHealth = maxHealth;
+        }
         if(DEBUG) System.out.println("I stole your health --> " + lifeSteal + " HP");
     }
 
@@ -371,14 +375,18 @@ public class Unit {
                 if (this.detectRange > range && (angle <= direc + 22.5 && angle >= direc - 22.5)) {
                     if (range < min){
                         min = range;
-                        closestUnit = u;
+                        if(!u.getName().equals(this.getName())){
+                            closestUnit = u;
+                        }
                     }
                 }
             }else{
                 if (this.detectRange > range && (angle >= (360-22.5) && angle <= (360)) || (angle >= 0.0 && angle <= 22.5)) {
                     if (range < min){
                         min = range;
-                        closestUnit = u;
+                        if(!u.getName().equals(this.getName())){
+                            closestUnit = u;
+                        }
                     }
                 }
             }
@@ -438,6 +446,10 @@ public class Unit {
 
     public int getMoveCost() {
         return moveCost;
+    }
+
+    public int getMoveSpeed() {
+        return moveSpeed;
     }
 
     public int getAttackDamage() {

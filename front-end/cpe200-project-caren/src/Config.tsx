@@ -26,7 +26,7 @@ class Config{
     
     public static CANVAS_SCALE = 0.6666667; // scale relative to SCREEN_WIDTH, SCREEN_HEIGHT
 
-    public static MAX_WAVE = 5;
+    public static MAX_WAVE = 10;
 
     public static LOCALSTORAGE_KEY_GAMEID = "caren.client.game.key";
 

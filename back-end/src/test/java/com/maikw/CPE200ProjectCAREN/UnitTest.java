@@ -21,34 +21,100 @@ public class UnitTest {
 
     @Test
     void move() {
+        Unit unitMelee = UnitFactory.createDummy("melee");
+        Unit unitRanged = UnitFactory.createDummy("ranged");
+        Unit unitAoe = UnitFactory.createDummy("aoe");
+
         // melee move speed -> 3
+
+        // up
+
+        // upright
+
+        // right
+
+        // downright
+
+        // down
+
+        // downleft
+
+        // left
+
+        // upleft
 
 
         // ranged move speed -> 2
 
+        // up
+
+        // upright
+
+        // right
+
+        // downright
+
+        // down
+
+        // downleft
+
+        // left
+
+        // upleft
+
+
+
 
         // aoe move speed -> 1
+
+        // up
+
+        // upright
+
+        // right
+
+        // downright
+
+        // down
+
+        // downleft
+
+        // left
+
+        // upleft
+
+
 
 
     }
 
     @Test
     void attackDirection() {
-        Antibody ab_melee = abs_melee[1];
-        Antibody ab_ranged = abs_ranged[1];
-        Antibody ab_aoe = abs_aoe[1];
-        Virus v_melee = vs_melee[1];
-        Virus v_ranged = vs_ranged[1];
-        Virus v_aoe = vs_aoe[1];
+        Config.readFile("config/config_0.txt");
+        Antibody ab_melee = UnitFactory.createAntibody("melee"); ab_melee.setPositionX(0); ab_melee.setPositionY(1); ab_melee.setArea(area);
+        Antibody ab_ranged = UnitFactory.createAntibody("ranged"); ab_ranged.setPositionX(-20); ab_ranged.setPositionY(-20); ab_ranged.setArea(area);
+        Antibody ab_aoe = UnitFactory.createAntibody("aoe"); ab_aoe.setPositionX(0); ab_aoe.setPositionY(10); ab_aoe.setArea(area);
+        Virus v_melee = UnitFactory.createVirus("melee"); v_melee.setPositionX(5); v_melee.setPositionY(10); v_melee.setArea(area);
+        Virus v_ranged = UnitFactory.createVirus("ranged"); v_ranged.setPositionX(-3); v_ranged.setPositionY(1); v_ranged.setArea(area);
+        Virus v_aoe = UnitFactory.createVirus("aoe"); v_aoe.setPositionX(-20); v_aoe.setPositionY(-25); v_aoe.setArea(area);
+        area.addAntibody(ab_melee); area.addAntibody(ab_ranged); area.addAntibody(ab_aoe);
+        area.addVirus(v_melee); area.addVirus(v_ranged); area.addVirus(v_aoe);
 
         // melee attack -> attack range = 10, dmg = 20
-
+        ab_melee.attack("left"); // can attack -> ab_melee attack v_ranged
+        System.out.println(v_ranged.getCurrentHealth() + " " + (v_ranged.getMaxHealth() - ab_melee.getAttackDamage()));
+        assertEquals(v_ranged.getCurrentHealth(), v_ranged.getMaxHealth() - ab_melee.getAttackDamage());
+        ab_melee.attack("downright"); // can't attack -> nothing happen
 
         // ranged attack -> attack range = 30, dmg = 20
-
+        ab_ranged.attack("down"); // can attack -> ab_ranged attack v_aoe
+        assertEquals(v_aoe.getCurrentHealth(), v_aoe.getMaxHealth() - ab_ranged.getAttackDamage());
+        ab_ranged.attack("left"); // can't attack -> nothing happen
 
         // aoe attack -> attack range = 20, dmg = 15
-
+        ab_aoe.attack("right"); // can attack -> ab_aoe attack v_melee
+        assertEquals(v_melee.getCurrentHealth(), v_melee.getMaxHealth() - ab_aoe.getAttackDamage());
+        ab_aoe.attack("upleft"); // can't attack -> nothing happen
 
     }
 

@@ -118,7 +118,6 @@ public class UnitTest {
 
         // melee attack -> attack range = 10, dmg = 20
         ab_melee.attack("left"); // can attack -> ab_melee attack v_ranged
-        System.out.println(v_ranged.getCurrentHealth() + " " + (v_ranged.getMaxHealth() - ab_melee.getAttackDamage()));
         assertEquals(v_ranged.getCurrentHealth(), v_ranged.getMaxHealth() - ab_melee.getAttackDamage());
         ab_melee.attack("downright"); // can't attack -> nothing happen
 
@@ -271,11 +270,52 @@ public class UnitTest {
 
     @Test
     void findClosestUnit() {
+        Config.readFile("config/config_0.txt");
+        Antibody ab_melee = UnitFactory.createAntibody("melee"); ab_melee.setPositionX(0); ab_melee.setPositionY(1); ab_melee.setArea(area);
+        Antibody ab_ranged = UnitFactory.createAntibody("ranged"); ab_ranged.setPositionX(-20); ab_ranged.setPositionY(-20); ab_ranged.setArea(area);
+        Antibody ab_aoe = UnitFactory.createAntibody("aoe"); ab_aoe.setPositionX(0); ab_aoe.setPositionY(10); ab_aoe.setArea(area);
+        Virus v_melee = UnitFactory.createVirus("melee"); v_melee.setPositionX(5); v_melee.setPositionY(10); v_melee.setArea(area);
+        Virus v_ranged = UnitFactory.createVirus("ranged"); v_ranged.setPositionX(-3); v_ranged.setPositionY(1); v_ranged.setArea(area);
+        Virus v_aoe = UnitFactory.createVirus("aoe"); v_aoe.setPositionX(-20); v_aoe.setPositionY(-25); v_aoe.setArea(area);
+        area.addAntibody(ab_melee); area.addAntibody(ab_ranged); area.addAntibody(ab_aoe);
+        area.addVirus(v_melee); area.addVirus(v_ranged); area.addVirus(v_aoe);
+
+        assertEquals(ab_melee.findClosestUnit("virus"), v_ranged); // closest = v_ranged
+        assertEquals(v_ranged.findClosestUnit("antibody"), ab_melee); // closest = ab_melee
+
+        assertEquals(ab_ranged.findClosestUnit("virus"), v_aoe); // closest = v_aoe
+        assertEquals(v_aoe.findClosestUnit("antibody"), ab_ranged); // closest = ab_ranged
+
+        assertEquals(ab_aoe.findClosestUnit("virus"), v_melee); // closest = v_melee
+        assertEquals(v_melee.findClosestUnit("antibody"), ab_aoe); // closest = ab_aoe
     }
 
     @Test
     void findClosestUnitDirection() {
+        Config.readFile("config/config_0.txt");
+        Antibody ab_melee = UnitFactory.createAntibody("melee"); ab_melee.setPositionX(0); ab_melee.setPositionY(1); ab_melee.setArea(area);
+        Antibody ab_ranged = UnitFactory.createAntibody("ranged"); ab_ranged.setPositionX(-20); ab_ranged.setPositionY(-20); ab_ranged.setArea(area);
+        Antibody ab_aoe = UnitFactory.createAntibody("aoe"); ab_aoe.setPositionX(0); ab_aoe.setPositionY(10); ab_aoe.setArea(area);
+        Virus v_melee = UnitFactory.createVirus("melee"); v_melee.setPositionX(5); v_melee.setPositionY(10); v_melee.setArea(area);
+        Virus v_ranged = UnitFactory.createVirus("ranged"); v_ranged.setPositionX(-3); v_ranged.setPositionY(1); v_ranged.setArea(area);
+        Virus v_aoe = UnitFactory.createVirus("aoe"); v_aoe.setPositionX(-20); v_aoe.setPositionY(-25); v_aoe.setArea(area);
+        area.addAntibody(ab_melee); area.addAntibody(ab_ranged); area.addAntibody(ab_aoe);
+        area.addVirus(v_melee); area.addVirus(v_ranged); area.addVirus(v_aoe);
 
+        assertEquals(ab_melee.findClosestUnitDirection( "virus","left"), v_ranged); // closest = v_ranged
+        assertNull(ab_melee.findClosestUnitDirection("virus", "downright")); // closest = null
+        assertEquals(v_ranged.findClosestUnitDirection( "antibody","right"), ab_melee); // closest = ab_melee
+        assertNull(v_ranged.findClosestUnitDirection("antibody", "upleft")); // closest = null
+
+        assertEquals(ab_ranged.findClosestUnitDirection("virus", "down"), v_aoe); // closest = v_aoe
+        assertNull(ab_ranged.findClosestUnitDirection("virus", "left")); // closest = null
+        assertEquals(v_aoe.findClosestUnitDirection("antibody", "up"), ab_ranged); // closest = ab_ranged
+        assertNull(v_aoe.findClosestUnitDirection("antibody", "right")); // closest = null
+
+        assertEquals(ab_aoe.findClosestUnitDirection("virus", "right"), v_melee); // closest = v_melee
+        assertNull(ab_aoe.findClosestUnitDirection("virus", "upleft")); // closest = null
+        assertEquals(v_melee.findClosestUnitDirection("antibody", "left"), ab_aoe); // closest = ab_aoe
+        assertNull(v_melee.findClosestUnitDirection("antibody", "downright")); // closest = null
     }
 
     @Test

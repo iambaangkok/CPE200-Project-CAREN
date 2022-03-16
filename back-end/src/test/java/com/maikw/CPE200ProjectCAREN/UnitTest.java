@@ -21,92 +21,190 @@ public class UnitTest {
 
     @Test
     void move() {
-        Unit unitMelee = UnitFactory.createDummy("melee");
-        Unit unitRanged = UnitFactory.createDummy("ranged");
-        Unit unitAoe = UnitFactory.createDummy("aoe");
+        Config.readFile("config/config_1.txt");
+        Virus unitMelee = UnitFactory.createVirus("melee"); unitMelee.setArea(area); area.addVirus(unitMelee);
+        double baseX = 0;
+        double baseY = 0;
 
         // melee move speed -> 3
-
+        unitMelee.setPositionX(baseX); unitMelee.setPositionY(baseY);
         // up
-
+        unitMelee.move("up");
+        assertEquals(unitMelee.getPositionX(), baseX);
+        assertEquals(unitMelee.getPositionY(), baseY + unitMelee.getMoveSpeed());
+        baseX = unitMelee.getPositionX(); baseY = unitMelee.getPositionY();
         // upright
-
+        unitMelee.move("upright");
+        assertEquals(unitMelee.getPositionX(), baseX + unitMelee.getMoveSpeed());
+        assertEquals(unitMelee.getPositionY(), baseY + unitMelee.getMoveSpeed());
+        baseX = unitMelee.getPositionX(); baseY = unitMelee.getPositionY();
         // right
-
+        unitMelee.move("right");
+        assertEquals(unitMelee.getPositionX(), baseX + unitMelee.getMoveSpeed());
+        assertEquals(unitMelee.getPositionY(), baseY);
+        baseX = unitMelee.getPositionX(); baseY = unitMelee.getPositionY();
         // downright
-
+        unitMelee.move("downright");
+        assertEquals(unitMelee.getPositionX(), baseX + unitMelee.getMoveSpeed());
+        assertEquals(unitMelee.getPositionY(), baseY - unitMelee.getMoveSpeed());
+        baseX = unitMelee.getPositionX(); baseY = unitMelee.getPositionY();
         // down
-
+        unitMelee.move("down");
+        assertEquals(unitMelee.getPositionX(), baseX);
+        assertEquals(unitMelee.getPositionY(), baseY - unitMelee.getMoveSpeed());
+        baseX = unitMelee.getPositionX(); baseY = unitMelee.getPositionY();
         // downleft
-
+        unitMelee.move("downleft");
+        assertEquals(unitMelee.getPositionX(), baseX - unitMelee.getMoveSpeed());
+        assertEquals(unitMelee.getPositionY(), baseY - unitMelee.getMoveSpeed());
+        baseX = unitMelee.getPositionX(); baseY = unitMelee.getPositionY();
         // left
-
+        unitMelee.move("left");
+        assertEquals(unitMelee.getPositionX(), baseX - unitMelee.getMoveSpeed());
+        assertEquals(unitMelee.getPositionY(), baseY);
+        baseX = unitMelee.getPositionX(); baseY = unitMelee.getPositionY();
         // upleft
-
+        unitMelee.move("upleft");
+        assertEquals(unitMelee.getPositionX(), baseX - unitMelee.getMoveSpeed());
+        assertEquals(unitMelee.getPositionY(), baseY + unitMelee.getMoveSpeed());
+        baseX = unitMelee.getPositionX(); baseY = unitMelee.getPositionY();
 
         // ranged move speed -> 2
-
+        area.removeVirus(unitMelee);
+        Virus unitRanged = UnitFactory.createVirus("ranged"); unitRanged.setArea(area); area.addVirus(unitRanged);
+        baseX = 0; baseY = 0;
+        unitRanged.setPositionX(baseX); unitRanged.setPositionY(baseY);
         // up
-
+        unitRanged.move("up");
+        assertEquals(unitRanged.getPositionX(), baseX);
+        assertEquals(unitRanged.getPositionY(), baseY + unitRanged.getMoveSpeed());
+        baseX = unitRanged.getPositionX(); baseY = unitRanged.getPositionY();
         // upright
-
+        unitRanged.move("upright");
+        assertEquals(unitRanged.getPositionX(), baseX + unitRanged.getMoveSpeed());
+        assertEquals(unitRanged.getPositionY(), baseY + unitRanged.getMoveSpeed());
+        baseX = unitRanged.getPositionX(); baseY = unitRanged.getPositionY();
         // right
-
+        unitRanged.move("right");
+        assertEquals(unitRanged.getPositionX(), baseX + unitRanged.getMoveSpeed());
+        assertEquals(unitRanged.getPositionY(), baseY);
+        baseX = unitRanged.getPositionX(); baseY = unitRanged.getPositionY();
         // downright
-
+        unitRanged.move("downright");
+        assertEquals(unitRanged.getPositionX(), baseX + unitRanged.getMoveSpeed());
+        assertEquals(unitRanged.getPositionY(), baseY - unitRanged.getMoveSpeed());
+        baseX = unitRanged.getPositionX(); baseY = unitRanged.getPositionY();
         // down
-
+        unitRanged.move("down");
+        assertEquals(unitRanged.getPositionX(), baseX);
+        assertEquals(unitRanged.getPositionY(), baseY - unitRanged.getMoveSpeed());
+        baseX = unitRanged.getPositionX(); baseY = unitRanged.getPositionY();
         // downleft
-
+        unitRanged.move("downleft");
+        assertEquals(unitRanged.getPositionX(), baseX - unitRanged.getMoveSpeed());
+        assertEquals(unitRanged.getPositionY(), baseY - unitRanged.getMoveSpeed());
+        baseX = unitRanged.getPositionX(); baseY = unitRanged.getPositionY();
         // left
-
+        unitRanged.move("left");
+        assertEquals(unitRanged.getPositionX(), baseX - unitRanged.getMoveSpeed());
+        assertEquals(unitRanged.getPositionY(), baseY);
+        baseX = unitRanged.getPositionX(); baseY = unitRanged.getPositionY();
         // upleft
-
-
+        unitRanged.move("upleft");
+        assertEquals(unitRanged.getPositionX(), baseX - unitRanged.getMoveSpeed());
+        assertEquals(unitRanged.getPositionY(), baseY + unitRanged.getMoveSpeed());
+        baseX = unitRanged.getPositionX(); baseY = unitRanged.getPositionY();
 
         // aoe move speed -> 1
-
+        area.removeVirus(unitRanged);
+        Virus unitAoe = UnitFactory.createVirus("aoe"); unitAoe.setArea(area); area.addVirus(unitAoe);
+        baseX = 0; baseY = 0;
+        unitAoe.setPositionX(baseX); unitAoe.setPositionY(baseY);
         // up
-
+        unitAoe.move("up");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY + unitAoe.getMoveSpeed());
+        baseX = unitAoe.getPositionX(); baseY = unitAoe.getPositionY();
         // upright
-
+        unitAoe.move("upright");
+        assertEquals(unitAoe.getPositionX(), baseX + unitAoe.getMoveSpeed());
+        assertEquals(unitAoe.getPositionY(), baseY + unitAoe.getMoveSpeed());
+        baseX = unitAoe.getPositionX(); baseY = unitAoe.getPositionY();
         // right
-
+        unitAoe.move("right");
+        assertEquals(unitAoe.getPositionX(), baseX + unitAoe.getMoveSpeed());
+        assertEquals(unitAoe.getPositionY(), baseY);
+        baseX = unitAoe.getPositionX(); baseY = unitAoe.getPositionY();
         // downright
-
+        unitAoe.move("downright");
+        assertEquals(unitAoe.getPositionX(), baseX + unitAoe.getMoveSpeed());
+        assertEquals(unitAoe.getPositionY(), baseY - unitAoe.getMoveSpeed());
+        baseX = unitAoe.getPositionX(); baseY = unitAoe.getPositionY();
         // down
-
+        unitAoe.move("down");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY - unitAoe.getMoveSpeed());
+        baseX = unitAoe.getPositionX(); baseY = unitAoe.getPositionY();
         // downleft
-
+        unitAoe.move("downleft");
+        assertEquals(unitAoe.getPositionX(), baseX - unitAoe.getMoveSpeed());
+        assertEquals(unitAoe.getPositionY(), baseY - unitAoe.getMoveSpeed());
+        baseX = unitAoe.getPositionX(); baseY = unitAoe.getPositionY();
         // left
-
+        unitAoe.move("left");
+        assertEquals(unitAoe.getPositionX(), baseX - unitAoe.getMoveSpeed());
+        assertEquals(unitAoe.getPositionY(), baseY);
+        baseX = unitAoe.getPositionX(); baseY = unitAoe.getPositionY();
         // upleft
-
-
+        unitAoe.move("upleft");
+        assertEquals(unitAoe.getPositionX(), baseX - unitAoe.getMoveSpeed());
+        assertEquals(unitAoe.getPositionY(), baseY + unitAoe.getMoveSpeed());
+        baseX = unitAoe.getPositionX(); baseY = unitAoe.getPositionY();
+        
         // can't move
-
+        baseX = -100; baseY = 0;
+        unitAoe.setPositionX(baseX); unitAoe.setPositionY(baseY);
         // up
-
-        // upright
-
-        // right
-
-        // downright
-
+        unitAoe.move("up");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY);
         // down
-
+        unitAoe.move("down");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY);
         // downleft
-
+        unitAoe.move("downleft");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY);
         // left
-
+        unitAoe.move("left");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY);
         // upleft
+        unitAoe.move("upleft");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY);
 
+        baseX = 100; baseY = 0;
+        unitAoe.setPositionX(baseX); unitAoe.setPositionY(baseY);
+        // upright
+        unitAoe.move("upright");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY);
+        // right
+        unitAoe.move("right");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY);
+        // downright
+        unitAoe.move("downright");
+        assertEquals(unitAoe.getPositionX(), baseX);
+        assertEquals(unitAoe.getPositionY(), baseY);
 
     }
 
     @Test
     void attackDirection() {
-        Config.readFile("config/config_0.txt");
+        Config.readFile("config/config_1.txt");
         Antibody ab_melee = UnitFactory.createAntibody("melee"); ab_melee.setPositionX(0); ab_melee.setPositionY(1); ab_melee.setArea(area);
         Antibody ab_ranged = UnitFactory.createAntibody("ranged"); ab_ranged.setPositionX(-20); ab_ranged.setPositionY(-20); ab_ranged.setArea(area);
         Antibody ab_aoe = UnitFactory.createAntibody("aoe"); ab_aoe.setPositionX(0); ab_aoe.setPositionY(10); ab_aoe.setArea(area);
@@ -135,28 +233,29 @@ public class UnitTest {
 
     @Test
     void attackTarget() {
-        Antibody ab_melee = abs_melee[0];
-        Antibody ab_ranged = abs_ranged[0];
-        Antibody ab_aoe = abs_aoe[0];
-        Virus v_melee = vs_melee[0];
-        Virus v_ranged = vs_ranged[0];
-        Virus v_aoe = vs_aoe[0];
+        Config.readFile("config/config_1.txt");
+        Antibody ab_melee = UnitFactory.createAntibody("melee");
+        Antibody ab_ranged =  UnitFactory.createAntibody("ranged");
+        Antibody ab_aoe =  UnitFactory.createAntibody("aoe");
+        Virus v_melee =  UnitFactory.createVirus("melee");
+        Virus v_ranged =  UnitFactory.createVirus("ranged");
+        Virus v_aoe =  UnitFactory.createVirus("aoe");
         // melee attack -> attack range = 10, dmg = 20
         ab_melee.attack(v_melee);
         assertEquals(v_melee.getCurrentHealth(), v_melee.getMaxHealth() - ab_melee.getAttackDamage());
-        ab_melee.attack(ab_melee);
+        v_melee.attack(ab_melee);
         assertEquals(ab_melee.getCurrentHealth(), ab_melee.getMaxHealth() - v_melee.getAttackDamage());
         
         // ranged attack -> attack range = 30, dmg = 20
         ab_ranged.attack(v_ranged);
         assertEquals(v_ranged.getCurrentHealth(), v_ranged.getMaxHealth() - ab_ranged.getAttackDamage());
-        ab_ranged.attack(ab_ranged);
+        v_ranged.attack(ab_ranged);
         assertEquals(ab_ranged.getCurrentHealth(), ab_ranged.getMaxHealth() - v_ranged.getAttackDamage());
 
         // aoe attack -> attack range = 20, dmg = 15
         ab_aoe.attack(v_aoe);
         assertEquals(v_aoe.getCurrentHealth(), v_aoe.getMaxHealth() - ab_aoe.getAttackDamage());
-        ab_aoe.attack(ab_aoe);
+        v_aoe.attack(ab_aoe);
         assertEquals(ab_aoe.getCurrentHealth(), ab_aoe.getMaxHealth() - v_aoe.getAttackDamage());
     }
 
@@ -164,6 +263,7 @@ public class UnitTest {
     void takeDamage() {
         // create dummy unit for testing
         Unit unit = UnitFactory.createDummy("melee");
+        unit.setCurrentHealth(100); unit.maxHealth = 100;
 
         // check max health (100)
         assertEquals(unit.getMaxHealth(), 100);
@@ -181,7 +281,7 @@ public class UnitTest {
 
     @Test
     void sense() {
-        Config.readFile("config/config_0.txt");
+        Config.readFile("config/config_1.txt");
         Antibody ab_melee = UnitFactory.createAntibody("melee"); ab_melee.setPositionX(0); ab_melee.setPositionY(1); ab_melee.setArea(area);
         Antibody ab_ranged = UnitFactory.createAntibody("ranged"); ab_ranged.setPositionX(-20); ab_ranged.setPositionY(-20); ab_ranged.setArea(area);
         Antibody ab_aoe = UnitFactory.createAntibody("aoe"); ab_aoe.setPositionX(0); ab_aoe.setPositionY(10); ab_aoe.setArea(area);
@@ -270,7 +370,7 @@ public class UnitTest {
 
     @Test
     void findClosestUnit() {
-        Config.readFile("config/config_0.txt");
+        Config.readFile("config/config_1.txt");
         Antibody ab_melee = UnitFactory.createAntibody("melee"); ab_melee.setPositionX(0); ab_melee.setPositionY(1); ab_melee.setArea(area);
         Antibody ab_ranged = UnitFactory.createAntibody("ranged"); ab_ranged.setPositionX(-20); ab_ranged.setPositionY(-20); ab_ranged.setArea(area);
         Antibody ab_aoe = UnitFactory.createAntibody("aoe"); ab_aoe.setPositionX(0); ab_aoe.setPositionY(10); ab_aoe.setArea(area);
@@ -292,7 +392,7 @@ public class UnitTest {
 
     @Test
     void findClosestUnitDirection() {
-        Config.readFile("config/config_0.txt");
+        Config.readFile("config/config_1.txt");
         Antibody ab_melee = UnitFactory.createAntibody("melee"); ab_melee.setPositionX(0); ab_melee.setPositionY(1); ab_melee.setArea(area);
         Antibody ab_ranged = UnitFactory.createAntibody("ranged"); ab_ranged.setPositionX(-20); ab_ranged.setPositionY(-20); ab_ranged.setArea(area);
         Antibody ab_aoe = UnitFactory.createAntibody("aoe"); ab_aoe.setPositionX(0); ab_aoe.setPositionY(10); ab_aoe.setArea(area);
@@ -321,6 +421,7 @@ public class UnitTest {
     @Test
     void isAlive() {
         Unit unit = UnitFactory.createDummy("melee");
+        unit.setCurrentHealth(100);
         assertTrue(unit.isAlive()); // unit is alive
         unit.takeDamage(150);
         assertFalse(unit.isAlive()); // unit is dead

@@ -253,7 +253,7 @@ public class Unit {
                     for(Unit u : units){
                         range = range(target,u);
                         if(range <= this.aoeRadius){
-                            if(!u.getName().equals(this.name)){
+                            if(!u.getName().equals(this.name) && !u.getName().equals(target.getName())){
                                 attack(u);
                             }
                         }

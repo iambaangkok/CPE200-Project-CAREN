@@ -24,7 +24,7 @@ public class BinaryArithmeticNode implements Node {
             if(rv == 0){
                 throw new ArithmeticException("divide by zero");
             }
-            return lv / rv;
+            return Math.floor(lv / rv);
         }
         if (op.equals("%")){
             if(rv == 0){

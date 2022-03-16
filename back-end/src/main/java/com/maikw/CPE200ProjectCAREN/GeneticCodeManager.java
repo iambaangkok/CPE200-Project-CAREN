@@ -41,7 +41,7 @@ public class GeneticCodeManager {
                 sb.append("\n");
             }
         } catch (FileNotFoundException | NullPointerException e) {
-            System.out.println("File not found");
+            System.out.println("File not found <- From Genetic Code");
             //e.printStackTrace();
         } catch (IOException e) {
             //e.printStackTrace();

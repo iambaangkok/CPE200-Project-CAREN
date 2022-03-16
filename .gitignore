@@ -45,3 +45,4 @@ build/
 
 front-end/cpe200-project-caren/yarn.lock
 *.lock
+cloc-1.92.exe

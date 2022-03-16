@@ -22,10 +22,10 @@ public class TimeManager {
         this.fps = 60.0;
         this.deltaTime = 1.0 ;
         this.fastForwardMuliplier = 0.025 ;
-        this.slowDownMultiplier = 2.5 ;
+        this.slowDownMultiplier = 1.0 ;
         this.timeSate = new ArrayList<>(); this.timeSate.add(1) ;this.timeSate.add(5);this.timeSate.add(10); this.timeSate.add(15); this.timeSate.add(30);
 //        this.pause = "pause";
-        this.inputType = "normal"; //fastforward
+        this.inputType = ""; //fastforward
     }
 
     public Double getFps(){

@@ -48,7 +48,7 @@ public class InventoryController {
             }
         }
         if (unit.getUnitClass().equals("antibody")) {
-            if(unit.getCurrentHealth() - unit.moveCost > game.getShop().getMinCredit()){
+            if(shop.getCurrentCredit() - unit.moveCost > shop.getMinCredit()){
                 shop.setCurrentCredit(shop.getCurrentCredit() - unit.moveCost);
                 unit.setToSpawn(false);
                 unit.setCurrentHealth(0);

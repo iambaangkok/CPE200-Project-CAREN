@@ -61,33 +61,21 @@ public class Game implements Runnable{
             while(timeManager.inputType.equals("pause")) {
                 waitState(1);
                 System.out.println("pause state");
-                for(int i = 0 ; i < 3; ++i){
-                    Iterator<Antibody> abIterator = areas.get(i).getAntibodies().iterator();
-                    while(abIterator.hasNext()){
-                        Antibody ab = abIterator.next();
-                        if(!ab.isAlive() && !ab.toSpawn){
-                            System.out.println("Name : " + ab.getName() + " was picked up");
-                            abIterator.remove();
-                            areas.get(i).removeAntibody(ab);
-                        }
-                    }
-                }
+                toAddAntiboby();
+                pickUpAntiUnit();
+
+
             }
 
             waitState(timeManager.timeSate.get(0)); // สปีดของ loop
 
-        // test genAnti 1 ตัว
-//            System.out.println(inventory.meleeCount);
-//            InventoryController ic = new InventoryController(this);
-//            System.out.println(ic.pickupUnit("melee",areas.get(0),0.0,0.0));
 
 
-//            if(spawn == true){waitState(timeManager.timeSate.get(1)); this.spawn = false;} //timeManager.timeSate.get(1) //คือเวลาที่กำลังจะปล่อยไวรัส
 
             while (notSpawnedYet && ( areas.get(0).antibodies.size() == 0 || areas.get(1).antibodies.size() == 0 || areas.get(2).antibodies.size() == 0 )){
                 System.out.println("You must place at least 1 unit in each area.");
                 waitState(1);
-
+                pickUpAntiUnit();
                 toAddAntiboby();
                 toAddViruse();
             }
@@ -100,7 +88,7 @@ public class Game implements Runnable{
                 if (waveManager.currentWaveCount < waveManager.maxWaveCount) {
                     waveManager.currentWaveCount += 1;
 
-                    waitState(timeManager.timeSate.get(4));    //timeManager.timeSate.get(4) // 15 วิ
+                    waitState(timeManager.timeSate.get(4));    //timeManager.timeSate.get(4) // 30 วิ
 
                     putVirusToArea(0);
                     putVirusToArea(1);
@@ -133,6 +121,7 @@ public class Game implements Runnable{
             }
 
 
+
             // คำสั่งเดินของ Unit ในแต่ละ area
             areas.get(0).evaluate();
             areas.get(1).evaluate();
@@ -154,6 +143,20 @@ public class Game implements Runnable{
         areas.get(2).addAllAntibody(queueAntibobyArea3);
         queueAntibobyArea3.clear();
 
+    }
+
+    private void pickUpAntiUnit(){
+        for(int i = 0 ; i < 3; ++i){
+            Iterator<Antibody> abIterator = areas.get(i).getAntibodies().iterator();
+            while(abIterator.hasNext()){
+                Antibody ab = abIterator.next();
+                if(!ab.isAlive() && !ab.toSpawn){
+                    System.out.println("Name : " + ab.getName() + " was picked up");
+                    abIterator.remove();
+                    areas.get(i).removeAntibody(ab);
+                }
+            }
+        }
     }
     private void toAddViruse(){
 
@@ -188,7 +191,7 @@ public class Game implements Runnable{
                     System.out.println("current time "+(i*(int)(1000*timeManager.fastForwardMuliplier))/1000.0+ " second");
                 }
                 else{
-                    Thread.sleep((int)(1000*0.5));
+                    Thread.sleep((int)(1000*0.125));
                     System.out.println("current time "+i+ " second");
                 }
 

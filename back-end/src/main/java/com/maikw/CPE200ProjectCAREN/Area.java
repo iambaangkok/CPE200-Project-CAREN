@@ -72,6 +72,7 @@ public class Area {
 
     public void removeVirus(Virus dummy){
         this.viruses.remove(dummy);
+        this.removeUnit(dummy);
         dummy.setArea(null);
     }
 

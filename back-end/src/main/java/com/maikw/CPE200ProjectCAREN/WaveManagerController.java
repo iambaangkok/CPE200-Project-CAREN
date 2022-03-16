@@ -31,6 +31,11 @@ public class WaveManagerController {
     }
 
 
+
+
+
+
+
     @CrossOrigin
     @PostMapping(path = "/getwavenumberandnumberofvirus")
 //http://localhost:8080/waveManager/getwavenumberandnumberofvirus

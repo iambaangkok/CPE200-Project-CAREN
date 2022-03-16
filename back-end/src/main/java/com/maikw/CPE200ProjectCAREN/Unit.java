@@ -31,6 +31,7 @@ public class Unit {
     protected String unitClass;
     protected boolean didActionCommand = false;
     protected boolean toSpawn = true;
+    private final boolean DEBUG = true;
 
     public Unit(String name, String type, String geneticCode){
         variables = new HashMap<>();
@@ -60,10 +61,12 @@ public class Unit {
         }
         if (range > this.dangerRange){
             positionEval(direction);
-            System.out.println("Unit " + name + " moved " + direction);
-            System.out.println(positionX +" , "+ positionY +" <--------");
+            if(DEBUG) {
+                System.out.println("Unit " + name + " moved " + direction);
+                System.out.println(positionX + " , " + positionY + " <--------");
+            }
         }else{
-            System.out.println("There is already a unit there. Unit " + name + " can't move to " + direction);
+            if(DEBUG) System.out.println("There is already a unit there. Unit " + name + " can't move to " + direction);
         }
     }
 
@@ -72,18 +75,18 @@ public class Unit {
         if(this.unitClass.equals("virus")) targetClass = "antibody";
         else if(this.unitClass.equals("antibody")) targetClass = "virus";
         attackEval(targetClass, direction);
-        System.out.println("Unit " + name + " attacked " + direction);
+        if(DEBUG) System.out.println("Unit " + name + " attacked " + direction);
     }
 
     public void attack(Unit target){
         target.takeDamage(attackDamage);
         bloodSteal();
-        System.out.println("Unit " + target.name + "received damage current hp = " + target.currentHealth);
+        if(DEBUG) System.out.println("Unit " + target.name + "received damage current hp = " + target.currentHealth);
     }
 
     private void bloodSteal() {
         currentHealth += lifeSteal;
-        System.out.println("I stole your health --> " + lifeSteal + " HP");
+        if(DEBUG) System.out.println("I stole your health --> " + lifeSteal + " HP");
     }
 
     public void takeDamage(int dmg){
@@ -97,7 +100,7 @@ public class Unit {
     }
 
     public int sense(String mode, String direction){
-        System.out.println("Unit " + name + " sensed " + mode + " " + direction);
+        if(DEBUG) System.out.println("Unit " + name + " sensed " + mode + " " + direction);
         switch (mode) {
             case "virus" -> {
                 return senseEval("virus");
@@ -261,7 +264,7 @@ public class Unit {
                 }
             }
         }else{
-            System.out.println("Can't attack, No Unit nearby.");
+            if(DEBUG) System.out.println("Can't attack, No Unit nearby.");
         }
 
     }
@@ -269,7 +272,7 @@ public class Unit {
     private int senseEval(String classUnit){
         Unit closestUnit = findClosestUnit(classUnit);
         if(closestUnit == null){
-            System.out.println("closest unit is null");
+            if(DEBUG) System.out.println("Closest unit is null");
             return 0;
         }
         double angle = getAngle(this, closestUnit);

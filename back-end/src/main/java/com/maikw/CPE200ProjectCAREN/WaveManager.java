@@ -6,19 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 public class WaveManager {
-        protected Integer maxWaveCount = 5; //Config.maxWave
-        protected Integer currentWaveCount  = 0 ;
-        protected Integer waveCount  = 1 ;
-        protected  Integer timeBetweenWave  = 20 ;
-        protected List<Virus> viruses1;
-        protected List<Virus> viruses2;
-        protected List<Virus> viruses3;
-        protected Map<String,List<Virus>> allwave ;
+    protected Integer maxWaveCount = 5;
+    protected Integer currentWaveCount = 0;
+    protected Integer waveCount = 1;
+    protected Integer timeBetweenWave  = 20;
+    protected List<Virus> viruses1;
+    protected List<Virus> viruses2;
+    protected List<Virus> viruses3;
+    protected Map<String,List<Virus>> allwave ;
+    private final boolean DEBUG = true;
 
 
 
     public WaveManager(){
-//        this.maxWaveCount = Config.maxWave;
+        this.maxWaveCount = Config.maxWave;
         this.viruses1 = new ArrayList<>();
         this.viruses2 = new ArrayList<>();
         this.viruses3 = new ArrayList<>();
@@ -56,7 +57,7 @@ public class WaveManager {
     public void addVirus() {
             for (int i = 0 ; i < maxWaveCount ; ++i) {
                 createUnitVirus(Config.meleeCountPerWave[i], Config.rangedCountPerWave[i], Config.aoeCountPerWave[i]);
-                System.out.println(Config.meleeCountPerWave[i]+" , " + Config.rangedCountPerWave[i] + " , "+ Config.aoeCountPerWave[i]);
+                if(DEBUG) System.out.println(Config.meleeCountPerWave[i]+" , " + Config.rangedCountPerWave[i] + " , "+ Config.aoeCountPerWave[i]);
             }
 
 //        createUnitVirus(2,3 ,3 );

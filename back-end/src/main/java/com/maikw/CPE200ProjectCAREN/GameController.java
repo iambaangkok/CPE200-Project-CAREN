@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/game") // http://localhost:8080/game
 public class GameController {
     private final GameHandler gameHandler;
+    private final boolean DEBUG = true;
 
     @Autowired
     GameController(GameHandler gameHandler){
@@ -37,7 +38,9 @@ public class GameController {
     @CrossOrigin
     @PostMapping(path = "/uploadgeneticcode")
     public ApiData_GeneticCodeReturnData uploadGeneticCode(@RequestBody ApiData_GeneticCodeUpload data){
-        System.out.println(data.getId() + " " + data.getType() + " " +data.getGeneticCode());
+        if(DEBUG){
+            System.out.println(data.getId() + " " + data.getType() + " " +data.getGeneticCode());
+        }
         ApiData_Base data2 = new ApiData_Base();
         data2.setId(data.getId());
         Game game = gameHandler.getGame(data2);

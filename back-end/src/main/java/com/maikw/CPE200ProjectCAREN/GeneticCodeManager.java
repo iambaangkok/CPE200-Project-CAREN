@@ -1,12 +1,5 @@
 package com.maikw.CPE200ProjectCAREN;
 
-import com.maikw.CPE200ProjectCAREN.apiclasses.ApiData_GeneticCodeUpload;
-import com.maikw.CPE200ProjectCAREN.apiclasses.GameState;
-import com.maikw.CPE200ProjectCAREN.behavior_evaluator.BehaviorEvaluator;
-import com.maikw.CPE200ProjectCAREN.behavior_evaluator.SyntaxError;
-import com.maikw.CPE200ProjectCAREN.behavior_evaluator.UnmatchedParenthesesError;
-import org.springframework.web.bind.annotation.*;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;

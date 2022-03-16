@@ -86,7 +86,7 @@ public class Config {
             aoeMoveSpeed = s.nextInt(); // set aoeMoveSpeed
         }
         catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("File not found <- From Config");
         }
         catch (IOException e) {
             e.printStackTrace();

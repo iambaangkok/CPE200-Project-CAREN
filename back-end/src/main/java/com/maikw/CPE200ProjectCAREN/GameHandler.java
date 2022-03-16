@@ -18,6 +18,7 @@ public class GameHandler {
 
     protected Map<String,Thread> map ;
     protected Map<String, Game> gameMap;
+    private final boolean DEBUG = true;
 
     @Autowired
     public GameHandler(){
@@ -33,13 +34,13 @@ public class GameHandler {
         String id = data.getId();
 
         if(map.containsKey(id)){
-            System.out.println("This id [" + id + "] already exist.");
+            if(DEBUG) System.out.println("This id [" + id + "] already exist.");
         }else{
             Random random = new Random(System.currentTimeMillis());
             id = Integer.toString(random.nextInt());
-            System.out.println("id = " + id);
+            if(DEBUG) System.out.println("id = " + id);
             while (map.containsKey(id)){
-                System.out.println("id = " + id);
+                if(DEBUG) System.out.println("id = " + id);
                 id = Integer.toString(random.nextInt());
             }
             return id ;
@@ -52,23 +53,23 @@ public class GameHandler {
     @PostMapping(path = "/rungame") // http://localhost:8080/gamehandler/runGame
     public void runGame(@RequestBody ApiData_Base data ){
         String id = data.getId();
-        System.out.println("ID = " + id);
+        if(DEBUG) System.out.println("ID = " + id);
         if (!map.containsKey(id)) {
             Game game = new Game();
             game.setId(id);
             gameMap.put(id, game);
             map.put(id, new Thread(game));
             game.setId(id);
-            System.out.println("postset1 id = " + game.id);
+            if(DEBUG) System.out.println("postset1 id = " + game.id);
         }
         Thread.State tState = map.get(id).getState();
-        System.out.println("thread state : " + tState);
+        if(DEBUG) System.out.println("thread state : " + tState);
         if(tState.equals(Thread.State.NEW)){
-            System.out.println("thread NEW, running new thread");
+            if(DEBUG) System.out.println("thread NEW, running new thread");
             map.get(id).setDaemon(true);
             map.get(id).start();
         }else if(tState.equals(Thread.State.TERMINATED)){
-            System.out.println("thread terminated, creating new thread");
+            if(DEBUG) System.out.println("thread terminated, creating new thread");
             map.remove(id);
             gameMap.remove(id);
 
@@ -80,7 +81,7 @@ public class GameHandler {
             map.get(id).setDaemon(true);
             map.get(id).start();
             game.setId(id);
-            System.out.println("postset2 id = " + game.id);
+            if(DEBUG) System.out.println("postset2 id = " + game.id);
         }
     }
 

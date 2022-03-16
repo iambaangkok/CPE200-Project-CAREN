@@ -1,8 +1,5 @@
 package com.maikw.CPE200ProjectCAREN;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +12,7 @@ public class Area {
     protected double radius = 100;
     protected String name;
     protected List<Virus> rebornQueue;
+    private final boolean DEBUG = true;
 
     public Area(String name){
         this.units = new ArrayList<Unit>();
@@ -48,7 +46,7 @@ public class Area {
     public void addAllVirus(List<Virus> dummy){
         for(Virus virus : dummy){
             this.addVirus(virus);
-            System.out.println("Set to area = " + virus.area.getName());
+            if(DEBUG) System.out.println("Set to area = " + virus.area.getName());
         }
     }
 
@@ -99,8 +97,10 @@ public class Area {
             if(unit.isAlive()){
                 unit.setDidActionCommand(false);
                 unit.evaluate();
-                System.out.println(name);
-                System.out.println(unit.getCurrentHealth());
+                if(DEBUG){
+                    System.out.println(name);
+                    System.out.println(unit.getCurrentHealth());
+                }
             }else{ // if Unit is DEAD
                 if (unit.unitClass.equals("antibody")){
                     unitIterator.remove();
@@ -130,7 +130,7 @@ public class Area {
     public void snapViruses() {
         units.removeAll(viruses);
         viruses.clear();
-        System.out.println("Has gone");
+        if(DEBUG) System.out.println("Virus have gone");
     }
 
     public int getAlertLevel(){

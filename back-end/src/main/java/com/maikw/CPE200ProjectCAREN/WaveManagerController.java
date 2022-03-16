@@ -12,7 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/wavemanager") // http://localhost:8080/waveManager
 public class WaveManagerController {
-    GameHandler gameHandler;
+    private final GameHandler gameHandler;
+    private final boolean DEBUG = true;
 
     @Autowired
     public WaveManagerController(GameHandler gameHandler) {
@@ -70,7 +71,7 @@ public class WaveManagerController {
             } else if (virus.getType().equals("aoe")) {
                 countaoe += 1;
             } else {
-                System.out.println("Someting of Type is wong");
+                if(DEBUG) System.out.println("Someting of Type is wong");
             }
         }
         total = countmelee + countranged + countaoe;

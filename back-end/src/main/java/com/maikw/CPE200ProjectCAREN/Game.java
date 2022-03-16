@@ -25,6 +25,8 @@ public class Game implements Runnable{
     protected String startGameLoopM;
     protected String startGameLoopF;
 
+    private final boolean DEBUG = true;
+
 
     public Game(){
         Config.readFile("config/config_0.txt");
@@ -54,13 +56,15 @@ public class Game implements Runnable{
 
         while (areas.get(0).antibodies.size() != 0 || areas.get(1).antibodies.size() != 0
                 || areas.get(2).antibodies.size() != 0 || notSpawnedYet){
-            System.out.println("Game ID = " + id);
-            System.out.println(areas.get(0).antibodies.size() + " " + areas.get(1).antibodies.size() + " " +
-            areas.get(2).antibodies.size());
+            if(DEBUG) {
+                System.out.println("Game ID = " + id);
+                System.out.println(areas.get(0).antibodies.size() + " " + areas.get(1).antibodies.size() + " " +
+                        areas.get(2).antibodies.size());
+            }
 
             while(timeManager.inputType.equals("pause")) {
                 waitState(1);
-                System.out.println("pause state");
+                if(DEBUG) System.out.println("pause state");
                 toAddAntiboby();
                 pickUpAntiUnit();
 
@@ -73,7 +77,7 @@ public class Game implements Runnable{
 
 
             while (notSpawnedYet && ( areas.get(0).antibodies.size() == 0 || areas.get(1).antibodies.size() == 0 || areas.get(2).antibodies.size() == 0 )){
-                System.out.println("You must place at least 1 unit in each area.");
+                if(DEBUG) System.out.println("You must place at least 1 unit in each area.");
                 waitState(1);
                 pickUpAntiUnit();
                 toAddAntiboby();
@@ -97,11 +101,13 @@ public class Game implements Runnable{
                     putVirusToArea(0);
                     putVirusToArea(1);
                     putVirusToArea(2);
-                    System.out.println(areas.get(0).viruses.size());
-                    System.out.println(areas.get(1).viruses.size());
-                    System.out.println(areas.get(2).viruses.size());
+                    if(DEBUG) {
+                        System.out.println(areas.get(0).viruses.size());
+                        System.out.println(areas.get(1).viruses.size());
+                        System.out.println(areas.get(2).viruses.size());
+                    }
                 }
-                else{System.out.println("Win"); break;}
+                else{ if(DEBUG) System.out.println("Win"); break;}
             }
 
 
@@ -111,13 +117,17 @@ public class Game implements Runnable{
                 while(vsIterator.hasNext()){
                     Virus vs = vsIterator.next();
                     if(!vs.isAlive()){
-                        System.out.println("Name : " + vs.getName() + " is dead");
+                        if(DEBUG){
+                            System.out.println("Name : " + vs.getName() + " is dead");
+                        }
                         if(this.shop.getCurrentCredit() + vs.creditReward() <= shop.getMaxCredit()){
                             this.shop.setCurrentCredit(this.shop.getCurrentCredit() + vs.creditReward());
                         }else{
                             this.shop.setCurrentCredit(this.shop.getMaxCredit());
                         }
-                        System.out.println("Current Credit : " + this.shop.getCurrentCredit());
+                        if(DEBUG){
+                            System.out.println("Current Credit : " + this.shop.getCurrentCredit());
+                        }
                         vsIterator.remove();
                         areas.get(i).removeVirus(vs);
                     }
@@ -132,15 +142,15 @@ public class Game implements Runnable{
             areas.get(2).evaluate();
 
         }
-        System.out.println("Game has Over");
+        if(DEBUG) System.out.println("Game has Over");
 
     }
     private void toAddAntiboby(){
-        System.out.println("area1 preAdd - " + areas.get(0).getAntibodies());
+        if(DEBUG) System.out.println("area1 preAdd - " + areas.get(0).getAntibodies());
         areas.get(0).addAllAntibody(queueAntibobyArea1);
-        System.out.println("area1 postAdd - " + areas.get(0).getAntibodies());
+        if(DEBUG) System.out.println("area1 postAdd - " + areas.get(0).getAntibodies());
         queueAntibobyArea1.clear();
-        System.out.println("area1 postClear - " + areas.get(0).getAntibodies());
+        if(DEBUG) System.out.println("area1 postClear - " + areas.get(0).getAntibodies());
 
         areas.get(1).addAllAntibody(queueAntibobyArea2);
         queueAntibobyArea2.clear();
@@ -155,7 +165,7 @@ public class Game implements Runnable{
             while(abIterator.hasNext()){
                 Antibody ab = abIterator.next();
                 if(!ab.isAlive() && !ab.toSpawn){
-                    System.out.println("Name : " + ab.getName() + " was picked up");
+                    if(DEBUG) System.out.println("Name : " + ab.getName() + " was picked up");
                     abIterator.remove();
                     areas.get(i).removeAntibody(ab);
                 }
@@ -188,15 +198,15 @@ public class Game implements Runnable{
                 // ทำ if หรือ switch ทำการเลือกใช้ว่ามันทำอะไรอยู่
                 if(timeManager.inputType.equals("slowdown")){
                     Thread.sleep((int)(1000*timeManager.slowDownMultiplier));
-                    System.out.println("current time "+(i*(int)(1000*timeManager.slowDownMultiplier))/1000.0+ " second");
+                    if(DEBUG) System.out.println("current time "+(i*(int)(1000*timeManager.slowDownMultiplier))/1000.0+ " second");
                 }
                 else if(timeManager.inputType.equals("fastforward")) {
                     Thread.sleep((int)(1000*timeManager.fastForwardMuliplier));
-                    System.out.println("current time "+(i*(int)(1000*timeManager.fastForwardMuliplier))/1000.0+ " second");
+                    if(DEBUG) System.out.println("current time "+(i*(int)(1000*timeManager.fastForwardMuliplier))/1000.0+ " second");
                 }
                 else{
                     Thread.sleep((int)(1000*0.125));
-                    System.out.println("current time "+i+ " second");
+                    if(DEBUG) System.out.println("current time "+i+ " second");
                 }
 
 
@@ -264,7 +274,8 @@ public class Game implements Runnable{
         return queueVirusArea3;
     }
 
-    public void setId(String id) {this.id = id;
-        System.out.println("this.id = " + this.id + "  id = " + id);
+    public void setId(String id) {
+        this.id = id;
+        if(DEBUG) System.out.println("this.id = " + this.id + "  id = " + id);
     }
 }

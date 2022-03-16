@@ -8,6 +8,7 @@ public class Shop {
     protected int rangedPrice;
     protected int aoePrice;
     protected Inventory inventory;
+    private final boolean DEBUG = true;
 
     public Shop() {
         this.maxCredit = 9999;
@@ -23,7 +24,7 @@ public class Shop {
             inventory.increaseMeleeCount();
             currentCredit -= meleePrice;
         }else{
-            System.out.println("You have no enough credit.");
+            if(DEBUG) System.out.println("You have no enough credit.");
         }
     }
 
@@ -32,7 +33,7 @@ public class Shop {
             inventory.increaseRangedCount();
             currentCredit -= rangedPrice;
         }else{
-            System.out.println("You have no enough credit.");
+            if(DEBUG) System.out.println("You have no enough credit.");
         }
     }
 
@@ -41,7 +42,7 @@ public class Shop {
             inventory.increaseAoeCount();
             currentCredit -= aoePrice;
         }else{
-            System.out.println("You have no enough credit.");
+            if(DEBUG) System.out.println("You have no enough credit.");
         }
     }
 

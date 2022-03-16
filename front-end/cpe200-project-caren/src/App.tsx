@@ -76,11 +76,20 @@ import p_invenButton_bottom_blank from './assets/artworks/invenButton_bottom_bla
 import p_alertLight_blue from './assets/artworks/alertLight_blue.png';
 import p_alertLight_yellow from './assets/artworks/alertLight_yellow.png';
 import p_alertLight_red from './assets/artworks/alertLight_red.png';
+import { time } from 'console';
+
+// SOUNDS
+const p_bgmusic = require('./sounds/gamemusic.mp3');
+const p_click = require('./sounds/sfx_click.mp3');
 
 /////////////////////////////////////////////
 
 var canvas : HTMLCanvasElement | null;
 var ctx: CanvasRenderingContext2D | null;
+
+/// SOUNDS
+var a_bgmusic : HTMLAudioElement;
+var a_click : HTMLAudioElement;
 
 /// ELEMENTS
 var i_main_background: ImageObject;
@@ -170,6 +179,8 @@ var areas : {units : any[], viruses : any[], antibodies : any[],radius: number, 
 ]; // area datas
 var scannerRadius : number = 100; 
 
+var timeData : {type : string, multiplier : number};
+
 var shop;
 var money : number = 0;
 var buyMeleeCost : number = 0;
@@ -207,6 +218,8 @@ var frameTime = 1000/Config.FPS;
 
 var zoomPosition : Vector2 = {x:0,y:0} as Vector2;
 var zoomScale : number = 1;
+
+var firstClick : boolean = true;
 
 var gameId : string | null = "";
 
@@ -277,6 +290,13 @@ class App extends React.Component {
 		i_brain = new ImageObject([p_brain_blue, p_brain_red],808,74)
 		i_lungs = new ImageObject([p_lungs_blue, p_lungs_red],780,501)
 		i_heart = new ImageObject([p_heart_blue, p_heart_red],932,453)
+
+		// SOUNDS
+		a_bgmusic = new Audio(p_bgmusic);
+		a_bgmusic.loop = true;
+
+		a_click = new Audio(p_click);
+		a_click.volume = 0.35;
 
 		// dim black
 		i_dim_black = new ImageObject(p_dim_black, 0,0);
@@ -423,6 +443,7 @@ class App extends React.Component {
 		});
 
 		GameController.getSpeedMultiplier(gameId!).then(data => {
+			timeData = data;
 			b_time_pause.setClicked(data.type === "pause");
 			b_time_play.setClicked(data.type === "play");
 			b_time_fastforward.setClicked(data.type === "fastforward");
@@ -577,7 +598,7 @@ class App extends React.Component {
 
 		// post game-over
 		if(gameState === 2){
-			if(areas[0].taken && areas[1].taken && areas[2].taken && currentWave.waveNumber > 0){
+			if(areas[0].taken && areas[1].taken && areas[2].taken && currentWave.waveNumber > 0 && timeData.type !== 'pause'){
 				t_youlose.draw();
 			}
 		}
@@ -643,6 +664,13 @@ function onMouseDown(e : MouseEvent){
 	if (true) console.log(mousePosition);
 	if (true) console.log(scannerMousePosition);
 
+	if(firstClick){
+		a_bgmusic.play();
+		firstClick = false;
+	}
+
+	a_click.play();
+
 	if(gameState === 1){
 		if(i_dim_black.mouseInside(mousePosition)){
 			gameState = 2;
@@ -658,11 +686,12 @@ function onMouseDown(e : MouseEvent){
 		// scanner
 		if(activeAreaIndex === 0){
 
-		}else if(i_scanner.mouseInside(mousePosition) === false
+		}else if(inScannerRadius(scannerMousePosition) === false
 			&& !(
 				b_buy_melee.mouseInside(mousePosition) || b_buy_ranged.mouseInside(mousePosition) || b_buy_aoe.mouseInside(mousePosition)
 				|| b_time_play.mouseInside(mousePosition) || b_time_pause.mouseInside(mousePosition)
 				|| b_time_slowdown.mouseInside(mousePosition) || b_time_fastforward.mouseInside(mousePosition)
+				|| b_invenButton_top.mouseInside(mousePosition) || b_invenButton_middle.mouseInside(mousePosition) || b_invenButton_bottom.mouseInside(mousePosition)
 			)
 		){
 			activeAreaIndex = 0;
@@ -892,7 +921,7 @@ function mouseInScannerRadius(){
 }
 
 function inScannerRadius(scannerPos : Vector2){
-	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerPos) <= Config.SCANNER_RADIUS+200;
+	return Vector2.distanceBetweenPoint(new Vector2(0,0), scannerPos) <= Config.SCANNER_RADIUS;
 }
 
 

@@ -22,8 +22,12 @@ meleePrice 100
 rangedPrice 200
 aoePrice 250
 moveCost 20
-antibodyHealth 100
-virusHealth 100
+antibodyMeleeHealth 200
+antibodyRangedHealth 100
+antibodyAoeHealth 75
+virusMeleeHealth 200
+virusRangedHealth 100
+virusAoeHealth 75
 antibodyMeleeDamage 30
 antibodyRangedDamage 30
 antibodyAoeDamage 20

@@ -18,8 +18,12 @@ public class Config {
     public static int rangedPrice;
     public static int aoePrice;
     public static int moveCost;
-    public static int antibodyHealth;
-    public static int virusHealth;
+    public static int antibodyMeleeHealth;
+    public static int antibodyRangedHealth;
+    public static int antibodyAoeHealth;
+    public static int virusMeleeHealth;
+    public static int virusRangedHealth;
+    public static int virusAoeHealth;
     public static int antibodyMeleeDamage;
     public static int antibodyRangedDamage;
     public static int antibodyAoeDamage;
@@ -60,8 +64,12 @@ public class Config {
             rangedPrice = s.nextInt(); // set rangedPrice
             aoePrice = s.nextInt(); // set aoePrice
             moveCost = s.nextInt(); // set moveCost
-            antibodyHealth = s.nextInt(); // set antibodyHealth
-            virusHealth = s.nextInt(); // set virusHealth
+            antibodyMeleeHealth = s.nextInt(); // set antibodyMeleeHeath
+            antibodyRangedHealth = s.nextInt(); // set antibodyMeleeHeath
+            antibodyAoeHealth = s.nextInt(); // set antibodyMeleeHeath
+            virusMeleeHealth = s.nextInt(); // set antibodyMeleeHeath
+            virusRangedHealth = s.nextInt(); // set antibodyMeleeHeath
+            virusAoeHealth = s.nextInt(); // set antibodyMeleeHeath
             antibodyMeleeDamage = s.nextInt(); // set antibodyMeleeDamage
             antibodyRangedDamage = s.nextInt(); // set antibodyRangedDamage
             antibodyAoeDamage = s.nextInt(); // set antibodyAoeDamage

@@ -8,27 +8,29 @@ public class Virus extends Unit{
     public Virus(String name, String type, String geneticCode) {
         super(name, type, geneticCode);
         this.unitClass = "virus";
-        this.maxHealth = Config.virusHealth;
-        this.currentHealth = maxHealth;
 
         switch (type) {
             case "melee" -> {
+                this.maxHealth = Config.virusMeleeHealth;
                 this.attackDamage = Config.virusMeleeDamage;
                 this.attackRange = Config.meleeAttackRange;
                 this.moveSpeed = Config.meleeMoveSpeed;
             }
             case "ranged" -> {
+                this.maxHealth = Config.virusRangedHealth;
                 this.attackDamage = Config.virusRangedDamage;
                 this.attackRange = Config.rangedAttackRange;
                 this.moveSpeed = Config.rangedMoveSpeed;
             }
             case "aoe" -> {
+                this.maxHealth = Config.virusAoeHealth;
                 this.attackDamage = Config.virusAoeDamage;
                 this.attackRange = Config.aoeAttackRange;
                 this.aoeRadius = 5;
                 this.moveSpeed = Config.aoeMoveSpeed;
             }
         }
+        this.currentHealth = maxHealth;
 
         Unit dummy = UnitFactory.createDummy("melee");
         Random r = new Random();

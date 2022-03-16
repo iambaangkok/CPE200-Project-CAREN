@@ -426,6 +426,12 @@ class App extends React.Component {
 			GameController.getArea(gameId!,i+1).then(data => {
 				areas[i] = data;
 				if(DEBUG) console.log(areas[i]);
+				areas[i].antibodies.forEach(unit => {
+					unit.position.y = -unit.position.y;
+				})
+				areas[i].viruses.forEach(unit => {
+					unit.position.y = -unit.position.y;
+				})
 			});
 		}
 
@@ -639,7 +645,11 @@ function onMouseDown(e : MouseEvent){
 		if(activeAreaIndex === 0){
 
 		}else if(i_scanner.mouseInside(mousePosition) === false
-			&& !(b_buy_melee.mouseInside(mousePosition) || b_buy_ranged.mouseInside(mousePosition) || b_buy_aoe.mouseInside(mousePosition))
+			&& !(
+				b_buy_melee.mouseInside(mousePosition) || b_buy_ranged.mouseInside(mousePosition) || b_buy_aoe.mouseInside(mousePosition)
+				|| b_time_play.mouseInside(mousePosition) || b_time_pause.mouseInside(mousePosition)
+				|| b_time_slowdown.mouseInside(mousePosition) || b_time_fastforward.mouseInside(mousePosition)
+			)
 		){
 			activeAreaIndex = 0;
 		}
@@ -660,21 +670,24 @@ function onMouseDown(e : MouseEvent){
 			}else{
 				if(mouseInScannerRadius() && activeAreaIndex !== 0){
 					var detect = detectClickOnAntibodies(mousePosition);
+					var scannerMPReverseY = Vector2.getCopy(scannerMousePosition);
+					scannerMPReverseY.y = -scannerMPReverseY.y;
+
 					if(detect !== null){ // if clicked on antibody
 						if(DEBUG) console.log("CLICKED ON ANTI!!!!!!")
 						GameController.pickUpUnit(gameId!,detect);
 					}
 					else if(b_invenButton_top.isClicked() && inventory.meleeCount > 0){
 						if(DEBUG) console.log("PLACE MELEE")
-						GameController.placeUnit(gameId!,"melee", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						GameController.placeUnit(gameId!,"melee", activeAreaIndex, scannerToGameCoordinate(scannerMPReverseY));
 						inventory.meleeCount -= 1;
 					}else if(b_invenButton_middle.isClicked() && inventory.rangedCount > 0){
 						if(DEBUG) console.log("PLACE RANGED")
-						GameController.placeUnit(gameId!,"ranged", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						GameController.placeUnit(gameId!,"ranged", activeAreaIndex, scannerToGameCoordinate(scannerMPReverseY));
 						inventory.rangedCount -= 1;
 					}else if(b_invenButton_bottom.isClicked() && inventory.aoeCount > 0){
 						if(DEBUG) console.log("PLACE AOE")
-						GameController.placeUnit(gameId!,"aoe", activeAreaIndex, scannerToGameCoordinate(scannerMousePosition));
+						GameController.placeUnit(gameId!,"aoe", activeAreaIndex, scannerToGameCoordinate(scannerMPReverseY));
 						inventory.aoeCount -= 1;
 					}
 				}

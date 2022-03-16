@@ -71,7 +71,7 @@ public class UnitFactory {
     }
 
     public static Unit createDummy(String type){
-        String g = GeneticCodeManager.getAsString("geneticcodes/maikoiwang/working/maikoiwang_w1.txt");
+        String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w1.txt");
         Unit u;
         switch (type) {
             case "melee" -> {

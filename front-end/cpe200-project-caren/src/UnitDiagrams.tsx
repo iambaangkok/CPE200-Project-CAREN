@@ -28,7 +28,9 @@ class UnitDiagrams extends React.Component {
 
 	render() {
 		return (
-            <div>
+            <div style={{
+                width:"1280px"
+            }}>
                 <img src={p_units} style={{paddingBottom:"60px", paddingTop:"60px"}} alt=""></img>
                 <div style={{
                     justifyContent: "start", alignItems:"start",

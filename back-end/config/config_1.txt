@@ -50,7 +50,7 @@ virusMeleeDamage 20
 virusRangedDamage 20
 virusAoeDamage 15
 lifeSteal 10
-creditReward 50
+creditReward 60
 meleeAttackRange 10
 rangedAttackRange 30
 aoeAttackRange 20

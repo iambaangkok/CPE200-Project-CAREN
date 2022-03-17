@@ -31,7 +31,9 @@ class GeneticCodeInput extends React.Component {
 
 	render() {
 		return (
-            <div style={{paddingBottom:"60px"}}>
+            <div style={{
+                width:"1280px",
+                paddingBottom:"60px"}}>
                 <img src={p_gCode} style={{paddingBottom:"60px", paddingTop:"60px"}} alt=""></img>
                 <div style={{
                     justifyContent: "start", alignItems:"start",

@@ -32,7 +32,7 @@ aoeCountPerWaveNine 10
 aoeCountPerWaveTen 15
 detectRange 100
 dangerRange 5
-startCredit 2000
+startCredit 3000
 meleePrice 100
 rangedPrice 200
 aoePrice 250

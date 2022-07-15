@@ -5,4 +5,4 @@ Genetic codes are written using a specified grammar as per stated in the project
 The game must be run on a web page with a Java back-end which handles all the non-visual computation of the game.
 
 
-(Design Overview Document - Overleaf)[https://www.overleaf.com/project/61fcb496300e0586a36b36e4]
+[Design Overview Document - Overleaf](https://www.overleaf.com/project/61fcb496300e0586a36b36e4)

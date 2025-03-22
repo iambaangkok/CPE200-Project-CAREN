@@ -1,8 +1,8 @@
 ## CPE200-Project-CAREN
 
-![start screen](itch.io/CAREN 1.png)
-![body screen](itch.io/CAREN 2.png)
-![scanner screen](itch.io/CAREN 3.png)
+![start screen](<itch.io/CAREN 1.png>)
+![body screen](<itch.io/CAREN 2.png>)
+![scanner screen](<itch.io/CAREN 3.png>)
 
 # Introduction
 

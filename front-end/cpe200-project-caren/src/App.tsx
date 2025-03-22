@@ -293,6 +293,7 @@ class App extends React.Component {
 
 		// SOUNDS
 		a_bgmusic = new Audio(p_bgmusic);
+		a_bgmusic.volume = 0.35;
 		a_bgmusic.loop = true;
 
 		a_click = new Audio(p_click);

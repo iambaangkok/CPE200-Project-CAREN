@@ -491,14 +491,30 @@ class App extends React.Component {
 			t_inven_melee.setText(['x' + inventory.meleeCount.toString()]);
 			t_inven_ranged.setText(['x' + inventory.rangedCount.toString()]);
 			t_inven_aoe.setText(['x' + inventory.aoeCount.toString()]);
+			
+			if (areas != null && areas[0] != null) {
+				i_alertLight_top.setState(areas[0].alertLevel);
+				i_brain.setState((areas[0].taken)? 1 : 0);
+			} else {
+				i_alertLight_top.setState(2);
+				i_brain.setState(1);
+			}
+			if (areas != null && areas[1] != null) {
+				i_alertLight_middle.setState(areas[1].alertLevel);
+				i_heart.setState((areas[1].taken)? 1 : 0);
+			} else {
+				i_alertLight_middle.setState(2);
+				i_heart.setState(1);
+			}
+			if (areas != null && areas[2] != null) {
+				i_alertLight_bottom.setState(areas[2].alertLevel);
+				i_lungs.setState((areas[2].taken)? 1 : 0);
+			} else {
+				i_alertLight_bottom.setState(2);
+				i_lungs.setState(1);
+			}
+			
 
-			i_alertLight_top.setState(areas[0].alertLevel);
-			i_alertLight_middle.setState(areas[1].alertLevel);
-			i_alertLight_bottom.setState(areas[2].alertLevel);
-
-			i_brain.setState((areas[0].taken)? 1 : 0);
-			i_heart.setState((areas[1].taken)? 1 : 0);
-			i_lungs.setState((areas[2].taken)? 1 : 0);
 
 
 		}

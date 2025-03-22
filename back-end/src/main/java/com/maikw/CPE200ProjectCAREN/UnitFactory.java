@@ -4,8 +4,8 @@ public class UnitFactory {
     private static int count = 0;
 
     public static Antibody createAntibody(String type){
-//        String g = GeneticCodeManager.getAsString("geneticcodes/maikoiwang/working/maikoiwang_w1.txt");
-        String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt");
+//        String g = GeneticCodeManager.getAsString("genetic-codes/maikoiwang/working/maikoiwang_w1.txt");
+        String g = GeneticCodeManager.getAsString("genetic-codes/sampleteam/working/sampleteam_w0.txt");
 
         Antibody ab;
         switch (type) {
@@ -25,7 +25,7 @@ public class UnitFactory {
     }
 
     public static Antibody createAntibody(String type, GeneticCodeManager gm){
-        String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w0.txt");
+        String g = GeneticCodeManager.getAsString("genetic-codes/sampleteam/working/sampleteam_w0.txt");
 
         Antibody ab;
         switch (type) {
@@ -51,8 +51,8 @@ public class UnitFactory {
     }
 
     public static Virus createVirus(String type){
-//        String g = GeneticCodeManager.getAsString("geneticcodes/maikoiwang/working/maikoiwang_w1.txt");
-        String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w1.txt");
+//        String g = GeneticCodeManager.getAsString("genetic-codes/maikoiwang/working/maikoiwang_w1.txt");
+        String g = GeneticCodeManager.getAsString("genetic-codes/sampleteam/working/sampleteam_w1.txt");
         Virus v;
         switch (type) {
             case "melee" -> {
@@ -71,7 +71,7 @@ public class UnitFactory {
     }
 
     public static Unit createDummy(String type){
-        String g = GeneticCodeManager.getAsString("geneticcodes/sampleteam/working/sampleteam_w1.txt");
+        String g = GeneticCodeManager.getAsString("genetic-codes/sampleteam/working/sampleteam_w1.txt");
         Unit u;
         switch (type) {
             case "melee" -> {
